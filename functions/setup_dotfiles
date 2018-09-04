@@ -3,7 +3,7 @@
 # Set preferred bash aliased by copying the 'bash_aliases.in' file to ~/.bash_aliases
 function write_bash_aliases {
 	# Check list
-	INPUT=$(dirname "$0")'/data/config/bash_aliases.in'
+	INPUT=${SCRIPT_DIR}'/data/config/bash_aliases.in'
 	# Draw window
 	if (eval `resize` && whiptail \
 		--title "Preferred Bash Aliases" \
@@ -24,7 +24,7 @@ function write_bash_aliases {
 # Configure environment variables by copying the 'profile.in' file to ~/.profile
 function write_profile {
 	# Check list
-	INPUT=$(dirname "$0")'/data/config/profile.in'
+	INPUT=${SCRIPT_DIR}'/data/config/profile.in'
 	# Draw window
 	if (eval `resize` && whiptail \
 		--title "Configure Environment Variables" \
@@ -45,7 +45,7 @@ function write_profile {
 # Configure bash profile by copying the 'bashrc.in' file to ~/.bashrc
 function write_bashrc {
 	# Check list
-	INPUT=$(dirname "$0")'/data/config/bashrc.in'
+	INPUT=${SCRIPT_DIR}'/data/config/bashrc.in'
 	# Draw window
 	if (eval `resize` && whiptail \
 		--title "Configure Bash" \
@@ -66,7 +66,7 @@ function write_bashrc {
 # Configure text editors by copying the 'editorconfig.in' file to ~/.editorconfig
 function write_editorconfig {
 	# Check list
-	INPUT=$(dirname "$0")'/data/config/editorconfig.in'
+	INPUT=${SCRIPT_DIR}'/data/config/editorconfig.in'
 	# Draw window
 	if (eval `resize` && whiptail \
 		--title "Configure Text editors" \

@@ -125,7 +125,7 @@ function check_dependencies {
 	echo_message header "Starting 'check_dependencies' function"
 	echo_message title "Checking if necessary dependencies are installed..."
 	# Variables
-	LIST=$(dirname "$0")'/data/dependencies.list'
+	LIST=${SCRIPT_DIR}'/data/dependencies.list'
 	# Check dependencies
 	for PACKAGE in $(cat $LIST); do 
 		# If package is not installed

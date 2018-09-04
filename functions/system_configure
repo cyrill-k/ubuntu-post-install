@@ -5,7 +5,7 @@
 function gsettings_config {
 	echo_message info "Setting preferred application-specific & desktop settings..."
 	# Variables
-	LIST=$(dirname "$0")'/data/gsettings.list'
+	LIST=${SCRIPT_DIR}'/data/gsettings.list'
 	while IFS= read line
 	do
 		gsettings set $line

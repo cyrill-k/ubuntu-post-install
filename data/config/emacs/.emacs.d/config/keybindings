@@ -1,0 +1,21 @@
+;; global keybindings
+(global-set-key (kbd "C-c s") 'ff-find-other-file)
+(global-set-key "\M- " 'hippie-expand)
+(global-set-key (kbd "C-c d") 'whack-whitespace)
+(global-set-key (kbd "C-c f") 'grep-find)
+(global-set-key (kbd "C-c r") 'find-name-dired)
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-c v") 'copy-buffer-file-name-into-clipboard)
+
+;; helm global overrides
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-c l") 'helm-locate)
+
+;; helm internal keybindings
+(with-eval-after-load "helm"
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+  (define-key helm-map (kbd "C-<tab>")  'helm-select-action) ; list actions using C-z
+  )

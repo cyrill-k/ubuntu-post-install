@@ -1,0 +1,27 @@
+(setq-default indent-tabs-mode nil)
+(set-face-attribute 'default nil :height 150)
+
+;; tex
+(with-eval-after-load "tex"
+  (add-to-list 'TeX-command-list
+               '("Clean" "make clean" TeX-run-command t t :help "make clean") t)
+  (add-to-list 'TeX-command-list
+               '("Make" "make" TeX-run-command t t :help "make") t)
+  (add-to-list 'TeX-view-program-list
+               '("okular" "/usr/bin/okular %o"))
+  (setcdr (assq 'output-pdf TeX-view-program-selection) '("okular"))
+  )
+
+;; helm
+(with-eval-after-load "helm"
+  (setq helm-autoresize-max-height 0)
+  (setq helm-autoresize-min-height 20)
+  (helm-autoresize-mode 1)
+  )
+
+;; (add-to-list 'load-path "/home/cyrill/Emacs-wgrep")
+;; (require 'wgrep)
+;; (require 'wgrep-helm)
+
+;; fix dead_tilde issue due to fcitx
+(require 'iso-transl)

@@ -2,34 +2,20 @@
 
 # emacs
 function install_emacs {
-	status="0"
-	NAME="Emacs"
-	while [ "$status" -eq 0 ]; do
-		VERSION=$(eval `resize` && whiptail \
-		--title "$NAME" \
-		--radiolist "Which version of $NAME would you like to install?" \
-		--ok-button "Install" \
-		--cancel-button "Go Back" \
-		$LINES $COLUMNS $(( $LINES - 12 )) \
-		"stable"    "Stable build" ON \
-		"beta"      "Beta build" OFF \
-		"unstable"  "Unstable build" OFF \
-		3>&1 1>&2 2>&3) 
-		# Change to lower case and remove spaces.
-		case "${VERSION}" in
-			stable)
-				download_chrome stable;
-			;;
-			beta)
-				download_chrome beta;
-			;;
-			unstable)
-				download_chrome unstable;
-			;;
-			# return
-			*) status=1 
-				install_thirdparty
-			;;
-		esac
-	done
+    DESIRED_EMACS_VERSION="emacs25"
+    # if desired emacs version is not yet installed
+    if [ $(check_package_installed ${DESIRED_EMACS_VERSION}) != 0 ]; then
+        # remove existing emacs installations
+        superuser_do "apt remove -y emacs emacs24*"
+
+        # add repository for Emacs 25
+        do_add_launchpad_ppa "Emacs 25" "kelleyk/emacs" ""
+
+        # install Emacs 25
+        superuser_do "apt install -y $DESIRED_EMACS_VERSION"
+    fi
+
+    cp -r "$SCRIPT_DIR/data/config/emacs/.emacs.d" ~
+    [ -f ~/.emacs ] && rm ~/.emacs
+    emacs --script "$SCRIPT_DIR/data/config/emacs/install.el"
 }

@@ -7,7 +7,7 @@
 function import_apps_functions {
 	DIR="functions/apps"
 	# iterate through the files in the 'functions/apps' folder
-	for FUNCTION in $(dirname "$0")/$DIR/*; do
+	for FUNCTION in ${SCRIPT_DIR}/$DIR/*; do
 		if [[ -d $FUNCTION ]]; then
 			continue
 		elif [[ -f $FUNCTION ]]; then
@@ -35,6 +35,7 @@ function install_thirdparty {
 		'install_oracle_java'   'Oracle Java' \
 		'install_rvm'           'Ruby Version Manager (RVM)' \
 		'install_sublime_text'  'Sublime Text 3' \
+                'install_emacs'         'Emacs & helm' \
 		3>&1 1>&2 2>&3)
 
 	# check exit status

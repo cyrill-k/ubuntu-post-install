@@ -21,6 +21,20 @@
 # You should have received a copy of the GNU General Public License along with
 # this program; if not, see <https://www.gnu.org/licenses/gpl-3.0.txt>
 
+unset CDPATH
+get_script_dir () {
+    SOURCE="${BASH_SOURCE[0]}"
+    # While $SOURCE is a symlink, resolve it
+    while [ -h "$SOURCE" ]; do
+        DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+        SOURCE="$( readlink "$SOURCE" )"
+        [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+    done
+    DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+    echo "$DIR"
+}
+SCRIPT_DIR="$(get_script_dir)"
+
 # tab width
 tabs 4
 clear
@@ -38,6 +52,7 @@ function main {
 		--menu "\nWhat would you like to do?" \
 		--cancel-button "Quit" \
 		$LINES $COLUMNS $(( $LINES - 12 )) \
+		'install_full'          'Perform full installation on new machine' \
 		'system_update'         'Perform system updates' \
 		'install_favs'          'Install preferred applications' \
 		'install_favs_dev'      'Install preferred development tools' \
@@ -66,20 +81,14 @@ function main {
 function quit {
 	echo_message header "Starting 'quit' function"
 	echo_message title "Exiting $TITLE..."
-	# Draw window
-	if (whiptail --title "Quit" --yesno "Are you sure you want quit?" 8 56) then
-		echo_message welcome 'Thanks for using!'
-		exit 99
-	else
-		main
-	fi
+	exit 99
 }
 
 # Import Functions
 function import_functions {
 	DIR="functions"
 	# iterate through the files in the 'functions' folder
-	for FUNCTION in $(dirname "$0")/$DIR/*; do
+	for FUNCTION in ${SCRIPT_DIR}/$DIR/*; do
 		# skip directories
 		if [[ -d $FUNCTION ]]; then
 			continue

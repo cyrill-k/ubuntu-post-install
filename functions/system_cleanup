@@ -8,7 +8,7 @@ function purge_unused {
 	NAME="Unused Pre-installed Applications"
 	echo_message title "Removing ${NAME,,}..."
 	# Check list
-	LIST=$(dirname "$0")'/data/purge.list'
+	LIST=${SCRIPT_DIR}'/data/purge.list'
 	# Draw window
 	if (eval `resize` && whiptail \
 		--title "Remove $NAME" \
@@ -45,7 +45,7 @@ function purge_snaps {
 	NAME="Unused Pre-installed Snaps"
 	echo_message title "Removing ${NAME,,}..."
 	# Check list
-	LIST=$(dirname "$0")'/data/purge-snaps.list'
+	LIST=${SCRIPT_DIR}'/data/purge-snaps.list'
 	# Draw window
 	if (eval `resize` && whiptail \
 		--title "Remove $NAME" \

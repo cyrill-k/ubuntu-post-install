@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function install_full {
+    # installations using `apt install`
+    do_install_from_list "preferred applications" "favs"
+    do_install_from_list "preferred development tools" "favs-dev"
+    do_install_from_list "preferred utilities" "favs-utils"
+
+    #
+    import_apps_functions
+    install_emacs
+
+    # Finished
+    echo_message success "Full installation complete."
+    whiptail --title "Finished" --msgbox "Full installation is complete." 8 56
+}
