@@ -1,0 +1,16 @@
+font pango:monospace 8
+bindsym $mod+Pause mode "$mode_system"
+
+# monitors
+set $monitor1 "HDMI-1"
+set $monitor2 "DVI-I-1"
+
+workspace 1 output $monitor1
+
+assign [class="Firefox"] $workspace2
+
+# move workspace other monitor
+bindsym $mod+m move workspace to output right
+
+# screen arrangement
+exec_always xrandr --output VGA-1 --off --output DVI-D-1 --mode 1920x1200 --pos 0x0 --rotate normal --output HDMI-1 --primary --mode 2560x1440 --pos 1920x0 --rotate normal

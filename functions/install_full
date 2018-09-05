@@ -9,6 +9,7 @@ function install_full {
     #
     import_apps_functions
     install_emacs
+    install_i3
 
     # Finished
     echo_message success "Full installation complete."

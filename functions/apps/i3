@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# emacs
+function install_i3 {
+    i=0
+    for file in ${SCRIPT_DIR}/data/config/i3/[^.]*; do
+        files[i]="$file"
+        files[i+1]="$(basename "$file")"
+        ((i+=2))
+    done
+
+
+    echo_message header "Selecting i3 configuration"
+    NO_CONFIG="//"
+    # Draw window
+    CONFIG=$(eval `resize` && whiptail \
+	     --notags \
+	     --title "i3" \
+	     --menu "\nWhich configuration would you like to install?" \
+	     $LINES $COLUMNS $(( $LINES - 12 )) \
+             "${NO_CONFIG}" "[Keep existing configuration]" \
+             "${files[@]}" \
+	     3>&1 1>&2 2>&3)
+
+    if [ "${CONFIG}" != "${NO_CONFIG}" ]; then
+        echo_message info "Creating i3 config '${CONFIG}'"
+        mkdir -p ~/.config/i3
+        cp ${SCRIPT_DIR}/data/config/i3/.base ~/.config/i3/config
+        cat "${CONFIG}" >>~/.config/i3/config
+    else
+        echo_message info "Not creating new i3 configuration"
+    fi
+}

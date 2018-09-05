@@ -35,7 +35,9 @@ function install_thirdparty {
 		'install_oracle_java'   'Oracle Java' \
 		'install_rvm'           'Ruby Version Manager (RVM)' \
 		'install_sublime_text'  'Sublime Text 3' \
-                'install_emacs'         'Emacs & helm' \
+		'install_emacs'         'Emacs & helm' \
+		'install_i3'            'i3 window manager' \
+		'install_citx'          'install japanese keyboard' \
 		3>&1 1>&2 2>&3)
 
 	# check exit status

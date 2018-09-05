@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#todo install fzf
+# https://github.com/ibmandura/helm-fzf
+# https://gist.github.com/bling/18655e86918bebd7bc3d
+# https://stackoverflow.com/questions/36522834/vim-fuzzy-finder-like-for-emacs
+# https://github.com/junegunn/fzf
 # emacs
 function install_emacs {
     DESIRED_EMACS_VERSION="emacs25"
