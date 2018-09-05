@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function install_helm_fzf {
+    git clone https://github.com/ibmandura/helm-fzf ~/.emacs.d/helm-fzf
+}
+
 #todo install fzf
 # https://github.com/ibmandura/helm-fzf
 # https://gist.github.com/bling/18655e86918bebd7bc3d
@@ -19,6 +23,10 @@ function install_emacs {
         # install Emacs 25
         superuser_do "apt install -y $DESIRED_EMACS_VERSION"
     fi
+
+    # require fzf
+    install_fzf
+    install_helm_fzf
 
     cp -r "$SCRIPT_DIR/data/config/emacs/.emacs.d" ~
     [ -f ~/.emacs ] && rm ~/.emacs

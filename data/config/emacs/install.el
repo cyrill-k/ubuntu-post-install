@@ -10,4 +10,5 @@
           '(helm
             wgrep
             wgrep-helm
-            magit))
+            magit
+            s))

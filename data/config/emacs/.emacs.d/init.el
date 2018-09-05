@@ -18,3 +18,5 @@
 (load "~/.emacs.d/config/config")
 (load "~/.emacs.d/config/functions")
 (load "~/.emacs.d/config/keybindings")
+
+(load "~/.emacs.d/helm-fzf/helm-fzf.el")
