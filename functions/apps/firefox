@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function install_firefox {
+    FIREFOX="firefox"
+    # if firefox is not yet installed
+    if [ $(check_package_installed ${FIREFOX}) != 0 ]; then
+        superuser_do "apt install -y $FIREFOX"
+    fi
+
+    (cd ~/.mozilla/firefox/*.default &&
+    echo 'user_pref("browser.fullscreen.autohide","false");' >user.js)
+}
