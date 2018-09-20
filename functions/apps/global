@@ -1,0 +1,22 @@
+#!/bin/bash
+
+function install_global {
+    GLOBAL_INSTALL_FILE="tamacom.com/global/global-6.6.2.tar.gz"
+    GLOBAL_INSTALL_BASENAME="$(basename $GLOBAL_INSTALL_FILE)"
+    GLOBAL_INSTALL_BASENAME_NOEXT="${GLOBAL_INSTALL_BASENAME%.tar.gz}"
+    GLOBAL_PATH="${HOME}/.local/lib/"
+    GLOBAL_FOLDER="global"
+
+    # check if GLOBAL is already installed:
+    if [ -d "$GLOBAL_PATH$GLOBAL_FOLDER" ]; then
+        echo_message info "Uninstalling existing GNU global implementation..."
+        superuser_do "make uninstall"
+    fi
+    
+    echo_message info "Downloading new GNU global implementation..."
+    mkdir -p "$SCRIPT_DIR/$GLOBAL_PATH" && wget -qO - "$GLOBAL_INSTALL_FILE" | tar --transform "s/$GLOBAL_INSTALL_BASENAME_NOEXT/$GLOBAL_FOLDER/" -C "$GLOBAL_PATH" -xvz
+
+    echo_message info "Building and installing GNU global"
+    
+    (cd "$GLOBAL_PATH" && pwd && cd "$GLOBAL_FOLDER" && pwd && (./configure && make && superuser_do "make install"))
+}

@@ -27,6 +27,7 @@ function install_emacs {
     # require fzf
     install_fzf
     install_helm_fzf
+    install_global
 
     cp -r "$SCRIPT_DIR/data/config/emacs/.emacs.d" ~
     [ -f ~/.emacs ] && rm ~/.emacs

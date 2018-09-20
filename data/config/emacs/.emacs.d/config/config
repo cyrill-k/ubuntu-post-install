@@ -25,3 +25,6 @@
 
 ;; fix dead_tilde issue due to fcitx
 (require 'iso-transl)
+
+;; add hook for C++
+(add-hook 'c++-mode-hook 'helm-gtags-mode)

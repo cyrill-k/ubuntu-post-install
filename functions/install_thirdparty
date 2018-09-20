@@ -40,6 +40,7 @@ function install_thirdparty {
 		'install_fzf'           'fzf fuzzy finder' \
 		'install_citx'          'install japanese keyboard' \
                 'install_firefox'       'install firefox adjusted to i3' \
+                'install_global'       'install GNU global' \
 		3>&1 1>&2 2>&3)
 
 	# check exit status
