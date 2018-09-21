@@ -87,6 +87,38 @@ function install_remote_package() {
 	fi
 }
 
+# Remove function (non-interactive)
+#
+# ${1} = apt name
+
+function do_remove() {
+    PACKAGE="$1"
+        # remove existing installations
+        superuser_do "apt remove -y emacs $PACKAGE*"
+}
+
+# Install function (non-interactive)
+#
+# ${1} = apt name
+
+function do_install() {
+    PACKAGE="$1"
+    # If package is not installed
+    if [ $(check_package_installed $PACKAGE) != 0 ]; then
+        # Install package
+        echo_message warning "Package '$PACKAGE' is not installed. Installing..."
+        # Admin privileges
+        superuser_do "apt install -y $PACKAGE"
+        # Check if failed
+        if [[ $? != 0 ]]; then
+            echo_message error "Error installing '$PACKAGE'."
+        fi
+    else
+        # Show already installed message
+        echo_message info "Package '$PACKAGE' is installed."
+    fi
+}
+
 # Install from list function (non-interactive)
 #
 # ${1} = Name
@@ -97,20 +129,7 @@ function do_install_from_list() {
     LIST=${SCRIPT_DIR}'/data/'${2}'.list'
     # Install loop
     for PACKAGE in $(cat $LIST); do
-        # If package is not installed
-        if [ $(check_package_installed $PACKAGE) != 0 ]; then
-            # Install package
-            echo_message warning "Package '$PACKAGE' is not installed. Installing..."
-            # Admin privileges
-            superuser_do "apt install -y $PACKAGE"
-            # Check if failed
-            if [[ $? != 0 ]]; then
-                echo_message error "Error installing '$PACKAGE'."
-            fi
-        else
-            # Show already installed message
-            echo_message info "Package '$PACKAGE' is installed."
-        fi
+        do_install "$PACKAGE"
     done
     # Finished
     echo_message success "Installation of ${1} complete."

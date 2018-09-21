@@ -6,12 +6,29 @@ function install_full {
     do_install_from_list "preferred development tools" "favs-dev"
     do_install_from_list "preferred utilities" "favs-utils"
 
-    #
+    # import functions
     import_apps_functions
+
+    # install all apps
     install_emacs
     install_i3
+    install_firefox
 
     # Finished
     echo_message success "Full installation complete."
     whiptail --title "Finished" --msgbox "Full installation is complete." 8 56
+}
+
+function configure_full {
+    # import functions
+    import_apps_functions
+
+    # configure all apps
+    configure_emacs
+    configure_i3
+    configure_firefox
+
+    # Finished
+    echo_message success "Full Configuration complete."
+    whiptail --title "Finished" --msgbox "Full Configuration is complete." 8 56
 }

@@ -53,6 +53,7 @@ function main {
 		--cancel-button "Quit" \
 		$LINES $COLUMNS $(( $LINES - 12 )) \
 		'install_full'          'Perform full installation on new machine' \
+		'configure_full'        'Set all configurations' \
 		'system_update'         'Perform system updates' \
 		'install_favs'          'Install preferred applications' \
 		'install_favs_dev'      'Install preferred development tools' \

@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# emacs
 function install_i3 {
+    do_install "i3"
+}
+
+function configure_i3 {
     i=0
     for file in ${SCRIPT_DIR}/data/config/i3/[^.]*; do
         files[i]="$file"

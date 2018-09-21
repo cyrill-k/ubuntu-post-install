@@ -36,11 +36,14 @@ function install_thirdparty {
 		'install_rvm'           'Ruby Version Manager (RVM)' \
 		'install_sublime_text'  'Sublime Text 3' \
 		'install_emacs'         'Emacs & helm' \
+		'configure_emacs'       'Configure Emacs & helm' \
 		'install_i3'            'i3 window manager' \
+		'configure_i3'          'Configure i3 window manager' \
 		'install_fzf'           'fzf fuzzy finder' \
-		'install_citx'          'install japanese keyboard' \
-                'install_firefox'       'install firefox adjusted to i3' \
-                'install_global'       'install GNU global' \
+		'install_citx'          'Install japanese keyboard' \
+                'install_firefox'       'Install firefox adjusted to i3' \
+                'configure_firefox'     'Adjust firefox to i3' \
+                'install_global'        'Install GNU global' \
 		3>&1 1>&2 2>&3)
 
 	# check exit status

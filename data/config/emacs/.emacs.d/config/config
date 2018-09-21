@@ -14,9 +14,10 @@
 
 ;; helm
 (with-eval-after-load "helm"
-  (setq helm-autoresize-max-height 0)
+  (setq helm-autoresize-max-height 50)
   (setq helm-autoresize-min-height 20)
   (helm-autoresize-mode 1)
+  (setq helm-case-fold-search t)
   )
 
 ;; (add-to-list 'load-path "/home/cyrill/Emacs-wgrep")
@@ -28,3 +29,51 @@
 
 ;; add hook for C++
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; fix below here
+
+
+
+
+
+;; ;; semantic
+;; (require 'cc-mode)
+;; (require 'semantic)
+
+;; (global-semanticdb-minor-mode 1)
+;; (global-semantic-idle-scheduler-mode 1)
+
+;; (semantic-mode 1)
+
+;; (require 'company)
+;; (add-hook 'after-init-hook 'global-company-mode)
+
+;; (setq company-backends (delete 'company-semantic company-backends))
+;; (define-key c-mode-map  [(tab)] 'company-complete)
+;; (define-key c++-mode-map  [(tab)] 'company-complete)
+;; (setq company-clang-executable "~/scioncpp/build-tools/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang++")
+
+;; (require 'company-c-headers)
+;; (add-to-list 'company-backends 'company-c-headers)
+;; (add-to-list 'company-c-headers-path-system "~/scioncpp/build-tools/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-16.04/include/c++/v1")
+
+(require 'cc-mode)
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(define-key c-mode-map  [(tab)] 'company-complete)
+(define-key c++-mode-map  [(tab)] 'company-complete)
+
+; irony
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
