@@ -7,8 +7,19 @@
             (package-install package)))
 
         ; list of packages to be installed
-          '(helm
-            wgrep
-            wgrep-helm
-            magit
-            s))
+        '(magit
+          ; helm
+          helm
+          ; wgrep
+          wgrep
+          wgrep-helm
+          ; necessary dependencies
+          s
+          ; coding: gtags, irony, company, flycheck
+          helm-gtags
+          company
+          irony
+          company-irony
+          flycheck
+          flycheck-irony
+          helm-flycheck))

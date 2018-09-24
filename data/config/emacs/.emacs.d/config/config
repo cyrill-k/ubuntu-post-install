@@ -1,8 +1,13 @@
 (setq-default indent-tabs-mode nil)
 (set-face-attribute 'default nil :height 150)
 
+;; isearch wraps over new lines
+(setq isearch-lax-whitespace t)
+(setq isearch-regexp-lax-whitespace t)
+(setq search-whitespace-regexp "[ \t\r\n]+")
+
 ;; tex
-(with-eval-after-load "tex"
+(with-eval-after-load 'tex
   (add-to-list 'TeX-command-list
                '("Clean" "make clean" TeX-run-command t t :help "make clean") t)
   (add-to-list 'TeX-command-list
@@ -13,30 +18,44 @@
   )
 
 ;; helm
-(with-eval-after-load "helm"
+(with-eval-after-load 'helm
   (setq helm-autoresize-max-height 50)
-  (setq helm-autoresize-min-height 20)
-  (helm-autoresize-mode 1)
+;;  (setq helm-autoresize-min-height 20)
+  (helm-autoresize-mode 0)
   (setq helm-case-fold-search t)
   )
-
-;; (add-to-list 'load-path "/home/cyrill/Emacs-wgrep")
-;; (require 'wgrep)
-;; (require 'wgrep-helm)
 
 ;; fix dead_tilde issue due to fcitx
 (require 'iso-transl)
 
-;; add hook for C++
+;; gtags
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
+(with-eval-after-load 'cc-mode
+  (add-to-list 'company-backends 'company-gtags))
 
+;; cc-mode
+;; (require 'cc-mode)
 
+;; company
+;; (require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(with-eval-after-load 'cc-mode
+  (define-key c++-mode-map  [(tab)] 'company-complete))
 
+;; irony
+(add-hook 'c++-mode-hook 'irony-mode)
+;; removed, slows down ff-find-other-file
+; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
 
+;; flycheck-irony
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; fix below here
-
-
+;; company-irony
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-irony))
 
 
 
@@ -61,19 +80,17 @@
 ;; (add-to-list 'company-backends 'company-c-headers)
 ;; (add-to-list 'company-c-headers-path-system "~/scioncpp/build-tools/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-16.04/include/c++/v1")
 
-(require 'cc-mode)
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-(define-key c-mode-map  [(tab)] 'company-complete)
-(define-key c++-mode-map  [(tab)] 'company-complete)
+;; (require 'cc-mode)
+;; (require 'company)
+;; (add-hook 'after-init-hook 'global-company-mode)
+;; (define-key c-mode-map  [(tab)] 'company-complete)
+;; (define-key c++-mode-map  [(tab)] 'company-complete)
 
-; irony
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
+;; ; irony
+;; (add-hook 'c++-mode-hook 'irony-mode)
 
-; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-irony))
+;; ; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+;; (eval-after-load 'flycheck
+;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+;; (eval-after-load 'company
+;;   '(add-to-list 'company-backends 'company-irony))
