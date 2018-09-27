@@ -41,9 +41,11 @@ function install_thirdparty {
 		'configure_i3'          'Configure i3 window manager' \
 		'install_fzf'           'fzf fuzzy finder' \
 		'install_citx'          'Install japanese keyboard' \
-                'install_firefox'       'Install firefox adjusted to i3' \
+                'install_firefox'       'Install firefox' \
                 'configure_firefox'     'Adjust firefox to i3' \
                 'install_global'        'Install GNU global' \
+                'install_python'        'Install Python' \
+                'install_ietf_tools'    'Install IETF martinthomson requirements' \
 		3>&1 1>&2 2>&3)
 
 	# check exit status

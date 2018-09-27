@@ -1,0 +1,54 @@
+#!/bin/bash
+
+function pip_update {
+    # update pip
+    curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | superuser_do python
+}
+
+# install package using pip
+# $1 = package name
+function pip_install {
+    #
+    pip install --user "$1"
+    echo_message success "Installation of ${1} complete."
+}
+
+
+# Install from list function (non-interactive)
+#
+# ${1} = Name
+# ${2} = list-name
+
+function pip_install_from_list {
+    #update pip
+    pip_update
+    # Variables
+    LIST=${SCRIPT_DIR}'/data/'${2}'.list'
+    # Install loop
+    for PACKAGE in $(cat $LIST); do
+        pip_install "$PACKAGE"
+    done
+    # Finished
+    echo_message success "Installation of list ${1} complete."
+
+}
+
+function install_python {
+    do_install "python3"
+
+    pip_install_from_list "python"
+}
+
+function install_ietf_tools {
+    # make virtualenv for xml2rfc
+    VIRTUALENV_PATH=~/virtualenv
+    mkdir -p "$VIRTUALENV_PATH"
+    virtualenv "$VIRTUALENV_PATH/ietf"
+    . "$VIRTUALENV_PATH/ietf/bin/activate"
+    pip install xml2rfc
+    deactivate
+
+    # install markdown -> xml converter
+    do_install gem
+    superuser_do gem install kramdown-rfc2629
+}

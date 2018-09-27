@@ -13,6 +13,7 @@ function install_full {
     install_emacs
     install_i3
     install_firefox
+    install_python
 
     # Finished
     echo_message success "Full installation complete."
