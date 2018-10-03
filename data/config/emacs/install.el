@@ -22,4 +22,6 @@
           company-irony
           flycheck
           flycheck-irony
-          helm-flycheck))
+          helm-flycheck
+          ; markdown
+          markdown-mode))
