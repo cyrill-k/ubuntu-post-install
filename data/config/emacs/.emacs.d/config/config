@@ -17,6 +17,9 @@
                '("okular" "/usr/bin/okular %o"))
   (setcdr (assq 'output-pdf TeX-view-program-selection) '("okular"))
   )
+(add-hook 'TeX-mode-hook
+          (lambda ()
+            (setq TeX-command-default "make")))
 
 ;; helm
 (with-eval-after-load 'helm
