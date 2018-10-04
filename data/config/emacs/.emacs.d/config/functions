@@ -13,3 +13,26 @@
   "Copy current buffer's path into clipboard using x-set-selection"
   (interactive "P")
   (x-set-selection nil (file-truename buffer-file-name)))
+
+(defun async-shell-to-temp-buffer (cmd buf)
+  (with-output-to-temp-buffer buf
+    (start-process-shell-command cmd
+                   (get-buffer-create buf)
+                   cmd)
+    (pop-to-buffer buf)
+    (special-mode)))
+
+(defun async-make (&optional arg)
+  (if arg
+      (progn
+        (message "make within virtualenv 'ietf'")
+        (async-shell-to-temp-buffer
+         "source ~/virtualenv/ietf/bin/activate; make"
+         "*make output*")
+        )
+    (progn
+      (message "make")
+      (async-shell-to-temp-buffer
+       "make"
+       "*make output*")
+      )))
