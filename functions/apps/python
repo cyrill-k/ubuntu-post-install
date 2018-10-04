@@ -36,15 +36,18 @@ function pip_install_from_list {
 function install_python {
     do_install "python3"
 
-    pip_install_from_list "python"
+    pip_install_from_list "python" "python"
 }
 
 function install_ietf_tools {
+    do_install "enscript"
+
     # make virtualenv for xml2rfc
     VIRTUALENV_PATH=~/virtualenv
     mkdir -p "$VIRTUALENV_PATH"
-    virtualenv "$VIRTUALENV_PATH/ietf"
+    virtualenv -p python3 "$VIRTUALENV_PATH/ietf"
     . "$VIRTUALENV_PATH/ietf/bin/activate"
+    pip_update
     pip install xml2rfc
     deactivate
 
