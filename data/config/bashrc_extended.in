@@ -1,0 +1,5 @@
+shopt -s dotglob
+shopt -s globstar
+
+# include fzf keybindings
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

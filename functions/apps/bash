@@ -1,20 +1,20 @@
 #!/bin/bash
 
-function configure_bash {
+function configure_aliases {
     echo_message header "Creating bash aliases"
     keep_aliases="k"
     replace_aliases="r"
     extend_aliases="e"
     # Draw window
     CONFIG=$(eval `resize` && whiptail \
-	     --notags \
-	     --title "i3" \
-	     --menu "\nWhich configuration would you like to install?" \
-	     $LINES $COLUMNS $(( $LINES - 12 )) \
+                                  --notags \
+                                  --title "i3" \
+                                  --menu "\nWhich configuration would you like to install?" \
+                                  $LINES $COLUMNS $(( $LINES - 12 )) \
              "${keep_aliases}" "[Keep existing aliases]" \
              "${replace_aliases}" "[Replace .bash_aliases]" \
              "${extend_aliases}" "[Extend .bash_aliases]" \
-	     3>&1 1>&2 2>&3)
+             3>&1 1>&2 2>&3)
 
     case "${CONFIG}" in
         "${keep_aliases}") echo_message info "Not modifying .bash_aliases"
@@ -26,4 +26,38 @@ function configure_bash {
                              cat "${SCRIPT_DIR}/data/config/bash_aliases.in" >>~/.bash_aliases
                              ;;
     esac
+}
+
+function configure_bashrc {
+    echo_message header "Creating .bashrc"
+    keep_bashrc="k"
+    replace_bashrc="r"
+    extend_aliases="e"
+    # Draw window
+    CONFIG=$(eval `resize` && whiptail \
+                                  --notags \
+                                  --title "i3" \
+                                  --menu "\nWhich configuration would you like to install?" \
+                                  $LINES $COLUMNS $(( $LINES - 12 )) \
+             "${keep_bashrc}" "[Keep existing bashrc]" \
+             "${replace_bashrc}" "[Replace .bashrc]" \
+             "${extend_bashrc}" "[Extend .bashrc]" \
+             3>&1 1>&2 2>&3)
+
+    case "${CONFIG}" in
+        "${keep_bashrc}") echo_message info "Not modifying .bashrc"
+                          ;;
+        "${replace_bashrc}") echo_message info "Replacing .bashrc"
+                             cp "${SCRIPT_DIR}/data/config/bashrc_basic.in" ~/.bashrc
+                             cat "${SCRIPT_DIR}/data/config/bashrc_extended.in" >>~/.bashrc
+                             ;;
+        "${extend_bashrc}") echo_message info "Extending .bashrc without copying basic configurations"
+                            cat "${SCRIPT_DIR}/data/config/bashrc_extended.in" >>~/.bashrc
+                            ;;
+    esac
+}
+
+function configure_bash {
+    configure_bashrc
+    configure_aliases
 }
