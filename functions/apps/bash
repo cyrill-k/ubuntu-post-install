@@ -1,0 +1,29 @@
+#!/bin/bash
+
+function configure_bash {
+    echo_message header "Creating bash aliases"
+    keep_aliases="k"
+    replace_aliases="r"
+    extend_aliases="e"
+    # Draw window
+    CONFIG=$(eval `resize` && whiptail \
+	     --notags \
+	     --title "i3" \
+	     --menu "\nWhich configuration would you like to install?" \
+	     $LINES $COLUMNS $(( $LINES - 12 )) \
+             "${keep_aliases}" "[Keep existing aliases]" \
+             "${replace_aliases}" "[Replace .bash_aliases]" \
+             "${extend_aliases}" "[Extend .bash_aliases]" \
+	     3>&1 1>&2 2>&3)
+
+    case "${CONFIG}" in
+        "${keep_aliases}") echo_message info "Not modifying .bash_aliases"
+                           ;;
+        "${replace_aliases}") echo_message info "Replacing .bash_aliases"
+                              cp "${SCRIPT_DIR}/data/config/bash_aliases.in" ~/.bash_aliases
+                              ;;
+        "${extend_aliases}") echo_message info "Extending .bash_aliases"
+                             cat "${SCRIPT_DIR}/data/config/bash_aliases.in" >>~/.bash_aliases
+                             ;;
+    esac
+}

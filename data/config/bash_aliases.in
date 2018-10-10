@@ -17,5 +17,8 @@ alias l='ls -CF'
 # human readable df
 alias df='df -h'
 
+#trash-cli
+alias t='trash'
+
 # ignore common typos
 #alias naon='nano'

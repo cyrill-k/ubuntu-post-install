@@ -28,6 +28,7 @@ function configure_full {
     configure_emacs
     configure_i3
     configure_firefox
+    configure_bash
 
     # Finished
     echo_message success "Full Configuration complete."
