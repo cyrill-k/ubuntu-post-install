@@ -8,7 +8,7 @@ function superuser_do() {
 	if [[ $EUID = 0 ]]; then
 		echo_message warning "You are logged in as the root user. Again, this is not recommended. :/"
 		# Running command without sudo
-		$@
+		"$@"
 	else
 		# check sudo uptime to see if a password is needed
 		if [ $(sudo -n uptime 2>&1 | grep 'a password is required' | wc -l) != 0 ]; then
@@ -41,7 +41,7 @@ function superuser_do() {
 						fi
 					else
 						# pass the command to sudo
-						sudo ${@}
+						sudo "$@"
 						break
 					fi
 				done
@@ -54,7 +54,7 @@ function superuser_do() {
 		else
 			echo_message info "Admin privileges not required at this time."
 			# pass the command to sudo
-			sudo $@
+			sudo "$@"
 		fi
 	fi
 }

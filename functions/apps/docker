@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function install_docker {
+    echo_message info "Downloading download.docker.com gpg keys"
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | superuser_do apt-key add -
+
+    echo_message info "Add download.docker.com repository"
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+    echo_message info "apt update"
+    superuser_do apt update
+
+    echo_message info "apt install docker"
+    superuser_do apt install docker-ce
+}

@@ -47,6 +47,7 @@ function install_thirdparty {
                 'install_python'        'Install Python' \
                 'install_ietf_tools'    'Install IETF martinthomson requirements' \
                 'configure_bash    '    'Creating/extend .bash_aliases' \
+                'install_docker    '    'Install latest stable docker from docker apt repository' \
 		3>&1 1>&2 2>&3)
 
 	# check exit status
