@@ -61,23 +61,33 @@ function add_flatpak_repo() {
 	fi
 }
 
+# Add apt repository (no user interaction)
+#
+# ${1} = Name
+# ${2} = launchpad-user/ppa-name -- used to search in /etc/apt/sources.list
+# ${3} = add-apt-repository argument
+
+function do_add_apt_repository_basic() {
+    # Check if PPA already added
+    if ! grep -q "^deb .*${2}" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+        # Add repository
+        echo_message info "Adding repository: \"${3}\""
+        superuser_do add-apt-repository -y "${3}"
+        # Update repository information
+        echo_message info "Refreshing repository information..."
+        superuser_do apt update -y -qq
+        # Done
+        echo_message success "Repository added."
+    fi
+}
+
 # Add Launchpad PPA (no user interaction)
 #
 # ${1} = Name
 # ${2} = launchpad-user/ppa-name
 
 function do_add_launchpad_ppa() {
-    # Check if PPA already added
-    if ! grep -q "^deb .*${2}" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
-        # Add repository
-        echo_message info "Adding ${1} PPA repository..."
-        superuser_do "add-apt-repository -y ppa:${2}"
-        # Update repository information
-        echo_message info "Refreshing repository information..."
-        superuser_do "apt update -y -qq"
-        # Done
-        echo_message success "Repository added."
-    fi
+    do_add_launchpad_ppa_basic "${1}" "${2}" "ppa:${2}"
 }
 
 # Add Launchpad PPA

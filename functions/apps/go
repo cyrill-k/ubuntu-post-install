@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function install_go {
+    GOLANG_ALL="golang*"
+    GOLANG_VERSION="golang-1.10-go"
+    
+    do_remove "${GOLANG_ALL}"
+
+    # add repository for golang
+    do_add_launchpad_ppa "golang 1.10" "gophers/archive"
+
+    # install golang
+    do_install "${GOLANG_VERSION}"
+}

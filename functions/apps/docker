@@ -7,8 +7,7 @@ function install_docker {
         echo_message info "Downloading download.docker.com gpg keys"
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | superuser_do apt-key add -
 
-        echo_message info "Add download.docker.com repository"
-        sudo add-apt-repository "$DOCKER_PPA"
+        do_add_apt_repository_basic "download.docker.com" "$DOCKER_PPA_URL" "$DOCKER_PPA"
     else
         echo_message info "download.docker.com repository is already added"
     fi
