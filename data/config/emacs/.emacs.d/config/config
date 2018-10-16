@@ -50,8 +50,6 @@
 (add-hook 'c++-mode-hook 'irony-mode)
 ;; removed, slows down ff-find-other-file
 ; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-irony))
 
 ;; flycheck-irony
 (with-eval-after-load 'flycheck
@@ -61,7 +59,18 @@
 (with-eval-after-load 'company
   (add-to-list 'company-backends 'company-irony))
 
+;; company-go
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-go))
 
+;; go
+(add-hook 'go-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook 'gofmt-before-save)
+            (setq-default)
+            (setq tab-width 4)
+            (setq standard-indent 4)
+            (setq indent-tabs-mode t)))
 
 ;; ;; semantic
 ;; (require 'cc-mode)

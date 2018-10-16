@@ -10,7 +10,7 @@ function install_global {
     # check if GLOBAL is already installed:
     if [ -d "$GLOBAL_PATH$GLOBAL_FOLDER" ]; then
         echo_message info "Uninstalling existing GNU global implementation..."
-        superuser_do "make uninstall"
+        superuser_do make uninstall
     fi
     
     echo_message info "Downloading new GNU global implementation..."
@@ -18,5 +18,5 @@ function install_global {
 
     echo_message info "Building and installing GNU global"
     
-    (cd "$GLOBAL_PATH" && pwd && cd "$GLOBAL_FOLDER" && pwd && (./configure && make && superuser_do "make install"))
+    (cd "$GLOBAL_PATH" && pwd && cd "$GLOBAL_FOLDER" && pwd && (./configure && make && superuser_do make install))
 }

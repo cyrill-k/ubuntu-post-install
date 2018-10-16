@@ -17,7 +17,7 @@ function install_package() {
 			# Install
 			echo_message info "Installing package '${2}'..."
 			# Admin privileges
-			superuser_do "apt install -y ${2}"
+			superuser_do apt install -y ${2}
 			# Finished
 			echo_message success "Installation of package '${2}' is complete."
 			whiptail --title "Finished" --msgbox "Installation of ${1} complete." 8 56
@@ -69,12 +69,12 @@ function install_remote_package() {
 		esac
 		# Install package(s)
 		echo_message info "Installing '${2}' package..."
-		superuser_do "dpkg -i ${2}*.deb"
+		superuser_do dpkg -i "${2}*.deb"
 		# Install depencies, if any
 		echo_message info "Correcting any dependency errors..."
-		superuser_do "apt install -fy"
+		superuser_do apt install -fy
 		# Cleanup and finish
-		rm ${2}*.deb
+		rm "${2}*.deb"
 		# Done
 		echo_message success "Installation of ${1} complete."
 		whiptail --title "Finished" --msgbox "Installation of ${1} complete." 8 56
@@ -93,8 +93,8 @@ function install_remote_package() {
 
 function do_remove() {
     PACKAGE="$1"
-        # remove existing installations
-        superuser_do "apt remove -y emacs $PACKAGE*"
+    # remove existing installations
+    superuser_do apt remove -y emacs "$PACKAGE"
 }
 
 # Install function (non-interactive)
@@ -108,7 +108,7 @@ function do_install() {
         # Install package
         echo_message warning "Package '$PACKAGE' is not installed. Installing..."
         # Admin privileges
-        superuser_do "apt install -y $PACKAGE"
+        superuser_do apt install -y "$PACKAGE"
         # Check if failed
         if [[ $? != 0 ]]; then
             echo_message error "Error installing '$PACKAGE'."
@@ -126,7 +126,7 @@ function do_install() {
 
 function do_install_from_list() {
     # Variables
-    LIST=${SCRIPT_DIR}'/data/'${2}'.list'
+    LIST="${SCRIPT_DIR}/data/${2}.list"
     # Install loop
     for PACKAGE in $(cat $LIST); do
         do_install "$PACKAGE"
@@ -145,7 +145,7 @@ function install_from_list() {
 	# echo_message header "Starting 'install_from_list' function..."
 	echo_message title "Starting installation of ${1}..."
 	# Variables
-	LIST=${SCRIPT_DIR}'/data/'${2}'.list'
+	LIST="${SCRIPT_DIR}/data/${2}.list"
 	# Draw window
 	if (eval `resize` && whiptail \
 		--title "Install ${2^}" \
@@ -153,7 +153,7 @@ function install_from_list() {
 		$LINES $COLUMNS $(( $LINES - 12 )) \
 		--scrolltext \
 		3>&1 1>&2 2>&3) then
-		do_install_from_list $@
+		do_install_from_list "$@"
 		whiptail --title "Finished" --msgbox "Installation of ${1} is complete." 8 56
 		${3}
 	else
@@ -180,7 +180,7 @@ function install_flatpak_package() {
 			--yesno "The flatpak package for ${1} is not installed. \n\nProceed with installation of '${3}'?" 10 64) then
 			# Install
 			echo_message info "Installing flatpak '${3}'..."
-			flatpak install -y ${2} ${3}
+			flatpak install -y "${2}" "${3}"
 			# Finished
 			echo_message success "Installation of '${3}' is complete."
 			whiptail --title "Finished" --msgbox "Installation of ${1^} (Flatpak) complete." 8 56
@@ -207,7 +207,7 @@ function install_flatpak_package() {
 function install_snap_package() {
 	# echo_message header "Starting 'install_snap_package' function..."
 	# If package is not installed
-	if [[ $(snap list | grep ${2} &> /dev/null; echo $?) != 0 ]]; then
+	if [[ $(snap list | grep "${2}" &> /dev/null; echo $?) != 0 ]]; then
 		echo_message info "${1} is not installed. Installing..."
 		if (whiptail \
 			--title "Install ${1}" \

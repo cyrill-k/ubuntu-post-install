@@ -87,7 +87,7 @@ function do_add_apt_repository_basic() {
 # ${2} = launchpad-user/ppa-name
 
 function do_add_launchpad_ppa() {
-    do_add_launchpad_ppa_basic "${1}" "${2}" "ppa:${2}"
+    do_add_apt_repository_basic "${1}" "${2}" "ppa:${2}"
 }
 
 # Add Launchpad PPA

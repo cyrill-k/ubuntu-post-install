@@ -26,4 +26,6 @@
           ; markdown
           markdown-mode
           ; go-lang
-          go-mode))
+          go-mode
+          company-go
+          flycheck-gometalinter))

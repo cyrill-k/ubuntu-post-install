@@ -2,13 +2,25 @@
 
 function install_go {
     GOLANG_ALL="golang*"
-    GOLANG_VERSION="golang-1.10-go"
+    GOLANG_VERSION="golang-1.10"
     
-    do_remove "${GOLANG_ALL}"
+    if [ $(check_package_installed ${GOLANG_VERSION}) != 0 ]; then
+        do_remove "${GOLANG_ALL}"
 
-    # add repository for golang
-    do_add_launchpad_ppa "golang 1.10" "gophers/archive"
+        # add repository for golang
+        do_add_launchpad_ppa "golang 1.10" "gophers/archive"
 
-    # install golang
-    do_install "${GOLANG_VERSION}"
+        # install golang
+        do_install "${GOLANG_VERSION}"
+    fi
+
+    install_go_for_emacs
+}
+
+function install_go_for_emacs {
+    # install gocode for autocompletion
+    go get -u github.com/mdempsky/gocode
+
+    # install gometalinter
+    curl -L https://git.io/vp6lP | sh
 }
