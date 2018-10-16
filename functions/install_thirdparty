@@ -30,26 +30,28 @@ function install_thirdparty {
 		--ok-button "Install" \
 		--cancel-button "Go Back" \
 		$LINES $COLUMNS $(( $LINES - 12 )) \
-		'install_chrome'        'Google Chrome' \
-		'install_dropbox'       'Dropbox' \
-		'install_oracle_java'   'Oracle Java' \
-		'install_rvm'           'Ruby Version Manager (RVM)' \
-		'install_sublime_text'  'Sublime Text 3' \
-		'install_emacs'         'Emacs & helm' \
-		'configure_emacs'       'Configure Emacs & helm' \
-		'install_i3'            'i3 window manager' \
-		'configure_i3'          'Configure i3 window manager' \
+                'configure_bash'        'bash: Configure .bashrc .bash_aliases' \
+		'install_emacs'         'emacs: Install emacs & helm' \
+		'configure_emacs'       'emacs: Configure emacs & helm' \
+		'install_i3'            'i3: Install i3 window manager' \
+		'configure_i3'          'i3: Configure i3 window manager' \
 		'install_fzf'           'fzf fuzzy finder' \
-		'install_citx'          'Install japanese keyboard' \
-                'install_firefox'       'Install firefox' \
-                'configure_firefox'     'Adjust firefox to i3' \
-                'install_global'        'Install GNU global' \
-                'install_python'        'Install Python' \
-                'install_ietf_tools'    'Install IETF martinthomson requirements' \
-                'configure_bash    '    'Creating/extend .bash_aliases' \
-                'install_docker    '    'Install latest stable docker from docker apt repository' \
-                'install_go        '    'Install latest go version' \
+                'install_global'        'global: Install GNU global' \
+                'install_python'        'python: Install Python' \
+                'install_ietf_tools'    'ietf: Install IETF martinthomson toolchain & python virtualenv' \
+                'install_docker'        'docker: Install latest stable version from docker apt repository' \
+                'install_go'            'go: Install latest go version' \
+                'configure_go'          'go: Configure env variables for go' \
+                'install_firefox'       'firefox: Install firefox' \
+                'configure_firefox'     'firefox: Configure firefox to work with i3' \
+		'install_citx'          'japanese: Install japanese keyboard' \
 		3>&1 1>&2 2>&3)
+
+    # 'install_chrome'        'Google Chrome' \
+    # 'install_dropbox'       'Dropbox' \
+    # 'install_oracle_java'   'Oracle Java' \
+    # 'install_rvm'           'Ruby Version Manager (RVM)' \
+    # 'install_sublime_text'  'Sublime Text 3' \
 
 	# check exit status
 	if [ $? = 0 ]; then

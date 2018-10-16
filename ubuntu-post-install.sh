@@ -52,22 +52,24 @@ function main {
 		--menu "\nWhat would you like to do?" \
 		--cancel-button "Quit" \
 		$LINES $COLUMNS $(( $LINES - 12 )) \
-		'install_full'          'Perform full installation on new machine' \
-		'configure_full'        'Set all configurations' \
-		'system_update'         'Perform system updates' \
-		'install_favs'          'Install preferred applications' \
-		'install_favs_dev'      'Install preferred development tools' \
-		'install_favs_utils'    'Install preferred utilities' \
-		'install_gnome'         'Install preferred GNOME software' \
-		'install_codecs'        'Install multimedia codecs' \
-		'install_fonts'         'Install additional fonts' \
-		'install_snap_apps'     'Install Snap applications' \
-		'install_flatpak_apps'  'Install Flatpak applications' \
-		'install_thirdparty'    'Install third-party applications' \
-		'setup_dotfiles'        'Configure dotfiles' \
-		'system_configure'      'Configure system' \
-		'system_cleanup'        'Cleanup the system' \
+		'install_full'          'install: Perform base installation' \
+		'configure_full'        'configure: Configure base installations' \
+		'install_thirdparty'    'apps: Install various applications' \
+		'install_favs'          'apt: Install preferred applications' \
 		3>&1 1>&2 2>&3)
+
+	# 'system_update'         'Perform system updates' \
+	# 'install_favs_dev'      'Install preferred development tools' \
+	# 'install_favs_utils'    'Install preferred utilities' \
+	# 'install_gnome'         'Install preferred GNOME software' \
+	# 'install_codecs'        'Install multimedia codecs' \
+	# 'install_fonts'         'Install additional fonts' \
+	# 'install_snap_apps'     'Install Snap applications' \
+	# 'install_flatpak_apps'  'Install Flatpak applications' \
+	# 'setup_dotfiles'        'Configure dotfiles' \
+	# 'system_configure'      'Configure system' \
+	# 'system_cleanup'        'Cleanup the system' \
+
 	# check exit status
 	if [ $? = 0 ]; then
 		echo_message header "Starting '$MAIN' function"

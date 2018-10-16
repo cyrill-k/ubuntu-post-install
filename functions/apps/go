@@ -12,6 +12,8 @@ function install_go {
 
         # install golang
         do_install "${GOLANG_VERSION}"
+
+        configure_go
     fi
 
     install_go_for_emacs
@@ -23,4 +25,9 @@ function install_go_for_emacs {
 
     # install gometalinter
     curl -L https://git.io/vp6lP | sh
+}
+
+function configure_go {
+    echo_message info "exporting go binary folder to PATH variable..."
+    echo 'export PATH=$PATH:/usr/local/go/bin:/usr/lib/go-1.10/bin' >>.bashrc
 }

@@ -14,7 +14,7 @@ function install_global {
     fi
     
     echo_message info "Downloading new GNU global implementation..."
-    mkdir -p "$SCRIPT_DIR/$GLOBAL_PATH" && wget -qO - "$GLOBAL_INSTALL_FILE" | tar --transform "s/$GLOBAL_INSTALL_BASENAME_NOEXT/$GLOBAL_FOLDER/" -C "$GLOBAL_PATH" -xvz
+    mkdir -p "${GLOBAL_PATH}${GLOBAL_FOLDER}" && wget -qO - "$GLOBAL_INSTALL_FILE" | tar --transform "s/$GLOBAL_INSTALL_BASENAME_NOEXT/$GLOBAL_FOLDER/" -C "$GLOBAL_PATH" -xvz
 
     echo_message info "Building and installing GNU global"
     
