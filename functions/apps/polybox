@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function install_polybox_keys {
+    echo_message info "Install polybox keys"
+    wget -qO - http://polybox.ethz.ch/repo/Ubuntu_16.04/Release.key | superuser_do apt-key add -
+}
+
+function install_polybox {
+    install_polybox_keys
+
+    echo_message info "Adding http://polybox.ethz.ch/repo/Ubuntu_16.04/ repo"
+    echo 'deb http://polybox.ethz.ch/repo/Ubuntu_16.04/ /' | superuser_do tee -a /etc/apt/sources.list.d/polybox-client.list
+    superuser_do apt update
+
+    echo_message info "Install polybox client"
+    do_install polybox-client
+}
