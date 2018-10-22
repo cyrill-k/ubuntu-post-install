@@ -1,0 +1,34 @@
+#!/bin/bash
+
+function install_gdb {
+    GDB_VERSION="gdb-8.2"
+    USER_SOURCES="${HOME}/.local/src"
+    mkdir -p "${USER_SOURCES}" && cd "${USER_SOURCES}"
+
+    # download & unpack
+    echo_message info "Downloading ${GDB_VERSION}"
+    #curl -fsSL "http://ftp.gnu.org/gnu/gdb/${GDB_VERSION}.tar.gz" | tar -xz
+
+    # remove old version
+    echo_message info "Removing old gdb version"
+    do_remove gdb
+
+    # switch to tmp directory
+    TMP_DIR="$(mktemp -d)"
+    pushd "$TMP_DIR"
+
+    # make
+    echo_message info "Switching to temporary directory: $(pwd)"
+    echo_message info "Building ${GDB_VERSION}"
+    "${USER_SOURCES}/${GDB_VERSION}/configure"
+    make
+
+    # install
+    GDB_INSTALL_DIR="/usr/bin/gdb"
+    echo_message info "Installing into ${GDB_INSTALL_DIR}"
+    superuser_do cp gdb/gdb "${GDB_INSTALL_DIR}"
+
+    # clean up
+    popd
+    rm -rf "$TMP_DIR"
+}

@@ -42,6 +42,7 @@ function install_thirdparty {
                 'install_docker'        'docker: Install latest stable version from docker apt repository' \
                 'install_go'            'go: Install latest go version' \
                 'configure_go'          'go: Configure env variables for go' \
+                'install_gdb'           'gdb: Install gdb' \
                 'install_firefox'       'firefox: Install firefox' \
                 'configure_firefox'     'firefox: Configure firefox to work with i3' \
 		'install_citx'          'japanese: Install japanese keyboard' \
