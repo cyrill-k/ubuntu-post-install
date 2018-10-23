@@ -47,6 +47,7 @@ function install_thirdparty {
                 'configure_firefox'     'firefox: Configure firefox to work with i3' \
 		'install_citx'          'japanese: Install japanese keyboard' \
                 'install_polybox'       'polybox: Install ETHZ polybox' \
+                'install_capnproto'     'cap n proto: Interchange format system' \
 		3>&1 1>&2 2>&3)
 
     # 'install_chrome'        'Google Chrome' \

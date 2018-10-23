@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function install_capnproto {
+    CAPNPROTO_VERSION="capnproto-c++-0.7.0"
+    echo_message info "Downloading cap'n proto ..."
+    curl "https://capnproto.org/$CAPNPROTO_VERSION{}.tar.gz" | tar zx
+    cd "$CAPNPROTO_VERSION{}"
+    echo_message info "./configure cap'n proto ..."
+    ./configure
+    echo_message info "make cap'n proto ..."
+    make -j6 check
+    echo_message info "make install cap'n proto ..."
+    superuser_do make install
+    rm -r "$CAPNPROTO_VERSION{}"
+}
