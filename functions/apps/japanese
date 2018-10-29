@@ -1,0 +1,9 @@
+#!/bin/bash
+
+function install_citx_mozc {
+    do_install fcitx-mozc
+}
+
+function configure_citx_mozc {
+    cp ${SCRIPT_DIR}/data/config/xinputrc.in ~/.xinputrc
+}
