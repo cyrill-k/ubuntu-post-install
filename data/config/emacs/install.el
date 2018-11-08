@@ -1,5 +1,8 @@
 (load "~/.emacs.d/config/package")
 
+;; refresh package list if it is not already available
+(when (not package-archive-contents) (package-refresh-contents))
+
 (mapcar (lambda (package)
           ; install package if not already installed
           (unless (package-installed-p package)
