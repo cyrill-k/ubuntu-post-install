@@ -40,6 +40,8 @@ function install_python {
 }
 
 function install_ietf_tools {
+    install_python
+
     do_install "enscript"
 
     # make virtualenv for xml2rfc
@@ -47,9 +49,11 @@ function install_ietf_tools {
     mkdir -p "$VIRTUALENV_PATH"
     virtualenv -p python3 "$VIRTUALENV_PATH/ietf"
     . "$VIRTUALENV_PATH/ietf/bin/activate"
-    pip_update
-    pip install xml2rfc
-    deactivate
+    if [ $? == 0 ]; then
+        pip_update
+        pip install xml2rfc
+        deactivate
+    fi
 
     # install markdown -> xml converter
     do_install gem

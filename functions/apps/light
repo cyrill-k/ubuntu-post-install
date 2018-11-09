@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function install_light {
+    LIGHT_DIR=~/.light
+    echo_message info "Cloning github.com/haikarainen/light.git"
+    git clone https://github.com/haikarainen/light.git "$LIGHT_DIR"
+    if [ $? != 0 ]; then
+        echo_message warning "Cloning failed"
+        exit
+    fi
+
+    # switch to light directory
+    pushd "$LIGHT_DIR"
+
+    echo_message info "./autogen.sh"
+    ./autogen.sh >/dev/null
+    if [ $? != 0 ]; then
+        echo_message warning "./autogen.sh failed"
+        exit
+    fi
+
+    echo_message info "./configure"
+    ./configure >/dev/null
+    if [ $? != 0 ]; then
+        echo_message warning "./configure failed"
+        exit
+    fi
+
+    echo_message info "make"
+    make >/dev/null
+    if [ $? != 0 ]; then
+        echo_message warning "make failed"
+        exit
+    fi
+
+    echo_message info "sudo make install"
+    superuser_do make install >/dev/null
+    if [ $? != 0 ]; then
+        echo_message warning "make install failed"
+        exit
+    fi
+
+    popd
+
+    echo_message info "light successfully installed"
+}
