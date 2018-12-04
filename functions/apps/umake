@@ -1,0 +1,7 @@
+#!/bin/bash
+
+function install_umake {
+    do_add_launchpad_ppa umake ubuntu-desktop/ubuntu-make
+
+    do_install ubuntu-make
+}

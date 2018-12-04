@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function install_pycharm {
+    #install_umake
+
+    #echo_message info "Building pycharm using umake..."
+    #umake ide pycharm
+
+    do_add_launchpad_ppa mystic-mirage/pycharm mystic-mirage/pycharm
+
+    do_install pycharm-community
+}
