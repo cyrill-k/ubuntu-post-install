@@ -107,3 +107,7 @@
 ;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 ;; (eval-after-load 'company
 ;;   '(add-to-list 'company-backends 'company-irony))
+
+(require 'magit)
+(magit-define-popup-option 'magit-diff-popup
+  ?F "Filter by file status" "--diff-filter=" #'read-from-minibuffer)
