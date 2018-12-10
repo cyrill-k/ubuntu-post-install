@@ -38,3 +38,6 @@
 
 ;; company-mode
 (global-set-key (kbd "C-c c") 'company-complete)
+(with-eval-after-load 'cc-mode
+  (define-key c++-mode-map "§" 'company-complete)
+  )

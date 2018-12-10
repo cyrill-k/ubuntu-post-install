@@ -43,8 +43,6 @@
 ;; company
 ;; (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
-(with-eval-after-load 'cc-mode
-  (define-key c++-mode-map  [(tab)] 'company-complete))
 
 ;; irony
 (add-hook 'c++-mode-hook 'irony-mode)
