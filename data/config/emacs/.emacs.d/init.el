@@ -8,6 +8,7 @@
  '(helm-gtags-suggested-key-mapping t)
  '(helm-gtags-fuzzy-match t)
  '(helm-gtags-path-style 'relative)
+ '(custom-enabled-themes (quote (tango-dark)))
  '(grep-find-command
    (quote
     ("find . -type f -exec grep --color -nHi -e '' {} +" . 44)))
