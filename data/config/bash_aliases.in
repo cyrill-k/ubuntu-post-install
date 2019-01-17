@@ -39,5 +39,5 @@ function vimw {
 }
 
 function emacsw {
-    emacs "$(which "$1")"
+    ( emacs "$(which "$1")" >/dev/null 2>&1 & )
 }
