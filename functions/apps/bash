@@ -1,5 +1,16 @@
 #!/bin/bash
 
+function extend_aliases {
+    cp "${SCRIPT_DIR}/data/config/bash_aliases.in" ~/.bash_aliases_extended
+    if ! grep -q '\. ~/\.bash_aliases_extended' ~/.bashrc; then
+        cat >>~/.bashrc <<EOF
+if [ -f ~/.bash_aliases_extended ]; then
+    . ~/.bash_aliases_extended
+fi
+EOF
+    fi
+}
+
 function configure_aliases {
     echo_message header "Creating bash aliases"
     keep_aliases="k"
@@ -11,9 +22,9 @@ function configure_aliases {
                                   --title "i3" \
                                   --menu "\nWhich configuration would you like to install?" \
                                   $LINES $COLUMNS $(( $LINES - 12 )) \
-             "${keep_aliases}" "[Keep existing aliases]" \
-             "${replace_aliases}" "[Replace .bash_aliases]" \
-             "${extend_aliases}" "[Extend .bash_aliases]" \
+             "${keep_aliases}" "keep existing aliases" \
+             "${replace_aliases}" "replace .bash_aliases" \
+             "${extend_aliases}" "extend .bash_aliases" \
              3>&1 1>&2 2>&3)
 
     case "${CONFIG}" in
@@ -23,9 +34,20 @@ function configure_aliases {
                               cp "${SCRIPT_DIR}/data/config/bash_aliases.in" ~/.bash_aliases
                               ;;
         "${extend_aliases}") echo_message info "Extending .bash_aliases"
-                             cat "${SCRIPT_DIR}/data/config/bash_aliases.in" >>~/.bash_aliases
+                             extend_aliases
                              ;;
     esac
+}
+
+function extend_bashrc {
+    cp "${SCRIPT_DIR}/data/config/bashrc_extended.in" ~/.bashrc_extended
+    if ! grep -q '\. ~/\.bashrc_extended' ~/.bashrc; then
+        cat >>~/.bashrc <<EOF
+if [ -f ~/.bashrc_extended ]; then
+    . ~/.bashrc_extended
+fi
+EOF
+    fi
 }
 
 function configure_bashrc {
@@ -39,9 +61,9 @@ function configure_bashrc {
                                   --title "i3" \
                                   --menu "\nWhich configuration would you like to install?" \
                                   $LINES $COLUMNS $(( $LINES - 12 )) \
-             "${keep_bashrc}" "[Keep existing bashrc]" \
-             "${replace_bashrc}" "[Replace .bashrc]" \
-             "${extend_bashrc}" "[Extend .bashrc]" \
+             "${keep_bashrc}" "keep existing bashrc" \
+             "${replace_bashrc}" "replace .bashrc" \
+             "${extend_bashrc}" "extend .bashrc" \
              3>&1 1>&2 2>&3)
 
     case "${CONFIG}" in
@@ -52,7 +74,7 @@ function configure_bashrc {
                              cat "${SCRIPT_DIR}/data/config/bashrc_extended.in" >>~/.bashrc
                              ;;
         "${extend_bashrc}") echo_message info "Extending .bashrc without copying basic configurations"
-                            cat "${SCRIPT_DIR}/data/config/bashrc_extended.in" >>~/.bashrc
+                            extend_bashrc
                             ;;
     esac
 }

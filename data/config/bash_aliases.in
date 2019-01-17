@@ -29,3 +29,15 @@ alias t='trash'
 
 # ignore common typos
 #alias naon='nano'
+
+function catw {
+    cat "$(which "$1")"
+}
+
+function vimw {
+    vim "$(which "$1")"
+}
+
+function emacsw {
+    emacs "$(which "$1")"
+}
