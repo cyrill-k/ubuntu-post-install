@@ -30,6 +30,8 @@ alias t='trash'
 # ignore common typos
 #alias naon='nano'
 
+alias e="emacsclient -a ~/.emacs.d/config/bin/emacs-nw-q"
+
 function catw {
     cat "$(which "$1")"
 }
