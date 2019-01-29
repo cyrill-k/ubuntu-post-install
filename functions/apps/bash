@@ -12,7 +12,7 @@ EOF
 }
 
 function configure_aliases {
-    echo_message header "Creating bash aliases"
+    echo_message header "Setting .bash_aliases"
     keep_aliases="k"
     replace_aliases="r"
     extend_aliases="e"
@@ -51,10 +51,10 @@ EOF
 }
 
 function configure_bashrc {
-    echo_message header "Creating .bashrc"
+    echo_message header "Setting .bashrc"
     keep_bashrc="k"
     replace_bashrc="r"
-    extend_aliases="e"
+    extend_bashrc="e"
     # Draw window
     CONFIG=$(eval `resize` && whiptail \
                                   --notags \
@@ -71,7 +71,7 @@ function configure_bashrc {
                           ;;
         "${replace_bashrc}") echo_message info "Replacing .bashrc"
                              cp "${SCRIPT_DIR}/data/config/bashrc_basic.in" ~/.bashrc
-                             cat "${SCRIPT_DIR}/data/config/bashrc_extended.in" >>~/.bashrc
+                             extend_bashrc
                              ;;
         "${extend_bashrc}") echo_message info "Extending .bashrc without copying basic configurations"
                             extend_bashrc
@@ -79,7 +79,48 @@ function configure_bashrc {
     esac
 }
 
+function extend_profile {
+    cp "${SCRIPT_DIR}/data/config/profile_extended.in" ~/.profile_extended
+    if ! grep -q '\. ~/\.profile_extended' ~/.profile; then
+        cat >>~/.profile <<EOF
+if [ -f ~/.profile_extended ]; then
+    . ~/.profile_extended
+fi
+EOF
+    fi
+}
+
+function configure_profile {
+    echo_message header "Setting .profile"
+    keep_profile="k"
+    replace_profile="r"
+    extend_aliases="e"
+    # Draw window
+    CONFIG=$(eval `resize` && whiptail \
+                                  --notags \
+                                  --title "i3" \
+                                  --menu "\nWhich configuration would you like to install?" \
+                                  $LINES $COLUMNS $(( $LINES - 12 )) \
+             "${keep_profile}" "keep existing profile" \
+             "${replace_profile}" "replace .profile" \
+             "${extend_profile}" "extend .profile" \
+             3>&1 1>&2 2>&3)
+
+    case "${CONFIG}" in
+        "${keep_profile}") echo_message info "Not modifying .profile"
+                           ;;
+        "${replace_profile}") echo_message info "Replacing .profile"
+                              cp "${SCRIPT_DIR}/data/config/profile_basic.in" ~/.profile
+                              extend_profile
+                              ;;
+        "${extend_profile}") echo_message info "Extending .profile without copying basic configurations"
+                             extend_profile
+                             ;;
+    esac
+}
+
 function configure_bash {
     configure_bashrc
     configure_aliases
+    configure_profile
 }

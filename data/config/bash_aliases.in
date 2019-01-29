@@ -14,7 +14,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # extended listing
-alias ll='ls -halF'
+alias ll='ls -halFt'
 alias la='ls -A'
 alias l='ls -CF'
 
