@@ -1,0 +1,3 @@
+# emacsclient -nw -c ""
+export EDITOR='emacsclient -a ~/.emacs.d/config/bin/emacs-nw-q'
+export VISUAL='emacsclient -a ~/.emacs.d/config/bin/emacs-nw-q'
