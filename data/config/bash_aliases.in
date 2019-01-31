@@ -30,16 +30,33 @@ alias t='trash'
 # ignore common typos
 #alias naon='nano'
 
-alias e="emacsclient -a ~/.emacs.d/config/bin/emacs-nw-q"
+alias e="emacsclient --tty -a ''"
+alias o="emacsclient -na ''"
+
+# $1 XXXw function name
+# $2 XXX edit command
+# $3 executable name
+function openw {
+    if [ ! $# -eq 3 ]; then
+        echo "Usage: $1 executable_name"
+    else
+        w_path="$(which "$3")"
+        if [ -z "$w_path" ]; then
+            echo "No executable found: $3"
+        else
+            $2 "$w_path"
+        fi
+    fi
+}
 
 function catw {
-    cat "$(which "$1")"
+    openw catw cat "$@"
 }
 
 function vimw {
-    vim "$(which "$1")"
+    openw vimw vim "$@"
 }
 
 function emacsw {
-    ( emacs "$(which "$1")" >/dev/null 2>&1 & )
+    openw emacsw "emacsclient -na ''" "$@"
 }
