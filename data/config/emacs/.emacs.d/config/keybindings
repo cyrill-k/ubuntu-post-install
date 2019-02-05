@@ -1,3 +1,11 @@
+;; outline minor mode hack
+(global-unset-key (kbd "C-o"))
+(setq outline-minor-mode-prefix (kbd "C-o"))
+
+;; en-us C-z yanking
+;; (global-unset-key (kbd "C-z"))
+(global-set-key (kbd "C-z") 'yank)
+
 ;; global keybindings
 (global-set-key (kbd "C-c s") 'ff-find-other-file)
 (global-set-key (kbd "M-SPC") 'hippie-expand)
@@ -41,5 +49,5 @@
   (define-key c++-mode-map "§" 'company-complete))
 
 ;; helm-flyspell
-(with-eval-after-load "flyspell-mode"
+(with-eval-after-load 'flyspell
   (define-key flyspell-mode-map (kbd "C-;") 'helm-flyspell-correct))

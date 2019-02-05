@@ -22,9 +22,10 @@
             (setq TeX-command-default "make")
             (add-to-list 'LaTeX-fold-macro-spec-list
                          '("{1}||*" ("item")))
-            (TeX-fold-mode 1)
-            (reftex-mode 1)
-            (outline-minor-mode 1)))
+            (TeX-fold-mode)
+            (reftex-mode)
+            (outline-minor-mode)
+            (flyspell-mode)))
 
 ;; helm
 (with-eval-after-load 'helm
