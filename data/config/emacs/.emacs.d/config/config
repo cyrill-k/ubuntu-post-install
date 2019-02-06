@@ -7,25 +7,70 @@
 (setq isearch-regexp-lax-whitespace t)
 (setq search-whitespace-regexp "[ \t\r\n]+")
 
+;; todo(cyrill): maybe organize packages using melpa's use-package
+
 ;; tex
-(with-eval-after-load 'tex
+;; clean without confirmation
+(setq TeX-clean-confirm nil)
+(setq-default TeX-master 'shared)
+;; save latex file and invoke latexmk on master tex file
+(defun LaTeX-save-and-compile ()
+  "Save and compile the tex project using latexmk.
+If compilation fails, split the current window and open error-buffer
+then jump to the error line, if errors corrected, close the error-buffer
+window and close the *TeX help* buffer."
+  (interactive)
+  (progn
+    (let ((TeX-save-query nil)
+          (TeX-process-asynchronous nil)
+          (master-file (TeX-master-file)))
+      (TeX-save-document "")
+      ;; clean all generated files before compile
+      ;; DO NOT do it when up-to-date, remove this line in proper time
+      (TeX-clean t)
+      (TeX-run-TeX "latexmk"
+                   (TeX-command-expand "latexmk -pdflatex='pdflatex -file-line-error -synctex=1' -pdf %s" 'TeX-master-file)
+                   master-file)
+      (if (plist-get TeX-error-report-switches (intern master-file))
+          ;; avoid creating multiple windows to show the *TeX Help* error buffer
+          (if (get-buffer-window (get-buffer "*TeX Help*"))
+              (TeX-next-error)
+            (progn
+              (split-window-vertically -10)
+              (TeX-next-error)))
+        ;; if no errors, delete *TeX Help* window and buffer
+        (if (get-buffer "*TeX Help*")
+            (progn
+              (if (get-buffer-window (get-buffer "*TeX Help*"))
+                  (delete-windows-on "*TeX Help*"))
+              (kill-buffer "*TeX Help*")))))))
+(with-eval-after-load 'latex
+  ;; TeX commands
+  (add-to-list 'TeX-command-list
+               '("latexmk" "latexmk -pdflatex='pdflatex -file-line-error -synctex=1' -pdf %s" TeX-run-command nil t :help "Run latexmk") t)
   (add-to-list 'TeX-command-list
                '("makeclean" "make clean" TeX-run-command t t :help "make clean") t)
   (add-to-list 'TeX-command-list
                '("make" "make" TeX-run-command t t :help "make") t)
+  (setq TeX-command-default "make")
+
+  ;; pdf view commands
+  (push '("%(masterdir)" (lambda nil (file-truename (TeX-master-directory)))) TeX-expand-list)
   (add-to-list 'TeX-view-program-list
-               '("okular" "/usr/bin/okular %o"))
+               '("okular" "/usr/bin/okular %o#src:%n%(masterdir)./%b"))
   (setcdr (assq 'output-pdf TeX-view-program-selection) '("okular"))
+
+  ;; TeX-fold-mode customization
+  (add-to-list 'LaTeX-fold-macro-spec-list
+               '("{1}||*" ("item")))
   )
-(add-hook 'TeX-mode-hook
+(add-hook 'LaTeX-mode-hook
           (lambda ()
-            (setq TeX-command-default "make")
-            (add-to-list 'LaTeX-fold-macro-spec-list
-                         '("{1}||*" ("item")))
             (TeX-fold-mode)
             (reftex-mode)
             (outline-minor-mode)
-            (flyspell-mode)))
+            (flyspell-mode)
+            (flyspell-buffer)))
 
 ;; helm
 (with-eval-after-load 'helm
@@ -115,3 +160,17 @@
 (require 'magit)
 (magit-define-popup-option 'magit-diff-popup
   ?F "Filter by file status" "--diff-filter=" #'read-from-minibuffer)
+
+
+;; other useful stuff
+
+;; ;; C-x C-s to use save-buffer for regular files and use sudo to prompt passwd to
+;; ;; save file need root permission, C-x C-q to edit the root file first
+;; ;; Note that this C-x C-s will fail if the buffer is not a file, in this case,
+;; ;; use C-x C-w instead
+;; (bind-keys* ("C-x C-s" .
+;; 			 (lambda ()
+;; 			   (interactive)
+;; 			   (progn
+;; 				 (if (file-writable-p buffer-file-name) (save-buffer)
+;; (write-file (concat "/sudo:root@localhost:" buffer-file-name)))))))

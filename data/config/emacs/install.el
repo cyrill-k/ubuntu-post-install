@@ -10,7 +10,10 @@
             (package-install package)))
 
         ; list of packages to be installed
-        '(magit
+        '(
+          ; magit
+          magit
+          magit-svn
           ; helm
           helm
           ; wgrep
@@ -31,4 +34,7 @@
           ; go-lang
           go-mode
           company-go
-          flycheck-gometalinter))
+          flycheck-gometalinter
+          ; other stuff
+          bind-key
+          ))
