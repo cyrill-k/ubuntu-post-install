@@ -8,10 +8,16 @@
  '(helm-gtags-suggested-key-mapping t)
  '(helm-gtags-fuzzy-match t)
  '(helm-gtags-path-style 'relative)
- '(custom-enabled-themes (quote (tango-dark)))
+ '(grep-highlight-matches 'auto)
+ '(grep-command "grep --color -nHi -e ")
  '(grep-find-command
-   (quote
-    ("find . -type f -exec grep --color -nHi -e '' {} +" . 44)))
+   '("find . -type f -exec grep --color -nHi -e '' {} +" . 44))
+ '(grep-find-template "find <D> <X> -type f <F> -exec grep <C> -nHi -e <R> {} +")
+ '(grep-template "grep <X> <C> -nHi -e <R> <F>")
+ '(grep-use-null-device nil)
+ '(package-selected-packages
+    '(bind-key wgrep-helm s markdown-mode magit-svn helm-ispell helm-gtags helm-flyspell helm-flycheck flycheck-irony flycheck-gometalinter fcitx company-irony company-go auto-complete-auctex auctex))
+ '(custom-enabled-themes '(tango-dark))
  '(inhibit-startup-screen t))
 
 (custom-set-faces

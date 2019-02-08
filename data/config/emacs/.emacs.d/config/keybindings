@@ -12,7 +12,7 @@
 (global-set-key (kbd "C-c s") 'ff-find-other-file)
 (global-set-key (kbd "M-SPC") 'hippie-expand)
 (global-set-key (kbd "C-c d") 'whack-whitespace)
-(global-set-key (kbd "C-c f") 'grep-find)
+(global-set-key (kbd "C-c f") 'rgrep)
 (global-set-key (kbd "C-c r") 'find-name-dired)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-c v") 'copy-buffer-file-name-into-clipboard)
@@ -56,7 +56,6 @@
 
 ;; LaTeX (bind-keys)
 (with-eval-after-load 'latex
-            (message "test")
             (bind-keys :map LaTeX-mode-map
                        ("C-x C-s" . LaTeX-save-and-compile)
                        ;; default C-c C-e rebound and cannot be rebound
