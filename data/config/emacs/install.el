@@ -37,4 +37,5 @@
           flycheck-gometalinter
           ; other stuff
           bind-key
+          auctex
           ))
