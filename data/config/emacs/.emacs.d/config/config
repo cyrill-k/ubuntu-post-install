@@ -161,6 +161,8 @@ window and close the *TeX help* buffer."
 (magit-define-popup-option 'magit-diff-popup
   ?F "Filter by file status" "--diff-filter=" #'read-from-minibuffer)
 
+;; goto-chg
+(require 'goto-chg)
 
 ;; other useful stuff
 

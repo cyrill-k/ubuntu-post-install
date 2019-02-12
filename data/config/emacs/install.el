@@ -37,5 +37,9 @@
           flycheck-gometalinter
           ; other stuff
           bind-key
+          goto-chg
+          ; latex
           auctex
+          flyspell-correct
+          helm-flyspell
           ))
