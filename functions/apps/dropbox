@@ -9,3 +9,59 @@ function install_dropbox {
 	# Download and install remote package
 	install_remote_package $NAME $PACKAGE $REMOTE install_thirdparty
 }
+
+function manually_configure_dropbox {
+    # workaround to enable dropbox on ecrypt partition
+
+    # Create ext4 partition file
+    mkdir ~/remote/Dropbox
+    superuser_do chattr +i ~/remote/Dropbox
+
+    # replace 10G with desired dropbox space
+    truncate -s 10G ~/remote/.Dropbox.ext4
+    mkfs.ext4 -F ~/remote/.Dropbox.ext4
+
+    # make mountable
+    superuser_do echo "/home/$(whoami)/remote/.Dropbox.ext4 /home/$(whoami)/remote/Dropbox ext4 user,noauto,rw,loop,x-gvfs-hide 0 0" >>/etc/fstab
+
+    # create service to mount/umount ext4 fs
+    echo "[Unit]
+Description=Mounts a Dropbox ext4 image in the home directory of a user
+After=home-$(whoami).mount
+Requires=home-$(whoami).mount
+
+[Service]
+ExecStart=/bin/mount %h/remote/Dropbox
+ExecStop=/bin/umount %h/remote/Dropbox
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target" > ~/.config/systemd/user/mountdropbox.service
+
+    # start service
+    systemctl --user enable mountdropbox.service
+    systemctl --user start mountdropbox.service
+
+    # change access rights
+    sudo chown $(whoami):$(whoami) ~/remote/Dropbox
+
+    # start dropbox
+    dropbox start -i
+
+    # Create symlink
+    cd ~ && ln -vs ~/remote/Dropbox/Dropbox Dropbox
+
+    # automount ext4 fs before starting dropbox
+    cat >~/remote/start_dropbox.sh <<EOF
+#!/bin/sh
+systemctl --user enable mountdropbox.service
+systemctl --user start mountdropbox.service
+dropbox start -i
+EOF
+    chmod a+x ~/remote/start_dropbox.sh
+
+    # rename the original autostart file of dropbox (otherwise dropbox will overwrite it with the original content)
+    mv -iv ~/.config/autostart/dropbox.desktop ~/.config/autostart/start_dropbox.desktop
+
+    # edit the file and modify the Exec Property
+    gawk -i inplace '{sub(/^Exec=.*$/,"Exec=/home/'"$(whoami)"'/remote/start_dropbox.sh");print}' ~/.config/autostart/start_dropbox.desktop
