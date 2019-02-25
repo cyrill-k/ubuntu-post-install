@@ -72,6 +72,9 @@ window and close the *TeX help* buffer."
             (flyspell-mode)
             (flyspell-buffer)))
 
+(add-hook 'doc-view-mode-hook
+          'auto-revert-mode)
+
 ;; helm
 (with-eval-after-load 'helm
   (setq helm-autoresize-max-height 50)
