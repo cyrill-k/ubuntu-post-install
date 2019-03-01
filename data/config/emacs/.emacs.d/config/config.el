@@ -124,6 +124,16 @@ window and close the *TeX help* buffer."
             (setq standard-indent 4)
             (setq indent-tabs-mode t)))
 
+;; markdown
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (outline-minor-mode)))
+
+;; emacs lisp
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (outline-minor-mode)))
+
 ;; ;; semantic
 ;; (require 'cc-mode)
 ;; (require 'semantic)
@@ -166,6 +176,13 @@ window and close the *TeX help* buffer."
 
 ;; goto-chg
 (require 'goto-chg)
+
+;; i3
+(load "~/.emacs.d/config/lib/i3wm-config-mode.el")
+(load "~/.emacs.d/config/lib/i3wm.el")
+(defun xdg (x)
+  (interactive "f")
+  (i3wm-exec (concat "xdg-open " x)))
 
 ;; other useful stuff
 

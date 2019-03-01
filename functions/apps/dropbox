@@ -65,3 +65,4 @@ EOF
 
     # edit the file and modify the Exec Property
     gawk -i inplace '{sub(/^Exec=.*$/,"Exec=/home/'"$(whoami)"'/remote/start_dropbox.sh");print}' ~/.config/autostart/start_dropbox.desktop
+}

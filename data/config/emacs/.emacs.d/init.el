@@ -33,9 +33,9 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(load "~/.emacs.d/config/package")
-(load "~/.emacs.d/config/config")
-(load "~/.emacs.d/config/functions")
-(load "~/.emacs.d/config/keybindings")
+(load "~/.emacs.d/config/package.el")
+(load "~/.emacs.d/config/config.el")
+(load "~/.emacs.d/config/functions.el")
+(load "~/.emacs.d/config/keybindings.el")
 
 (load "~/.emacs.d/helm-fzf/helm-fzf.el")
