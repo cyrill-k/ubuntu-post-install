@@ -1,24 +1,28 @@
 ;; helm-gtags-fuzzy-match needs to be called before package-initialize
 (custom-set-variables
- '(helm-gtags-ignore-case t)
- '(helm-gtags-auto-update t)
- '(helm-gtags-use-input-at-cursor t)
- '(helm-gtags-pulse-at-cursor t)
- '(helm-gtags-prefix-key "\C-cg")
- '(helm-gtags-suggested-key-mapping t)
- '(helm-gtags-fuzzy-match t)
- '(helm-gtags-path-style 'relative)
- '(grep-highlight-matches 'auto)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (tango-dark)))
  '(grep-command "grep --color -nHi -e ")
  '(grep-find-command
-   '("find . -type f -exec grep --color -nHi -e '' {} +" . 44))
+   (quote
+    ("find . -type f -exec grep --color -nHi -e '' {} +" . 44)))
  '(grep-find-template "find <D> <X> -type f <F> -exec grep <C> -nHi -e <R> {} +")
+ '(grep-highlight-matches (quote auto))
  '(grep-template "grep <X> <C> -nHi -e <R> <F>")
  '(grep-use-null-device nil)
- '(package-selected-packages
-    '(bind-key wgrep-helm s markdown-mode magit-svn helm-ispell helm-gtags helm-flyspell helm-flycheck flycheck-irony flycheck-gometalinter fcitx company-irony company-go auto-complete-auctex auctex))
- '(custom-enabled-themes '(tango-dark))
+ '(helm-gtags-auto-update t)
+ '(helm-gtags-fuzzy-match t)
+ '(helm-gtags-ignore-case t)
+ '(helm-gtags-path-style (quote relative))
+ '(helm-gtags-prefix-key "g")
+ '(helm-gtags-pulse-at-cursor t)
+ '(helm-gtags-suggested-key-mapping t)
+ '(helm-gtags-use-input-at-cursor t)
  '(inhibit-startup-screen t))
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

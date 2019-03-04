@@ -1,4 +1,4 @@
-(load "~/.emacs.d/config/package")
+(load "~/.emacs.d/config/package.el")
 
 ;; refresh package list if it is not already available
 (when (not package-archive-contents) (package-refresh-contents))
@@ -10,36 +10,4 @@
             (package-install package)))
 
         ; list of packages to be installed
-        '(
-          ; magit
-          magit
-          magit-svn
-          ; helm
-          helm
-          ; wgrep
-          wgrep
-          wgrep-helm
-          ; necessary dependencies
-          s
-          ; coding: gtags, irony, company, flycheck
-          helm-gtags
-          company
-          irony
-          company-irony
-          flycheck
-          flycheck-irony
-          helm-flycheck
-          ; markdown
-          markdown-mode
-          ; go-lang
-          go-mode
-          company-go
-          flycheck-gometalinter
-          ; other stuff
-          bind-key
-          goto-chg
-          ; latex
-          auctex
-          flyspell-correct
-          helm-flyspell
-          ))
+        '(use-package))

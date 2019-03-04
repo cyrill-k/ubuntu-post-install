@@ -7,8 +7,6 @@
 (setq isearch-regexp-lax-whitespace t)
 (setq search-whitespace-regexp "[ \t\r\n]+")
 
-;; todo(cyrill): maybe organize packages using melpa's use-package
-
 ;; tex
 ;; clean without confirmation
 (setq TeX-clean-confirm nil)
@@ -171,8 +169,12 @@ window and close the *TeX help* buffer."
 ;;   '(add-to-list 'company-backends 'company-irony))
 
 (require 'magit)
-(magit-define-popup-option 'magit-diff-popup
-  ?F "Filter by file status" "--diff-filter=" #'read-from-minibuffer)
+;; (magit-define-popup-option 'magit-diff-popup
+;;   ?F "Filter by file status" "--diff-filter=" #'read-from-minibuffer)
+;; todo: fix reading input from minibuffer
+(transient-append-suffix 'magit-diff
+                         "-w"
+                         '("-F" "Filter by file status" "--diff-filter="'read-from-minibuffer))
 
 ;; goto-chg
 (require 'goto-chg)
