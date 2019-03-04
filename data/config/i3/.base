@@ -152,7 +152,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Lock screen & Shutdown, reboot, ...
-set $Locker i3lock && sleep 1
+set $Locker i3lock -c 000000 && sleep 1
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $Locker, mode "default"
