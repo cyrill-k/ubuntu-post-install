@@ -7,6 +7,23 @@ function install_firefox {
 }
 
 function configure_firefox {
+    # Remove hide on fullscreen
+    echo_message info "Fixing i3 firefox full screen issue"
     (cd ~/.mozilla/firefox/*.default &&
-    echo 'user_pref("browser.fullscreen.autohide","false");' >user.js)
+         ! grep -q 'browser.fullscreen.autohide' user.js &&
+         echo 'user_pref("browser.fullscreen.autohide","false");' >>user.js)
+
+    # Use emacs keybindings for firefox
+    echo_message info "Enabling firefox emacs theme"
+    if ! grep -q 'gtk-key-theme-name' ~/.config/gtk-3.0/settings.ini; then
+        cat >>~/.config/gtk-3.0/settings.ini <<EOF
+[Settings]
+gtk-key-theme-name = Emacs
+EOF
+    fi
+
+    # Customize emacs keybindings
+    echo_message info "Customizing firefox emacs keybindings"
+    mkdir -p ~/.themes/Emacs/gtk-3.0/
+    cp "${SCRIPT_DIR}/data/config/firefox/.themes/Emacs/gtk-3.0/gtk-keys.css" ~/.themes/Emacs/gtk-3.0/gtk-keys.css
 }

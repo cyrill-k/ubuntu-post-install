@@ -169,6 +169,7 @@ window and close the *TeX help* buffer."
 ;;   '(add-to-list 'company-backends 'company-irony))
 
 (require 'magit)
+(add-hook 'magit-mode-hook 'magit-svn-mode)
 ;; (magit-define-popup-option 'magit-diff-popup
 ;;   ?F "Filter by file status" "--diff-filter=" #'read-from-minibuffer)
 ;; todo: fix reading input from minibuffer
