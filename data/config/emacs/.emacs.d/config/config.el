@@ -125,7 +125,9 @@ window and close the *TeX help* buffer."
 ;; markdown
 (add-hook 'markdown-mode-hook
           (lambda ()
-            (outline-minor-mode)))
+            (outline-minor-mode)
+            (flyspell-mode)
+            (flyspell-buffer)))
 
 ;; emacs lisp
 (add-hook 'emacs-lisp-mode-hook
