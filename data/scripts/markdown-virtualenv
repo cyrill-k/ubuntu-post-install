@@ -1,0 +1,34 @@
+#!/bin/bash
+
+envpath=env
+if [ $# -eq 1 ]; then
+   envpath="$1"
+fi
+
+virtualenv -p python3 "$envpath"
+source "$envpath/bin/activate"
+curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python3
+pip3 install --upgrade pip
+pip3 install Markdown
+pip3 install pymdown-extensions
+pip3 install xhtml2pdf
+# pip3 install -r <(cat <<'REQUIREMENTS'
+# html5lib==1.0.1
+# Markdown==3.0.1
+# Pillow==5.4.1
+# pymdown-extensions==6.0
+# PyPDF2==1.26.0
+# reportlab==3.5.13
+# six==1.12.0
+# webencodings==0.5.1
+# xhtml2pdf==0.2.3
+# REQUIREMENTS)
+
+cat >Makefile <<'MAKEFILE'
+.PHONY: all
+
+all: $(patsubst %.md,%.pdf,$(wildcard *.md))
+
+%.pdf: %.md
+	cat $< | python -m markdown -x 'pymdownx.tilde' | xhtml2pdf - $@
+MAKEFILE
