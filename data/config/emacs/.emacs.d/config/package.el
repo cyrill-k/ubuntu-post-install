@@ -8,13 +8,9 @@
       '(("gnu" . 0)
         ("melpa" . 10)))
 
-;; (unless (require 'use-package nil 'noerror)
-;;   (package-install use-package))
-
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
+(unless (require 'use-package nil 'noerror)
+  (package-install 'use-package)
+  (require 'use-package))
 
 ;; always install packages
 (require 'use-package-ensure)
