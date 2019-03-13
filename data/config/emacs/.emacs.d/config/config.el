@@ -94,8 +94,7 @@ window and close the *TeX help* buffer."
 ;; (require 'cc-mode)
 
 ;; company
-;; (require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
+(global-company-mode)
 
 ;; irony
 (add-hook 'c++-mode-hook 'irony-mode)
@@ -171,7 +170,6 @@ window and close the *TeX help* buffer."
 ;; (eval-after-load 'company
 ;;   '(add-to-list 'company-backends 'company-irony))
 
-(require 'magit)
 (add-hook 'magit-mode-hook 'magit-svn-mode)
 ;; (magit-define-popup-option 'magit-diff-popup
 ;;   ?F "Filter by file status" "--diff-filter=" #'read-from-minibuffer)
@@ -179,9 +177,6 @@ window and close the *TeX help* buffer."
 (transient-append-suffix 'magit-diff
                          "-w"
                          '("-F" "Filter by file status" "--diff-filter="'read-from-minibuffer))
-
-;; goto-chg
-(require 'goto-chg)
 
 ;; i3
 (load "~/.emacs.d/config/lib/i3wm-config-mode.el")
@@ -194,7 +189,6 @@ window and close the *TeX help* buffer."
 (load "~/.emacs.d/config/lib/spthy.el")
 
 ;; delight
-(require 'delight)
 (delight 'helm-mode)
 ;; somehow not working
 ;; (delight 'outline-minor-mode)
