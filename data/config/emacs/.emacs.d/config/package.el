@@ -23,6 +23,9 @@
 ;;   (setq auto-package-update-hide-results t)
 ;;   (auto-package-update-maybe))
 
+;; delight
+(use-package delight)
+
 ;; emacs config management
 (use-package bind-key)
 
@@ -50,6 +53,10 @@
              :after helm)
 (use-package helm-flycheck
              :after helm)
+
+;; company
+(use-package company
+             :delight company-mode)
 
 ;; golang
 (use-package flycheck-gometalinter)

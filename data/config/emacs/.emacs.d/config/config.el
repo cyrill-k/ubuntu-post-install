@@ -79,6 +79,7 @@ window and close the *TeX help* buffer."
 ;;  (setq helm-autoresize-min-height 20)
   (helm-autoresize-mode 0)
   (setq helm-case-fold-search t)
+  (helm-mode)
   )
 
 ;; fix dead_tilde issue due to fcitx
@@ -188,6 +189,15 @@ window and close the *TeX help* buffer."
 (defun xdg (x)
   (interactive "f")
   (i3wm-exec (concat "xdg-open " x)))
+
+;; tamarin
+(load "~/.emacs.d/config/lib/spthy.el")
+
+;; delight
+(require 'delight)
+(delight 'helm-mode)
+;; somehow not working
+;; (delight 'outline-minor-mode)
 
 ;; other useful stuff
 
