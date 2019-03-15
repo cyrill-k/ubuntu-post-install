@@ -5,6 +5,7 @@ function install_i3 {
 }
 
 function configure_i3 {
+    files=
     i=0
     for file in ${SCRIPT_DIR}/data/config/i3/[^.]*; do
         files[i]="$file"
@@ -12,18 +13,17 @@ function configure_i3 {
         ((i+=2))
     done
 
-
     echo_message header "Selecting i3 configuration"
     NO_CONFIG="//"
     # Draw window
     CONFIG=$(eval `resize` && whiptail \
-	     --notags \
-	     --title "i3" \
-	     --menu "\nWhich configuration would you like to install?" \
-	     $LINES $COLUMNS $(( $LINES - 12 )) \
-             "${NO_CONFIG}" "[Keep existing configuration]" \
+             --notags \
+             --title "i3" \
+             --menu "\nWhich i3 config would you like to install?" \
+             $LINES $COLUMNS $(( $LINES - 12 )) \
+             "${NO_CONFIG}" "[Keep existing i3 config]" \
              "${files[@]}" \
-	     3>&1 1>&2 2>&3)
+             3>&1 1>&2 2>&3)
 
     if [ "${CONFIG}" != "${NO_CONFIG}" ]; then
         echo_message info "Creating i3 config '${CONFIG}'"
@@ -33,6 +33,35 @@ function configure_i3 {
     else
         echo_message info "Not creating new i3 configuration"
     fi
+
+
+    files=
+    i=0
+    for file in ${SCRIPT_DIR}/data/config/i3status/[^.]*; do
+        files[i]="$file"
+        files[i+1]="$(basename "$file")"
+        ((i+=2))
+    done
+    echo_message header "Selecting i3statusbar configuration"
+    NO_CONFIG="//"
+    # Draw window
+    CONFIG=$(eval `resize` && whiptail \
+             --notags \
+             --title "i3" \
+             --menu "\nWhich i3 status bar would you like to install?" \
+             $LINES $COLUMNS $(( $LINES - 12 )) \
+             "${NO_CONFIG}" "[Keep existing i3 statusbar]" \
+             "${files[@]}" \
+             3>&1 1>&2 2>&3)
+
+    if [ "${CONFIG}" != "${NO_CONFIG}" ]; then
+        echo_message info "Creating i3status config '${CONFIG}'"
+        mkdir -p ~/.config/i3status
+        cp "${CONFIG}" ~/.config/i3status/config
+    else
+        echo_message info "Not creating new i3 statusbar config"
+    fi
+
 
     # Nautilus fix
     gsettings set org.gnome.desktop.background show-desktop-icons false
