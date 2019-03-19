@@ -7,6 +7,7 @@
 ;; en-us C-z yanking
 ;; (global-unset-key (kbd "C-z"))
 (global-set-key (kbd "C-z") 'yank)
+(global-set-key (kbd "M-z") 'yank-pop)
 
 ;; global keybindings
 (global-set-key (kbd "C-c s") 'ff-find-other-file)
@@ -73,6 +74,8 @@
 
 ;; isearch
 (define-key isearch-mode-map (kbd "C-S-w") 'isearch-yank-char)
+(define-key isearch-mode-map (kbd "C-z") 'isearch-yank-kill)
+(define-key isearch-mode-map (kbd "M-z") 'isearch-yank-pop)
 
 ;; scrollers
 (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
