@@ -75,4 +75,6 @@
 (use-package auto-complete-auctex
              :defer t)
 
+;; org
+(use-package org)
 

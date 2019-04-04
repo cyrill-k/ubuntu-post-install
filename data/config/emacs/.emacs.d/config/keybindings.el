@@ -18,7 +18,7 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-c v") 'copy-buffer-file-name-into-clipboard)
 (global-set-key (kbd "C-c m") (lambda (&optional arg) (interactive "P") (async-make arg)))
-(global-set-key (kbd "C-c o") (lambda (x) (interactive "f") (i3wm-exec (concat "xdg-open " x))))
+(global-set-key (kbd "C-c o") (lambda (x) (interactive "f") (i3wm-exec (concat "xdg-open \"" x "\""))))
 
 ;; helm global overrides
 (global-set-key (kbd "M-x") 'helm-M-x)
