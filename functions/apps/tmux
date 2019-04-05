@@ -1,0 +1,22 @@
+#!/bin/bash
+
+function install_tmux {
+    echo_message info "Installing tmux..."
+    do_install tmux
+
+    echo_message info "Writing .tmux.conf (C-o prefix)"
+    cat >~/.tmux.conf <<EOF
+set -g prefix C-o
+unbind-key C-b
+bind-key C-o send-prefix
+EOF
+
+    alias_file=~/.bash_aliases
+    if [ -f ~/.bash_aliases_extended ]; then
+        alias_file=~/.bash_aliases_extended
+    fi
+    if ! grep -q 'alias a=' "$alias_file"; then
+        echo_message info "Setting alias a='tmux attach' in $alias_file"
+        echo "alias a='tmux attach'" >>"$alias_file"
+    fi
+}
