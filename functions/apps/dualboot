@@ -1,0 +1,7 @@
+#!/bin/bash
+
+function configure_dual_boot {
+    timedatectl set-local-rtc 1 --adjust-system-clock
+    # disable with:
+    # timedatectl set-local-rtc 0 --adjust-system-clock
+}

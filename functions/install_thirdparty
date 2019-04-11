@@ -52,6 +52,7 @@ function install_thirdparty {
                 'install_umake'         'umake: Install ubuntu-make' \
                 'install_pycharm'       'pycharm: Install pycharm python IDE' \
                 'install_tmux'          'tmux: Install & configure tmux (C-o prefix, alias a)' \
+                'configure_dual_boot'   'dual boot fixes: Using local time in ubuntu' \
 		3>&1 1>&2 2>&3)
 
     # 'install_chrome'        'Google Chrome' \
