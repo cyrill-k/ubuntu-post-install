@@ -61,7 +61,7 @@
 ;; LaTeX (bind-keys)
 (with-eval-after-load 'latex
             (bind-keys :map LaTeX-mode-map
-                       ("C-x C-s" . LaTeX-save-and-compile)
+                       ("C-c b" . LaTeX-save-and-compile)
                        ;; default C-c C-e rebound and cannot be rebound
                        ;; ("C-c C-x e" . LaTeX-environment)
                        ;; ("C-c C-x s" . LaTeX-section)
