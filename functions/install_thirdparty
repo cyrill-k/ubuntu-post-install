@@ -45,7 +45,7 @@ function install_thirdparty {
                 'install_gdb'           'gdb: Install gdb' \
                 'install_firefox'       'firefox: Install firefox' \
                 'configure_firefox'     'firefox: Configure firefox to work with i3' \
-		'install_citx'          'japanese: Install japanese keyboard' \
+		'install_japanese'      'japanese: Install & configure japanese keyboard' \
                 'install_polybox'       'polybox: Install ETHZ polybox' \
                 'install_capnproto'     'cap n proto: Interchange format system' \
                 'install_light'         'light: Install alternative to xbacklight for lenove laptop' \

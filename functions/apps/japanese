@@ -1,9 +1,14 @@
 #!/bin/bash
 
-function install_citx_mozc {
+function install_japanese {
+    install_fcitx_mozc
+    configure_fcitx_mozc
+}
+
+function install_fcitx_mozc {
     do_install fcitx-mozc
 }
 
-function configure_citx_mozc {
+function configure_fcitx_mozc {
     cp ${SCRIPT_DIR}/data/config/xinputrc.in ~/.xinputrc
 }
