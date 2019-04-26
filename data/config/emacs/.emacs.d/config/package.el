@@ -78,3 +78,9 @@
 ;; org
 (use-package org)
 
+;; ob-ipython (emacs jupyter support)
+(use-package ob-ipython
+             :after org)
+
+;; yasnippet
+(use-package yasnippet)

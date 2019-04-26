@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: numpy & matplotlib import
+# key: py
+# --
+%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np

@@ -21,7 +21,8 @@
  '(helm-gtags-pulse-at-cursor t)
  '(helm-gtags-suggested-key-mapping t)
  '(helm-gtags-use-input-at-cursor t)
- '(inhibit-startup-screen t))
+ '(inhibit-startup-screen t)
+ '(tramp-default-method "ssh"))
 
 
 (custom-set-faces

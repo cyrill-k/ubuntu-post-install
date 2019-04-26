@@ -84,3 +84,8 @@
 ;; goto-chg
 (global-set-key (kbd "C-.") 'goto-last-change)
 (global-set-key (kbd "C-,") 'goto-last-change-reverse)
+
+;; yasnippet
+(with-eval-after-load 'yasnippet
+  (bind-keys :map yas-minor-mode-map
+             ("C-c y" . yas-insert-snippet)))

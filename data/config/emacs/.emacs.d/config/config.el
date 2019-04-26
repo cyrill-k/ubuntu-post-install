@@ -205,3 +205,20 @@ window and close the *TeX help* buffer."
 ;; 			   (progn
 ;; 				 (if (file-writable-p buffer-file-name) (save-buffer)
 ;; (write-file (concat "/sudo:root@localhost:" buffer-file-name)))))))
+
+;; Org-Babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ipython . t)))
+
+(setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
+
+;; display/update images in the buffer after I evaluate
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+
+;; yasnippet
+(setq yas-snippet-dirs
+      '("~/.emacs.d/config/yasnippet/snippets"
+        ))
+
+(yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.

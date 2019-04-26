@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ipython block with temp file
+# key: py
+# --
+#+BEGIN_SRC ipython :session :kernel plotenv ${1::ipyfile ${2:$$(let ((temporary-file-directory "./")) (make-temp-file "py" nil ".png"))} }:exports ${3:both}
+$0
+#+END_SRC
