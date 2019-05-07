@@ -17,8 +17,8 @@ bindsym $mod+Shift+p move container to workspace 11
 workspace 11 output $projector
 
 #change to enable workspace
-#xrandr --output VGA-1 --auto --right-of $laptopscreen
-xrandr --output VGA-1 --off
+bindsym $mod+u exec xrandr --output $projector --auto --right-of $laptopscreen
+bindsym $mod+Shift+u exec xrandr --output $projector --off
 
 bindsym $mod+F12 mode "$mode_system"
 
