@@ -8,6 +8,18 @@ bar {
         #tray_output primary
 }
 
+set $laptopscreen "eDP-1"
+set $projector "HDMI-1"
+
+# projector workspace
+bindsym $mod+p workspace 11
+bindsym $mod+Shift+p move container to workspace 11
+workspace 11 output $projector
+
+#change to enable workspace
+#xrandr --output VGA-1 --auto --right-of $laptopscreen
+xrandr --output VGA-1 --off
+
 bindsym $mod+F12 mode "$mode_system"
 
 bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
