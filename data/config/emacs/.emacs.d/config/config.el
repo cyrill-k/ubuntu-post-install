@@ -206,6 +206,9 @@ window and close the *TeX help* buffer."
 ;; 				 (if (file-writable-p buffer-file-name) (save-buffer)
 ;; (write-file (concat "/sudo:root@localhost:" buffer-file-name)))))))
 
+;; org-mode
+(setq org-latex-pdf-process (list "latexmk -xelatex -quiet -shell-escape -f %f"))
+
 ;; Org-Babel
 (org-babel-do-load-languages
  'org-babel-load-languages
