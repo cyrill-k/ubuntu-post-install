@@ -25,6 +25,7 @@
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c l") 'helm-locate)
+(global-set-key (kbd "M-s o") 'helm-occur)
 (global-set-key [mouse-8] (kbd "C-u C-<SPC>"))
 
 ;; helm internal keybindings
@@ -76,6 +77,7 @@
 (define-key isearch-mode-map (kbd "C-S-w") 'isearch-yank-char)
 (define-key isearch-mode-map (kbd "C-z") 'isearch-yank-kill)
 (define-key isearch-mode-map (kbd "M-z") 'isearch-yank-pop)
+(define-key isearch-mode-map (kbd "M-s o") 'helm-occur-from-isearch)
 
 ;; scrollers
 (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
