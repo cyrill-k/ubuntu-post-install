@@ -14,11 +14,15 @@
   (interactive "P")
   (x-set-selection nil (file-truename buffer-file-name)))
 
-(defun async-shell-to-temp-buffer (cmd buf)
+(defun shell-execute (cmd buf)
+  (interactive (let ((default-buffer "*make output*"))
+                 (list
+                  (read-string "Command: " "make")
+                  (read-string (format "Output Buffer (%s): " default-buffer) nil nil default-buffer))))
   (with-output-to-temp-buffer buf
     (start-process-shell-command cmd
-                   (get-buffer-create buf)
-                   cmd)
+                                 (get-buffer-create buf)
+                                 cmd)
     (pop-to-buffer buf)
     (special-mode)))
 
@@ -26,8 +30,8 @@
   (if arg
       (progn
         (message "make within virtualenv 'ietf'")
-        (async-shell-to-temp-buffer
-         "source ~/virtualenv/ietf/bin/activate; make"
+        (shell-execute
+         "source env/bin/activate; make"
          "*make output*")
         )
     (progn

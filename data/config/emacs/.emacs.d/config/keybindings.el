@@ -77,7 +77,7 @@
 (define-key isearch-mode-map (kbd "C-S-w") 'isearch-yank-char)
 (define-key isearch-mode-map (kbd "C-z") 'isearch-yank-kill)
 (define-key isearch-mode-map (kbd "M-z") 'isearch-yank-pop)
-(define-key isearch-mode-map (kbd "M-s o") 'helm-occur-from-isearch)
+(define-key isearch-mode-map (kbd "M-s o") 'helm-multi-occur-from-isearch)
 
 ;; scrollers
 (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
