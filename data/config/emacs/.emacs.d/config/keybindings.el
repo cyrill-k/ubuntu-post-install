@@ -91,3 +91,6 @@
 (with-eval-after-load 'yasnippet
   (bind-keys :map yas-minor-mode-map
              ("C-c y" . yas-insert-snippet)))
+
+;; org-mode
+(define-key org-mode-map (kbd "C-c a") 'org-agenda)

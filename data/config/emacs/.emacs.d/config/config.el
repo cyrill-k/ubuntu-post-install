@@ -219,6 +219,9 @@ window and close the *TeX help* buffer."
 ;; display/update images in the buffer after I evaluate
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 
+;; Org file directory
+(setq org-agenda-files '("~/org"))
+
 ;; yasnippet
 (setq yas-snippet-dirs
       '("~/.emacs.d/config/yasnippet/snippets"
