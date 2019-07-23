@@ -36,7 +36,7 @@
         )
     (progn
       (message "make")
-      (async-shell-to-temp-buffer
+      (shell-execute
        "make"
        "*make output*")
       )))
