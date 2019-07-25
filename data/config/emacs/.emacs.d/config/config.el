@@ -228,3 +228,14 @@ window and close the *TeX help* buffer."
         ))
 
 (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
+
+;; multi-term fix colors
+(set-face-attribute 'term-color-blue nil :foreground "#5555FF")
+(set-face-attribute 'term-color-green nil :foreground "#55FF55")
+(set-face-attribute 'term-color-red nil :foreground "#FF5555")
+(set-face-attribute 'term-color-magenta nil :foreground "#FF55FF")
+(set-face-attribute 'term-color-cyan nil :foreground "#FF55FF")
+(set-face-attribute 'term-color-yellow nil :foreground "#FFFF55")
+(add-hook 'term-mode-hook
+          (lambda ()
+            (setq term-buffer-maximum-size 0)))

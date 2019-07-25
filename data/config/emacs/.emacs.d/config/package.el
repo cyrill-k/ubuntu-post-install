@@ -84,3 +84,6 @@
 
 ;; yasnippet
 (use-package yasnippet)
+
+;; multi-term
+(use-package multi-term)
