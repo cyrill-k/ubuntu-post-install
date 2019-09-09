@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Cyrill Kraehenbuehl
+# key: includepdf
+# group: skeleton
+# name: \includepdf[...
+# --
+\documentclass{article}
+
+\usepackage{pdfpages}
+
+\begin{document}
+
+\includepdf[page=-]{${1:pdf}}
+%\includepdf[page={page number}]{}
+
+\end{document}
