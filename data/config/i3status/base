@@ -8,9 +8,10 @@
 
 general {
         colors = true
-        interval = 5
+        interval = 1
 }
 
+order += "volume master"
 order += "ipv6"
 order += "disk /"
 order += "wireless _first_"
@@ -58,4 +59,12 @@ disk "/" {
         low_threshold = 10
         threshold_type = "gbytes_free"
         prefix_type = "custom"
+}
+
+volume master {
+        format = "♪: %volume"
+        format_muted = "♪: muted (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
 }
