@@ -19,6 +19,9 @@
 (global-set-key (kbd "C-c v") 'copy-buffer-file-name-into-clipboard)
 (global-set-key (kbd "C-c m") (lambda (&optional arg) (interactive "P") (async-make arg)))
 (global-set-key (kbd "C-c o") (lambda (x) (interactive "f") (i3wm-exec (concat "xdg-open \"" x "\""))))
+(global-set-key (kbd "C-c t") 'run-gnome-terminal-here)
+(global-set-key (kbd "C-c w") 'w3mext-open-link-or-image-or-url)
+
 
 ;; helm global overrides
 (global-set-key (kbd "M-x") 'helm-M-x)

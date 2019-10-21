@@ -40,3 +40,16 @@
        "make"
        "*make output*")
       )))
+
+(defun run-gnome-terminal-here ()
+  (interactive "@")
+  (shell-command
+   (concat "gnome-terminal --working-directory="
+           (file-truename default-directory)
+           " > /dev/null 2>&1 & disown")
+   nil nil))
+
+(defun open-link-or-image-or-url ()
+  "Opens the current link or image or current page's uri or any url-like text under cursor in firefox."
+  (interactive)
+    (browse-url-generic (car (browse-url-interactive-arg "URL: "))))

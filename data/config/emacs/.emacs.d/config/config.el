@@ -1,6 +1,7 @@
 (setq-default indent-tabs-mode nil)
 (set-face-attribute 'default nil :height 150)
 (setq-default fill-column 80)
+(setq browse-url-generic-program (executable-find "firefox"))
 
 ;; isearch wraps over new lines
 (setq isearch-lax-whitespace t)
