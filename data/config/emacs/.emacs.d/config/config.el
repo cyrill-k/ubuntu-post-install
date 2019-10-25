@@ -2,6 +2,7 @@
 (set-face-attribute 'default nil :height 150)
 (setq-default fill-column 80)
 (setq browse-url-generic-program (executable-find "firefox"))
+(tool-bar-mode -1)
 
 ;; isearch wraps over new lines
 (setq isearch-lax-whitespace t)
