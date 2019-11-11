@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ "$1" = "-A" ]; then
+    change="$(bc -l <<< "$2/100")"
+elif [ "$1" = "-U" ]; then
+    change="$(bc -l <<< "-$2/100")"
+else
+    echo "require -U or -A option" >&2
+    exit 1
+fi
+MON=eDP-1
+CurrBright=$( xrandr --verbose --current | grep ^"$MON" -A5 | tail -n1 )
+CurrBright="${CurrBright##* }"
+newBrightness=$(bc <<<"$CurrBright + $change")
+xrandr --output eDP-1 --brightness $(bc <<< "if (1 < $newBrightness) 1 else if (0 > $newBrightness) 0 else $newBrightness")
