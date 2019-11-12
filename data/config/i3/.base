@@ -181,4 +181,7 @@ bindsym $mod+m move workspace to output right
 # set background
 exec --no-startup-id xsetroot -solid "#333333"
 
+exec xset s
+exec xset -dpms
+
 
