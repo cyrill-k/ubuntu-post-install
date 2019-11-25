@@ -60,3 +60,25 @@ function vimw {
 function emacsw {
     openw emacsw "emacsclient -na ''" "$@"
 }
+
+COMMANDS_FILE="$HOME/.commands"
+
+__best_command__(){
+    local cmd
+    shopt -u nocaseglob nocasematch
+    cat "$1" | fzf --read0 --height 50% | sed 's/ #[^#]*$//'
+}
+
+__save_command__(){
+    local save
+    set -o history -o histexpand
+    read -p "Insert brief textual desctiption: " usrin
+    history | head -n -1 | sed -n '/^ *[0-9]* /h;/^ *[0-9]* /!H;$!b;x;p' | sed 's/^ *[0-9]* *//' >>"$1"
+    echo -ne " #" >>"$1"
+    echo -n "$usrin" | sed 's/#/ /g' >>"$1"
+    dd </dev/zero bs=1 count=1 >>"$1"
+}
+
+bind '"\er": redraw-current-line'
+bind '"\C-x\C-x": "\C-e\C-u\"`__best_command__ "$COMMANDS_FILE"`\"\e\C-e\er"'
+bind '"\C-x\C-a": "\C-e\C-u__save_command__ \"$COMMANDS_FILE\""'
