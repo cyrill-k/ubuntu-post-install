@@ -55,7 +55,7 @@ cpu_temperature 0 {
 }
 
 disk "/" {
-        format = "root: %avail"
+        format = "/ %avail"
         low_threshold = 10
         threshold_type = "gbytes_free"
         prefix_type = "custom"
