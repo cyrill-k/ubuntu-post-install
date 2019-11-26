@@ -16,7 +16,7 @@ set $monitor2 "DVI-I-1"
 
 workspace 1 output $monitor1
 
-assign [class="Firefox"] $workspace2
+# assign [class="Firefox"] $workspace2
 
 # screen arrangement
 exec_always xrandr --output VGA-1 --off --output DVI-D-1 --mode 1920x1200 --pos 0x0 --rotate normal --output HDMI-1 --primary --mode 2560x1440 --pos 1920x0 --rotate normal
