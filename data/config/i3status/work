@@ -52,7 +52,7 @@ disk "/" {
 }
 
 disk "/mnt/data" {
-        format = "data: %avail"
+        format = "/mnt/data %avail"
         low_threshold = 10
         threshold_type = "gbytes_free"
         prefix_type = "custom"
