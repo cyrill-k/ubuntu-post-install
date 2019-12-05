@@ -3,7 +3,7 @@ from cmd import Cmd
 import os
 import inspect
 from pathlib import Path
-from shutil import copyfile
+from shutil import copyfile, copytree, rmtree
 from subprocess import run
 
 join = os.path.join
@@ -14,8 +14,15 @@ class Install:
     def _apt_install(self, package):
         run(['sudo', 'apt', 'install', package])
 
+    def _apt_remove(self, package):
+        run(['sudo', 'apt', 'remove', package])
+
     def i3(self, inp):
         self._apt_install('i3')
+
+    def emacs(self, inp):
+        self._apt_remove('emacs*')
+        self._apt_install('emacs25')
 
 class Configure:
     def __init__(self):
@@ -23,6 +30,9 @@ class Configure:
         self.i3configpath = join(Path.home(), '.config','i3')
         self.i3statuspath = join(os.getcwd(),'data','config','i3status')
         self.i3statusconfigpath = join(Path.home(),'.config','i3status')
+        self.emacspath = join(Path.home(),'data','config','emacs')
+        self.emacshomeconfigfolder = join(Path.home(),'.emacs.d')
+        self.emacshomeconfigfile = join(Path.home(),'.emacs')
 
     def i3(self, inp):
         p_base = join(self.i3path, '.base')
@@ -35,8 +45,8 @@ class Configure:
             cf.write(pf.read())
         print(f"i3: wrote {c}")
 
+        print("Adding Nautilus i3 fix")
         run(['gsettings', 'set', 'org.gnome.desktop.background', 'show-desktop-icons', 'false'])
-        print("Added Nautilus i3 fix")
 
     def i3_args(self):
         return [p for p in os.listdir(self.i3path) if not p.startswith(".") and not p.endswith("~")]
@@ -51,6 +61,15 @@ class Configure:
 
     def i3status_args(self):
         return [p for p in os.listdir(self.i3statuspath) if not p.startswith(".") and not p.endswith("~")]
+
+    def emacs(self):
+        print('removing existing config files')
+        rmtree(join(Path.home(),'.emacs.d'))
+        os.remove(join(Path.home(),'.emacs'))
+        print('copying config files')
+        copytree(join(self.emacspath, '.emacs.d'), join(Path.home(), '.emacs.d'))
+        print('running emacs install script')
+        run(['emacs', '--script', join(self.emacspath,'install.el')])
 
 class MyPrompt(Cmd):
     prompt_map = {'default': 'ubuntu config manager> ',
