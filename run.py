@@ -66,8 +66,10 @@ class Configure:
 
     def emacs(self, inp):
         print('removing existing config files')
-        rmtree(join(Path.home(),'.emacs.d'))
-        os.remove(join(Path.home(),'.emacs'))
+        if os.path.isdir(join(Path.home(),'.emacs.d')):
+            rmtree(join(Path.home(),'.emacs.d'))
+        if os.path.isfile(join(Path.home(),'.emacs')):
+            os.remove(join(Path.home(),'.emacs'))
         print('copying config files')
         copytree(join(self.emacspath, '.emacs.d'), join(Path.home(), '.emacs.d'))
         print('running emacs install script')

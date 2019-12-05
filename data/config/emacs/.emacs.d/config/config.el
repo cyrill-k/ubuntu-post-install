@@ -4,6 +4,9 @@
 (setq browse-url-generic-program (executable-find "firefox"))
 (tool-bar-mode -1)
 
+;; general programming options
+(add-hook 'prog-mode-hook 'linum-mode)
+
 ;; isearch wraps over new lines
 (setq isearch-lax-whitespace t)
 (setq isearch-regexp-lax-whitespace t)

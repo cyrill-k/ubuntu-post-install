@@ -87,3 +87,8 @@
 
 ;; multi-term
 (use-package multi-term)
+
+;; elpy (python ide)
+(use-package elpy
+             :ensure t
+             :init (elpy-enable))
