@@ -62,7 +62,7 @@ class Configure:
     def i3status_args(self):
         return [p for p in os.listdir(self.i3statuspath) if not p.startswith(".") and not p.endswith("~")]
 
-    def emacs(self):
+    def emacs(self, inp):
         print('removing existing config files')
         rmtree(join(Path.home(),'.emacs.d'))
         os.remove(join(Path.home(),'.emacs'))
@@ -84,7 +84,9 @@ class MyPrompt(Cmd):
  
     def do_install(self, inp):
         #prompt = prompt_map['install']
-        getattr(Install(), inp)()
+        args = inp.split(" ")
+        argIndex = len(args)-1
+        getattr(Install(), args[0])(args[1:])
 
     def complete_install(self, text, line, begidx, endidx):
         args = line.split(" ")
