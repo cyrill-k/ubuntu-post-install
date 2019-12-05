@@ -97,6 +97,7 @@
 
 ;; org-mode
 (define-key org-mode-map (kbd "C-c a") 'org-agenda)
+(define-key org-mode-map (kbd "C-c q") 'toggle-truncate-lines)
 
 ;; multi-term
 (global-unset-key (kbd "<f1>"))

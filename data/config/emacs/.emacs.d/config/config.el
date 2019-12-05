@@ -209,6 +209,7 @@ window and close the *TeX help* buffer."
 ;; (write-file (concat "/sudo:root@localhost:" buffer-file-name)))))))
 
 ;; org-mode
+(setq org-startup-truncated nil)
 (setq org-latex-pdf-process (list "latexmk -xelatex -quiet -shell-escape -f %f"))
 
 ;; Org-Babel
