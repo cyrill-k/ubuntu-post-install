@@ -7,6 +7,9 @@ from shutil import copyfile, copytree, rmtree
 from subprocess import run
 
 join = os.path.join
+root = os.getcwd()
+home = Path.home()
+
 class Install:
     def __init__(self):
         run(['sudo', 'apt', 'update'])
@@ -28,13 +31,11 @@ class Install:
 
 class Configure:
     def __init__(self):
-        self.i3path = join(os.getcwd(),'data','config','i3')
-        self.i3configpath = join(Path.home(), '.config','i3')
-        self.i3statuspath = join(os.getcwd(),'data','config','i3status')
-        self.i3statusconfigpath = join(Path.home(),'.config','i3status')
-        self.emacspath = join(Path.home(),'data','config','emacs')
-        self.emacshomeconfigfolder = join(Path.home(),'.emacs.d')
-        self.emacshomeconfigfile = join(Path.home(),'.emacs')
+        self.i3path = join(root,'data','config','i3')
+        self.i3configpath = join(home, '.config','i3')
+        self.i3statuspath = join(root,'data','config','i3status')
+        self.i3statusconfigpath = join(home,'.config','i3status')
+        self.emacspath = join(root,'data','config','emacs')
 
     def i3(self, inp):
         p_base = join(self.i3path, '.base')
@@ -66,12 +67,12 @@ class Configure:
 
     def emacs(self, inp):
         print('removing existing config files')
-        if os.path.isdir(join(Path.home(),'.emacs.d')):
-            rmtree(join(Path.home(),'.emacs.d'))
-        if os.path.isfile(join(Path.home(),'.emacs')):
-            os.remove(join(Path.home(),'.emacs'))
+        if os.path.isdir(join(home,'.emacs.d')):
+            rmtree(join(home,'.emacs.d'))
+        if os.path.isfile(join(home,'.emacs')):
+            os.remove(join(home,'.emacs'))
         print('copying config files')
-        copytree(join(self.emacspath, '.emacs.d'), join(Path.home(), '.emacs.d'))
+        copytree(join(self.emacspath, '.emacs.d'), join(home, '.emacs.d'))
         print('running emacs install script')
         run(['emacs', '--script', join(self.emacspath,'install.el')])
 
