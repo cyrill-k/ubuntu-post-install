@@ -9,6 +9,7 @@ from subprocess import run
 join = os.path.join
 root = os.getcwd()
 home = Path.home()
+dirname = os.path.dirname
 
 class Install:
     def __init__(self):
@@ -32,17 +33,15 @@ class Install:
 class Configure:
     def __init__(self):
         self.i3path = join(root,'data','config','i3')
-        self.i3configpath = join(home, '.config','i3')
         self.i3statuspath = join(root,'data','config','i3status')
-        self.i3statusconfigpath = join(home,'.config','i3status')
         self.emacspath = join(root,'data','config','emacs')
 
     def i3(self, inp):
         p_base = join(self.i3path, '.base')
         p = join(self.i3path, inp[0])
-        c = join(self.i3configpath,'config')
-        if not os.path.isdir(self.i3configpath):
-            os.makedirs(self.i3configpath)
+        c = join(home, '.config', 'i3', 'config')
+        if not os.path.isdir(dirname(c)):
+            os.makedirs(dirname(c))
         copyfile(p_base, c)
         with open(p) as pf, open(c,'a') as cf:
             cf.write(pf.read())
@@ -56,9 +55,9 @@ class Configure:
 
     def i3status(self, inp):
         p = join(self.i3statuspath, inp[0])
-        c = join(self.i3statusconfigpath,'config')
-        if not os.path.isdir(self.i3statusconfigpath):
-            os.makedirs(self.i3statusconfigpath)
+        c = join(home,'.config','i3status','config')
+        if not os.path.isdir(dirname(c)):
+            os.makedirs(dirname(c))
         copyfile(p, c)
         print(f"i3status: wrote {c}")
 

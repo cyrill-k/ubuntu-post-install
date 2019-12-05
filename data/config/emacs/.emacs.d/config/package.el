@@ -3,6 +3,7 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
+(package-refresh-contents)
 
 (setq package-archive-priorities
       '(("gnu" . 0)
