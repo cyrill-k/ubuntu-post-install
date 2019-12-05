@@ -12,16 +12,18 @@ class Install:
         run(['sudo', 'apt', 'update'])
 
     def _apt_install(self, package):
-        run(['sudo', 'apt', 'install', package])
+        run(['sudo', 'apt', '-y', 'install', package])
 
     def _apt_remove(self, package):
-        run(['sudo', 'apt', 'remove', package])
+        run(['sudo', 'apt', '-y', 'remove', package])
 
     def i3(self, inp):
         self._apt_install('i3')
 
     def emacs(self, inp):
+        print('removing old emacs installations')
         self._apt_remove('emacs*')
+        print('installing emacs25')
         self._apt_install('emacs25')
 
 class Configure:
