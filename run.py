@@ -29,7 +29,6 @@ class Install:
         cmd = ['git', 'clone']
         cmd.extend(options)
         cmd.append(dst)
-        cmd.append(options)
         print(f'Executing {cmd}')
         run(cmd)
 
