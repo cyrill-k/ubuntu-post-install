@@ -4,8 +4,9 @@ import os
 import inspect
 from pathlib import Path
 from shutil import copyfile, copytree, rmtree
-from subprocess import run
+import subprocess
 
+run = subprocess.run
 join = os.path.join
 root = os.getcwd()
 home = Path.home()
@@ -33,8 +34,13 @@ class Install:
         run(cmd)
 
     def _binary_exists(self, binary):
-        """check if binary exists using `command -v binary`"""
-        return run(['command', '-v', binary]).returncode == 0
+        # this approach does not consider changes to the environment variable PATH 
+        # """check if binary exists using distutils.spawn.find_executable"""
+        # return find_executable(binary) is not None
+        bash_config_files = [join(home, '.bashrc'), join(home, '.bashrc_extended')]
+        cmd = '; '.join([f'[ -f {x} ] && source {x}' for x in bash_config_files])
+        cmd += f'; which {binary}'
+        return run(['/bin/bash', '-c', cmd], stdout=subprocess.DEVNULL).returncode == 0
 
     def i3(self, inp):
         self._apt_install('i3')
