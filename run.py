@@ -21,6 +21,21 @@ class Install:
     def _apt_remove(self, package):
         run(['sudo', 'apt', '-y', 'remove', package])
 
+    def _git_clone(self, remote, dst, options):
+        """Clone `remote` into `dst` folder with git options as list (e.g., options = ['--depth','1'])"""
+        if os.path.isdir(dst):
+            rmtree(dst)
+        cmd = ['git', 'clone']
+        cmd.extend(options)
+        cmd.append(dst)
+        cmd.append(options)
+        print(f'Executing {cmd}')
+        run(cmd)
+
+    def _binary_exists(self, binary):
+        """check if binary exists using `command -v binary`"""
+        return run(['command', '-v', binary]).returncode == 0
+
     def i3(self, inp):
         self._apt_install('i3')
 
@@ -29,6 +44,15 @@ class Install:
         self._apt_remove('emacs*')
         print('installing emacs25')
         self._apt_install('emacs25')
+        if not self._binary_exists('fzf'):
+            self.fzf([])
+        self._git_clone('https://github.com/ibmandura/helm-fzf', join(home, '.emacs.d', 'helm-fzf'), [])
+        self._apt_install('global')
+
+    def fzf(self, inp):
+        self._git_clone('https://github.com/junegunn/fzf.git',join(home,'.fzf'), ['--depth', '1'])
+        print('installing fzf')
+        run([join(home,'.fzf/install'), '--all'])
 
 class Configure:
     def __init__(self):

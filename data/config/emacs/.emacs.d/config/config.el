@@ -1,8 +1,9 @@
 (setq-default indent-tabs-mode nil)
 (set-face-attribute 'default nil :height 150)
-(setq-default fill-column 80)
+(setq-default fill-column 100)
 (setq browse-url-generic-program (executable-find "firefox"))
 (tool-bar-mode -1)
+(setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
 
 ;; general programming options
 (add-hook 'prog-mode-hook 'linum-mode)
