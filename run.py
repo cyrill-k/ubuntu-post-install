@@ -28,6 +28,7 @@ class Install:
             rmtree(dst)
         cmd = ['git', 'clone']
         cmd.extend(options)
+        cmd.append(remote)
         cmd.append(dst)
         print(f'Executing {cmd}')
         run(cmd)
