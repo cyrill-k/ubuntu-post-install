@@ -121,6 +121,8 @@ bindsym $mod+z exec emacsclient -c -a ''
 bindsym $mod+x exec firefox
 # virtualbox
 bindsym $mod+c exec virtualbox
+# thunderbird email client
+bindsym $mod+b exec thunderbird
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
