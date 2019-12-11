@@ -5,3 +5,5 @@ shopt -s globstar
 if [ -f ~/.fzf.bash ]; then
     . ~/.fzf.bash
 fi
+
+export WORKON_HOME=$HOME/.virtualenvs

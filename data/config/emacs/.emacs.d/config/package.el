@@ -91,5 +91,6 @@
 
 ;; elpy (python ide)
 (use-package elpy
-             :ensure t
-             :init (elpy-enable))
+             :config
+             (elpy-enable)
+             (defalias 'workon 'pyvenv-workon))
