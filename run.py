@@ -8,7 +8,7 @@ import subprocess
 
 run = subprocess.run
 join = os.path.join
-root = os.getcwd()
+root = os.path.dirname(os.path.realpath(__file__))
 home = Path.home()
 dirname = os.path.dirname
 

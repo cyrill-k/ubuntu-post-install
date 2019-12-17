@@ -21,7 +21,7 @@
 (global-set-key (kbd "C-c o") (lambda (x) (interactive "f") (i3wm-exec (concat "xdg-open \"" x "\""))))
 (global-set-key (kbd "C-c t") 'run-gnome-terminal-here)
 (global-set-key (kbd "C-c w") 'open-link-or-image-or-url)
-
+(global-set-key (kbd "C-c i") 'toggle-input-method)
 
 ;; helm global overrides
 (global-set-key (kbd "M-x") 'helm-M-x)

@@ -25,6 +25,9 @@
 ;;   (auto-package-update-maybe))
 
 ;; delight
+;; if gnu repository is not loaded because gpg key is expired, download
+;; https://elpa.gnu.org/packages/gnu-elpa-keyring-update-2019.3.tar and install using
+;; M-x package-install-file
 (use-package delight)
 
 ;; emacs config management
