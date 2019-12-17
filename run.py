@@ -4,6 +4,7 @@ import os
 import inspect
 from pathlib import Path
 from shutil import copyfile, copytree, rmtree
+from distutils import dir_util
 import subprocess
 
 run = subprocess.run
@@ -95,15 +96,22 @@ class Configure:
         return [p for p in os.listdir(self.i3statuspath) if not p.startswith(".") and not p.endswith("~")]
 
     def emacs(self, inp):
-        print('removing existing config files')
-        if os.path.isdir(join(home,'.emacs.d')):
-            rmtree(join(home,'.emacs.d'))
-        if os.path.isfile(join(home,'.emacs')):
-            os.remove(join(home,'.emacs'))
-        print('copying config files')
-        copytree(join(self.emacspath, '.emacs.d'), join(home, '.emacs.d'))
+        if inp[0] == 'clean-install':
+            print('removing existing config files')
+            if os.path.isdir(join(home,'.emacs.d')):
+                rmtree(join(home,'.emacs.d'))
+            if os.path.isfile(join(home,'.emacs')):
+                os.remove(join(home,'.emacs'))
+            print('copying config files')
+            copytree(join(self.emacspath, '.emacs.d'), join(home, '.emacs.d'))
+        else:
+            print('copying config files')
+            dir_util.copy_tree(join(self.emacspath, '.emacs.d'), join(home, '.emacs.d'))
         print('running emacs install script')
         run(['emacs', '--script', join(self.emacspath,'install.el')])
+
+    def emacs_args(self):
+        return ['update-only', 'clean-install']
 
 class MyPrompt(Cmd):
     prompt_map = {'default': 'ubuntu config manager> ',
