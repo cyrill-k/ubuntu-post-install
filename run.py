@@ -6,6 +6,7 @@ from pathlib import Path
 from shutil import copyfile, copytree, rmtree
 from distutils import dir_util
 import subprocess
+import re
 
 run = subprocess.run
 join = os.path.join
@@ -112,6 +113,45 @@ class Configure:
 
     def emacs_args(self):
         return ['update-only', 'clean-install']
+
+#     def profile(self, inp):
+#         if inp[0] == 'replace':
+#             print('replacing .profile')
+#             copyfile(join(root, "data", "config", "profile_basic.in"), join(home, ".profile"))
+#         elif inp[0] == 'extend':
+#             print('extending .profile')
+#         else:
+#             raise "Invalid option"
+#         copyfile(join(root, "data", "config", "profile_extended.in"), join(home, ".profile_extended"))
+#         self._extend(f"~/", join(home, ".profile"))
+
+#     def profile_args(self):
+#         return ['replace', 'extend']
+
+#     def _add_shell_include(self, shell_include, base):
+#         with open(base) as origin_file:
+#             for line in origin_file:
+#                 if re.findall(rf'\. {shell_include}', line):
+#                     return
+#             print(f"Didn't find include statement in {base}; Adding it now")
+#             origin_file.seek(0, os.SEEK_END)
+#             origin_file.write(f'''if [ -f {shell_include} ]; then
+#     . {shell_include}
+# fi'''
+
+#     def _modify_option(self, basic_src, extended_src, basic_dst, extended_dst_shell_path):
+#         if basic_src:
+#             copyfile(basic_src, basic_dst)
+            
+#         if inp[0] == 'replace':
+#             print('replacing .profile')
+#             copyfile(join(root, "data", "config", "profile_basic.in"), join(home, ".profile"))
+#         elif inp[0] == 'extend':
+#             print('extending .profile')
+#         else:
+#             raise "Invalid option"
+#         copyfile(join(root, "data", "config", "profile_extended.in"), join(home, ".profile_extended"))
+#         self._extend(f"~/", join(home, ".profile"))
 
 class MyPrompt(Cmd):
     prompt_map = {'default': 'ubuntu config manager> ',
