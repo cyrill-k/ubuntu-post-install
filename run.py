@@ -114,44 +114,52 @@ class Configure:
     def emacs_args(self):
         return ['update-only', 'clean-install']
 
-#     def profile(self, inp):
-#         if inp[0] == 'replace':
-#             print('replacing .profile')
-#             copyfile(join(root, "data", "config", "profile_basic.in"), join(home, ".profile"))
-#         elif inp[0] == 'extend':
-#             print('extending .profile')
-#         else:
-#             raise "Invalid option"
-#         copyfile(join(root, "data", "config", "profile_extended.in"), join(home, ".profile_extended"))
-#         self._extend(f"~/", join(home, ".profile"))
+    def profile(self, inp):
+        self._modify_option_wrapper(inp[0], "profile")
 
-#     def profile_args(self):
-#         return ['replace', 'extend']
+    def profile_args(self):
+        return ['replace', 'extend']
 
-#     def _add_shell_include(self, shell_include, base):
-#         with open(base) as origin_file:
-#             for line in origin_file:
-#                 if re.findall(rf'\. {shell_include}', line):
-#                     return
-#             print(f"Didn't find include statement in {base}; Adding it now")
-#             origin_file.seek(0, os.SEEK_END)
-#             origin_file.write(f'''if [ -f {shell_include} ]; then
-#     . {shell_include}
-# fi'''
+    def bashrc(self, inp):
+        self._modify_option_wrapper(inp[0], "bashrc")
 
-#     def _modify_option(self, basic_src, extended_src, basic_dst, extended_dst_shell_path):
-#         if basic_src:
-#             copyfile(basic_src, basic_dst)
-            
-#         if inp[0] == 'replace':
-#             print('replacing .profile')
-#             copyfile(join(root, "data", "config", "profile_basic.in"), join(home, ".profile"))
-#         elif inp[0] == 'extend':
-#             print('extending .profile')
-#         else:
-#             raise "Invalid option"
-#         copyfile(join(root, "data", "config", "profile_extended.in"), join(home, ".profile_extended"))
-#         self._extend(f"~/", join(home, ".profile"))
+    def bashrc_args(self):
+        return ['replace', 'extend']
+
+    def bashaliases(self, inp):
+        self._modify_option_wrapper(inp[0], "bash_aliases")
+
+    def bashaliases_args(self):
+        return ['extend']
+
+    def _add_shell_include(self, shell_include, base):
+        with open(base, "r+") as origin_file:
+            for line in origin_file:
+                if re.findall(rf'\. {shell_include}', line):
+                    return
+            print(f"Adding include statement to {base}")
+            origin_file.seek(0, os.SEEK_END)
+            origin_file.write(f'''
+if [ -f {shell_include} ]; then
+    . {shell_include}
+fi''')
+
+    def _modify_option(self, basic_src, extended_src, basic_dst, extended_dst_shell_path):
+        """extended_dst_shell_path uses ~ to represent $HOME"""
+        if basic_src:
+            print(f'replacing {basic_dst}')
+            copyfile(basic_src, basic_dst)
+        if extended_src:
+            print(f'replacing {extended_dst_shell_path}')
+            copyfile(extended_src, os.path.expanduser(extended_dst_shell_path))
+            self._add_shell_include(extended_dst_shell_path, basic_dst)
+
+    def _modify_option_wrapper(self, cmd, filename):
+        if cmd == 'replace':
+            basic_src = join(root, "data", "config", f"{filename}_basic.in")
+        else:
+            basic_src = None
+        self._modify_option(basic_src, join(root, "data", "config", f"{filename}_extended.in"), join(home, f".{filename}"), f"~/.{filename}_extended")
 
 class MyPrompt(Cmd):
     prompt_map = {'default': 'ubuntu config manager> ',
@@ -186,7 +194,7 @@ class MyPrompt(Cmd):
         args = line.split(" ")
         argIndex = len(args)-1
         if argIndex == 1:
-            return self.get_args(text, [x[0] for x in inspect.getmembers(Configure, predicate=inspect.isfunction) if not x[0].endswith('_args') and not x[0].startswith('__')])
+            return self.get_args(text, [x[0] for x in inspect.getmembers(Configure, predicate=inspect.isfunction) if not x[0].endswith('_args') and not x[0].startswith('_')])
         elif argIndex == 2:
             return self.get_args(text,getattr(Configure(), args[1]+'_args')())
     
