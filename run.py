@@ -133,7 +133,8 @@ class Configure:
         return ['extend']
 
     def _add_shell_include(self, shell_include, base):
-        with open(base, "r+") as origin_file:
+        with open(base, "a+") as origin_file:
+            origin_file.seek(0, os.SEEK_SET)
             for line in origin_file:
                 if re.findall(rf'\. {shell_include}', line):
                     return
