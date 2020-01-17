@@ -43,12 +43,12 @@ class Helper:
         cmd = '; '.join([f'[ -f {x} ] && source {x}' for x in bash_config_files])
         cmd += f'; which {binary}'
         return run(['/bin/bash', '-c', cmd], stdout=subprocess.DEVNULL).returncode == 0
-helper = Helper()
 
     def append_to_file(self, src, content):
         with open(src, "a+") as f:
             f.seek(0, os.SEEK_END)
             f.write(content)
+helper = Helper()
 
 class Install:
     def __init__(self):
@@ -74,6 +74,9 @@ class Install:
 
     def elpy(self, inp):
         helper.apt_install('python-virtualenv')
+
+    def mysqlserver(self, inp):
+        helper.apt_install('mysql-server')
 
 class Configure:
     def __init__(self):
@@ -151,6 +154,18 @@ class Configure:
             with open(join(home, ".ssh", "id_ed25519_vm.pub"), "r") as private_key:
                 helper.append_to_file(join(home, ".ssh", "authorized_keys"), private_key.read())
         helper.apt_install("openssh-server")
+
+    def trillianmysql(self, inp):
+        print("DROP USER 'root'@'localhost';")
+        print("CREATE USER 'root'@'localhost' IDENTIFIED BY '';")
+        print("GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '';")
+        print()
+        print("CREATE USER 'newuser'@'%' IDENTIFIED BY '';")
+        print("GRANT ALL PRIVILEGES ON *.* TO 'cyrill'@'localhost' IDENTIFIED BY '';")
+        print("FLUSH PRIVILEGES")
+        print()
+        #print("update user set authentication_string=password('') where user='root';")
+        print("SET GLOBAL max_connections = 1000;")
 
     # def elpy(self, inp):
     #     folder = join(home, '.emacs.d', 'elpy')
