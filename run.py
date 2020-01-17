@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from cmd import Cmd
 import os
 import inspect
@@ -14,17 +14,17 @@ root = os.path.dirname(os.path.realpath(__file__))
 home = Path.home()
 dirname = os.path.dirname
 
-class Install:
-    def __init__(self):
+class Helper:
+    def apt_update(self):
         run(['sudo', 'apt', 'update'])
 
-    def _apt_install(self, package):
+    def apt_install(self, package):
         run(['sudo', 'apt', '-y', 'install', package])
 
-    def _apt_remove(self, package):
+    def apt_remove(self, package):
         run(['sudo', 'apt', '-y', 'remove', package])
 
-    def _git_clone(self, remote, dst, options):
+    def git_clone(self, remote, dst, options):
         """Clone `remote` into `dst` folder with git options as list (e.g., options = ['--depth','1'])"""
         if os.path.isdir(dst):
             rmtree(dst)
@@ -35,7 +35,7 @@ class Install:
         print(f'Executing {cmd}')
         run(cmd)
 
-    def _binary_exists(self, binary):
+    def binary_exists(self, binary):
         # this approach does not consider changes to the environment variable PATH 
         # """check if binary exists using distutils.spawn.find_executable"""
         # return find_executable(binary) is not None
@@ -43,24 +43,37 @@ class Install:
         cmd = '; '.join([f'[ -f {x} ] && source {x}' for x in bash_config_files])
         cmd += f'; which {binary}'
         return run(['/bin/bash', '-c', cmd], stdout=subprocess.DEVNULL).returncode == 0
+helper = Helper()
+
+    def append_to_file(self, src, content):
+        with open(src, "a+") as f:
+            f.seek(0, os.SEEK_END)
+            f.write(content)
+
+class Install:
+    def __init__(self):
+        helper.apt_update()
 
     def i3(self, inp):
-        self._apt_install('i3')
+        helper.apt_install('i3')
 
     def emacs(self, inp):
         print('removing old emacs installations')
-        self._apt_remove('emacs*')
+        helper.apt_remove('emacs*')
         print('installing emacs25')
-        self._apt_install('emacs25')
-        if not self._binary_exists('fzf'):
+        helper.apt_install('emacs25')
+        if not helper.binary_exists('fzf'):
             self.fzf([])
-        self._git_clone('https://github.com/ibmandura/helm-fzf', join(home, '.emacs.d', 'helm-fzf'), [])
-        self._apt_install('global')
+        helper.git_clone('https://github.com/ibmandura/helm-fzf', join(home, '.emacs.d', 'helm-fzf'), [])
+        helper.apt_install('global')
 
     def fzf(self, inp):
-        self._git_clone('https://github.com/junegunn/fzf.git',join(home,'.fzf'), ['--depth', '1'])
+        helper.git_clone('https://github.com/junegunn/fzf.git',join(home,'.fzf'), ['--depth', '1'])
         print('installing fzf')
         run([join(home,'.fzf/install'), '--all'])
+
+    def elpy(self, inp):
+        helper.apt_install('python-virtualenv')
 
 class Configure:
     def __init__(self):
@@ -131,6 +144,19 @@ class Configure:
 
     def bashaliases_args(self):
         return ['extend']
+
+    def sshd(self, inp):
+        if not os.path.isfile(join(home, ".ssh", "id_ed25519_vm")):
+            run(["ssh-keygen", "-t", "ed25519", "-q", "-N", '', "-f", join(home, ".ssh", "id_ed25519_vm")])
+            with open(join(home, ".ssh", "id_ed25519_vm.pub"), "r") as private_key:
+                helper.append_to_file(join(home, ".ssh", "authorized_keys"), private_key.read())
+        helper.apt_install("openssh-server")
+
+    # def elpy(self, inp):
+    #     folder = join(home, '.emacs.d', 'elpy')
+    #     if not os.path.isdir(folder):
+    #         os.makedirs(folder)
+    #     run(['python3', '-m', 'venv', join(folder, 'rpc-venv')])
 
     def _add_shell_include(self, shell_include, base):
         with open(base, "a+") as origin_file:
