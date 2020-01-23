@@ -58,13 +58,13 @@ class Install:
         helper.apt_install('i3')
 
     def emacs(self, inp):
-        print('removing old emacs installations')
-        helper.apt_remove('emacs*')
-        print('installing emacs25')
-        helper.apt_install('emacs25')
+        if not helper.binary_exists('emacs25'):
+            print('removing old emacs installations')
+            helper.apt_remove('emacs*')
+            print('installing emacs25')
+            helper.apt_install('emacs25')
         if not helper.binary_exists('fzf'):
             self.fzf([])
-        helper.git_clone('https://github.com/ibmandura/helm-fzf', join(home, '.emacs.d', 'helm-fzf'), [])
         helper.apt_install('global')
 
     def fzf(self, inp):
@@ -124,6 +124,7 @@ class Configure:
         else:
             print('copying config files')
             dir_util.copy_tree(join(self.emacspath, '.emacs.d'), join(home, '.emacs.d'))
+        helper.git_clone('https://github.com/ibmandura/helm-fzf', join(home, '.emacs.d', 'helm-fzf'), [])
         print('running emacs install script')
         run(['emacs', '--script', join(self.emacspath,'install.el')])
 
