@@ -161,7 +161,7 @@ class Configure:
         print("CREATE USER 'root'@'localhost' IDENTIFIED BY '';")
         print("GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '';")
         print()
-        print("CREATE USER 'newuser'@'%' IDENTIFIED BY '';")
+        print("CREATE USER 'cyrill'@'localhost' IDENTIFIED BY '';")
         print("GRANT ALL PRIVILEGES ON *.* TO 'cyrill'@'localhost' IDENTIFIED BY '';")
         print("FLUSH PRIVILEGES")
         print()
