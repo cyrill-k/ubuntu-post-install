@@ -1,4 +1,6 @@
 (require 'bind-key)
+;; unbind suspend-frame keybinding
+(global-unset-key (kbd "C-x C-z"))
 
 ;; outline minor mode hack
 (global-unset-key (kbd "C-o"))
