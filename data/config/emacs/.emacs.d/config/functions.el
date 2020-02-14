@@ -29,7 +29,7 @@
 (defun async-make (&optional arg)
   (if arg
       (progn
-        (message "make within virtualenv 'ietf'")
+        (message "make within virtualenv './env'")
         (shell-execute
          "source env/bin/activate; make"
          "*make output*")

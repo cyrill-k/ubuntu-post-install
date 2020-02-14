@@ -48,6 +48,10 @@ class Helper:
         with open(src, "a+") as f:
             f.seek(0, os.SEEK_END)
             f.write(content)
+
+    def pip_install(self, package):
+        print('pip update --upgrade pip')
+        print(f'pip install {package}')
 helper = Helper()
 
 class Install:
@@ -77,6 +81,12 @@ class Install:
 
     def mysqlserver(self, inp):
         helper.apt_install('mysql-server')
+
+    def ietftools(self, inp):
+        helper.apt_install('enscript')
+        helper.apt_install('gem')
+        run(['sudo', 'gem', 'install', 'kramdown-rfc2629'])
+        helper.pip_install('xml2rfc')
 
 class Configure:
     def __init__(self):
