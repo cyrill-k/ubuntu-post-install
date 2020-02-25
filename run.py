@@ -52,6 +52,9 @@ class Helper:
     def pip_install(self, package):
         print('pip update --upgrade pip')
         print(f'pip install {package}')
+
+    def venv_run(self, venv_folder, cmd):
+        return run(['/bin/bash', '-c', f'source {join(venv_folder, "bin", "activate")}; {cmd}'])
 helper = Helper()
 
 class Install:
@@ -75,9 +78,6 @@ class Install:
         helper.git_clone('https://github.com/junegunn/fzf.git',join(home,'.fzf'), ['--depth', '1'])
         print('installing fzf')
         run([join(home,'.fzf/install'), '--all'])
-
-    def elpy(self, inp):
-        helper.apt_install('python-virtualenv')
 
     def mysqlserver(self, inp):
         helper.apt_install('mysql-server')
@@ -177,6 +177,18 @@ class Configure:
         print()
         #print("update user set authentication_string=password('') where user='root';")
         print("SET GLOBAL max_connections = 1000;")
+
+    def elpy(self, inp):
+        helper.apt_install('python-virtualenv')
+        helper.apt_install('python3-venv')
+        venvs = join(home, ".virtualenvs")
+        if not os.path.exists(venvs):
+            print(f"creating python virtualenv folder {venvs}")
+            os.makedirs(venvs)
+        venv_path = join(venvs, "elpy-python3")
+        run(['python3', '-m', 'venv', venv_path])
+        helper.venv_run(venv_path, 'pip install --upgrade pip')
+        helper.venv_run(venv_path, 'pip install rope jedi importmagic autopep8 flake8')
 
     # def elpy(self, inp):
     #     folder = join(home, '.emacs.d', 'elpy')
