@@ -167,6 +167,10 @@ class Configure:
         helper.apt_install("openssh-server")
 
     def trillianmysql(self, inp):
+        print("# first command should be enough; kept remaining user commands for reference")
+        print("ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';")
+        print("FLUSH PRIVILEGES;")
+        print()
         print("DROP USER 'root'@'localhost';")
         print("CREATE USER 'root'@'localhost' IDENTIFIED BY '';")
         print("GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '';")
