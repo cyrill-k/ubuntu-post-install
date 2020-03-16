@@ -177,6 +177,9 @@ class Configure:
         print("ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';")
         print("FLUSH PRIVILEGES;")
         print()
+        print("CREATE USER 'test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zaphod';")
+        print("GRANT ALL PRIVILEGES ON *.* TO 'test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zaphod';")
+        print()
         print("DROP USER 'root'@'localhost';")
         print("CREATE USER 'root'@'localhost' IDENTIFIED BY '';")
         print("GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '';")
@@ -206,11 +209,7 @@ class Configure:
         copyfile(xinputrcIn, xinputrcOut)
 
     def tmux(self, inp):
-        tmuxConf = """set -g prefix C-o
-unbind-key C-b
-bind-key C-o send-prefix"""
-        with open(join(home, '.tmux.conf'), "w") as f:
-            f.write(tmuxConf)
+        copyfile(join(root, 'data', 'config', 'tmux', '.tmux.conf'), join(home, '.tmux.conf'))
 
     # def elpy(self, inp):
     #     folder = join(home, '.emacs.d', 'elpy')
