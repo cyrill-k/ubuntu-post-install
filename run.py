@@ -88,6 +88,12 @@ class Install:
         run(['sudo', 'gem', 'install', 'kramdown-rfc2629'])
         helper.pip_install('xml2rfc')
 
+    def japanese(self, inp):
+        helper.apt_install("fcitx-mozc")
+
+    def tmux(self, inp):
+        helper.apt_install("tmux")
+
 class Configure:
     def __init__(self):
         self.i3path = join(root,'data','config','i3')
@@ -193,6 +199,18 @@ class Configure:
         run(['python3', '-m', 'venv', venv_path])
         helper.venv_run(venv_path, 'pip install --upgrade pip')
         helper.venv_run(venv_path, 'pip install rope jedi importmagic autopep8 flake8')
+
+    def japanese(self, inp):
+        xinputrcIn = join(root, 'data', 'config', 'xinputrc.in')
+        xinputrcOut = join(home, '.xinputrc')
+        copyfile(xinputrcIn, xinputrcOut)
+
+    def tmux(self, inp):
+        tmuxConf = """set -g prefix C-o
+unbind-key C-b
+bind-key C-o send-prefix"""
+        with open(join(home, '.tmux.conf'), "w") as f:
+            f.write(tmuxConf)
 
     # def elpy(self, inp):
     #     folder = join(home, '.emacs.d', 'elpy')
