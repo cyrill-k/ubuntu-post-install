@@ -7,6 +7,7 @@ from shutil import copyfile, copytree, rmtree
 from distutils import dir_util
 import subprocess
 import re
+import glob
 
 run = subprocess.run
 join = os.path.join
@@ -93,6 +94,11 @@ class Install:
 
     def tmux(self, inp):
         helper.apt_install("tmux")
+
+    def xkeysnail(self, inp):
+        helper.pip_install("xkeysnail")
+        print("xhost +SI:localuser:root")
+        print(f"sudo xkeysnail {join(root, 'data', 'config', 'xkeysnail', 'config.py')}")
 
 class Configure:
     def __init__(self):
@@ -211,24 +217,54 @@ class Configure:
     def tmux(self, inp):
         copyfile(join(root, 'data', 'config', 'tmux', '.tmux.conf'), join(home, '.tmux.conf'))
 
+    def firefox(self, inp):
+        self._add_firefox_user_pref('"browser.fullscreen.autohide"', 'false')
+        self._add_firefox_user_pref('"ui.key.menuAccessKeyFocuses"', 'false')
+
     # def elpy(self, inp):
     #     folder = join(home, '.emacs.d', 'elpy')
     #     if not os.path.isdir(folder):
     #         os.makedirs(folder)
     #     run(['python3', '-m', 'venv', join(folder, 'rpc-venv')])
 
+    def _add_firefox_user_pref(self, key, val):
+        try:
+            firefoxDir = join(home, '.mozilla', 'firefox')
+            dirs = glob.glob(join(firefoxDir, '*.default'))
+            dirs.extend(glob.glob(join(firefoxDir, '*.default-release')))
+            for d in dirs:
+                f = join(d, 'user.js')
+                p = f'user_pref({key},{val});\n'
+                self._append_if_not_found(f, re.escape(key), p)
+        except Exception as e:
+            print(f'error while adding firefox user pref: {e}')
+
     def _add_shell_include(self, shell_include, base):
-        with open(base, "a+") as origin_file:
-            origin_file.seek(0, os.SEEK_SET)
-            for line in origin_file:
-                if re.findall(rf'\. {shell_include}', line):
-                    return
-            print(f"Adding include statement to {base}")
-            origin_file.seek(0, os.SEEK_END)
-            origin_file.write(f'''
+        self._append_if_not_found(base, rf'\. {shell_include}', f'''
 if [ -f {shell_include} ]; then
     . {shell_include}
 fi''')
+#         with open(base, "a+") as origin_file:
+#             origin_file.seek(0, os.SEEK_SET)
+#             for line in origin_file:
+#                 if re.findall(rf'\. {shell_include}', line):
+#                     return
+#             print(f"Adding include statement to {base}")
+#             origin_file.seek(0, os.SEEK_END)
+#             origin_file.write(f'''
+# if [ -f {shell_include} ]; then
+#     . {shell_include}
+# fi''')
+
+    def _append_if_not_found(self, f, searchRegex, append):
+        with open(f, "a+") as origin_file:
+            origin_file.seek(0, os.SEEK_SET)
+            for line in origin_file:
+                if re.findall(searchRegex, line):
+                    return
+            print(f"Adding include statement to {f}")
+            origin_file.seek(0, os.SEEK_END)
+            origin_file.write(append)
 
     def _modify_option(self, basic_src, extended_src, basic_dst, extended_dst_shell_path):
         """extended_dst_shell_path uses ~ to represent $HOME"""
