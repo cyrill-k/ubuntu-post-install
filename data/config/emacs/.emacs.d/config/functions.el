@@ -41,6 +41,21 @@
        "*make output*")
       )))
 
+(defun async-make-clean (&optional arg)
+  (if arg
+      (progn
+        (message "make clean within virtualenv './env'")
+        (shell-execute
+         "source env/bin/activate; make clean"
+         "*make clean output*")
+        )
+    (progn
+      (message "make clean")
+      (shell-execute
+       "make clean"
+       "*make clean output*")
+      )))
+
 (defun run-gnome-terminal-here ()
   (interactive "@")
   (shell-command
