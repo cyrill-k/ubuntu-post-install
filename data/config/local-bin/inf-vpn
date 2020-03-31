@@ -1,0 +1,2 @@
+#!/bin/bash
+openconnect sslvpn.ethz.ch/inf-isec --user kcyrill@inf-isec.ethz.ch

@@ -88,6 +88,8 @@
 
 ;; yasnippet
 (use-package yasnippet)
+(use-package yasnippet-snippets
+             :after yasnippet)
 
 ;; multi-term
 (use-package multi-term)

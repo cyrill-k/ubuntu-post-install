@@ -8,6 +8,7 @@ from distutils import dir_util
 import subprocess
 import re
 import glob
+import stat
 
 run = subprocess.run
 join = os.path.join
@@ -99,6 +100,15 @@ class Install:
         helper.pip_install("xkeysnail")
         print("xhost +SI:localuser:root")
         print(f"sudo xkeysnail {join(root, 'data', 'config', 'xkeysnail', 'config.py')}")
+
+    def localbin(self, inp):
+        os.makedirs(join(home, '.local', 'bin'), exist_ok=True)
+        r = join(root, 'data', 'config', 'local-bin')
+        for src in next(os.walk(r))[2]:
+            dst = join(home, '.local', 'bin', os.path.basename(src))
+            copyfile(join(r, src), dst)
+            st = os.stat(dst)
+            os.chmod(dst, st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 class Configure:
     def __init__(self):

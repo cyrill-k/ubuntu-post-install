@@ -1,0 +1,15 @@
+#!/bin/bash
+f=~/Pictures/$(date +%s).png
+case $# in
+    0 )
+        maim "$f" && gimp "$f"
+        ;;
+    1 )
+        if [ "$1" = "-s" ]
+        then maim -s -c 1,0,0,0.6 "$f" && gimp "$f"
+        else echo "Usage $0 [-s]" >&2
+        fi
+        ;;
+    * )
+        echo "Usage $0 [-s]" >&2
+esac
