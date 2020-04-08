@@ -120,8 +120,7 @@ class Configure:
         p_base = join(self.i3path, '.base')
         p = join(self.i3path, inp[0])
         c = join(home, '.config', 'i3', 'config')
-        if not os.path.isdir(dirname(c)):
-            os.makedirs(dirname(c))
+        os.makedirs(dirname(c), exist_ok=True)
         copyfile(p_base, c)
         with open(p) as pf, open(c,'a') as cf:
             cf.write(pf.read())
@@ -136,8 +135,7 @@ class Configure:
     def i3status(self, inp):
         p = join(self.i3statuspath, inp[0])
         c = join(home,'.config','i3status','config')
-        if not os.path.isdir(dirname(c)):
-            os.makedirs(dirname(c))
+        os.makedirs(dirname(c), exist_ok=True)
         copyfile(p, c)
         print(f"i3status: wrote {c}")
 
@@ -230,6 +228,11 @@ class Configure:
     def firefox(self, inp):
         self._add_firefox_user_pref('"browser.fullscreen.autohide"', 'false')
         self._add_firefox_user_pref('"ui.key.menuAccessKeyFocuses"', 'false')
+
+    def xkeysnail(self, inp):
+        configFile = join(home, '.config', 'xkeysnail', 'config.py')
+        os.makedirs(dirname(configFile), exist_ok=True)
+        copyfile(join(root, 'data', 'config', 'xkeysnail', 'config.py'), configFile)
 
     # def elpy(self, inp):
     #     folder = join(home, '.emacs.d', 'elpy')

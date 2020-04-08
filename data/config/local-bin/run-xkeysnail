@@ -1,0 +1,3 @@
+#!/bin/bash
+xhost +SI:localuser:root
+sudo xkeysnail $HOME/.config/xkeysnail/config.py
