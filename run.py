@@ -102,6 +102,8 @@ class Install:
         print(f"sudo xkeysnail {join(root, 'data', 'config', 'xkeysnail', 'config.py')}")
 
     def localbin(self, inp):
+        for p in ["maim"]:
+            helper.apt_install(p)
         os.makedirs(join(home, '.local', 'bin'), exist_ok=True)
         r = join(root, 'data', 'config', 'local-bin')
         for src in next(os.walk(r))[2]:
