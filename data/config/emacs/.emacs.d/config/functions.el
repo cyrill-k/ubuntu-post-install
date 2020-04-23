@@ -71,6 +71,29 @@
        "*make clean; make output*")
       )))
 
+(defun async-make-previous-buffer (&optional arg)
+  (if arg
+      (progn
+        (with-current-buffer (other-buffer (current-buffer) t)
+          (message "make within virtualenv './env' (other-buffer)")
+          (shell-execute
+           "source env/bin/activate; make"
+           "*make output*")
+          ))
+    (progn
+      (with-current-buffer (other-buffer (current-buffer) t)
+        (message "make (other-buffer)")
+        (shell-execute
+         "make"
+         "*make output*")
+        ))))
+
+(defun global-s()
+  (interactive)
+  (if (eq (get major-mode 'mode-class) 'special)
+      (call-interactively 'other-window)
+    (call-interactively 'self-insert-command)))
+
 (defun run-gnome-terminal-here ()
   (interactive "@")
   (shell-command

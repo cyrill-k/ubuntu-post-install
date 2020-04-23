@@ -22,6 +22,7 @@
 (global-set-key (kbd "C-c m m") (lambda (&optional arg) (interactive "P") (async-make arg)))
 (global-set-key (kbd "C-c m c") (lambda (&optional arg) (interactive "P") (async-make-clean arg)))
 (global-set-key (kbd "C-c m r") (lambda (&optional arg) (interactive "P") (async-make-rebuild arg)))
+(global-set-key (kbd "C-c m p") (lambda (&optional arg) (interactive "P") (async-make-previous-buffer arg)))
 (global-set-key (kbd "C-c o") (lambda (x) (interactive "f") (i3wm-exec (concat "xdg-open \"" x "\""))))
 (global-set-key (kbd "C-c t") 'run-gnome-terminal-here)
 (global-set-key (kbd "C-c w") 'open-link-or-image-or-url)
@@ -111,3 +112,6 @@
             (add-to-list 'term-bind-key-alist '("M-[" . multi-term-prev))
             (add-to-list 'term-bind-key-alist '("M-]" . multi-term-next))
             (define-key term-raw-map (kbd "C-y") 'term-paste)))
+
+;; special mode
+(global-set-key "s" 'global-s)
