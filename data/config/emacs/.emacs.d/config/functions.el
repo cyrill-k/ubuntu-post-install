@@ -26,66 +26,23 @@
     (pop-to-buffer buf)
     (special-mode)))
 
-(defun async-make (&optional arg)
-  (if arg
+(defun async-make-with-args (cmd oBuffer vEnv)
+  (let ((c cmd))
+    (if vEnv
+        (progn
+          (message "execute within virtualenv './env'")
+          (setq c (concatenate 'string "source env/bin/activate; " c))))
+    (if oBuffer
+        (progn
+          (with-current-buffer (other-buffer (current-buffer) t)
+            (shell-execute
+             c
+             (concatenate 'string "*" cmd " output*")
+             )))
       (progn
-        (message "make within virtualenv './env'")
         (shell-execute
-         "source env/bin/activate; make"
-         "*make output*")
-        )
-    (progn
-      (message "make")
-      (shell-execute
-       "make"
-       "*make output*")
-      )))
-
-(defun async-make-clean (&optional arg)
-  (if arg
-      (progn
-        (message "make clean within virtualenv './env'")
-        (shell-execute
-         "source env/bin/activate; make clean"
-         "*make clean output*")
-        )
-    (progn
-      (message "make clean")
-      (shell-execute
-       "make clean"
-       "*make clean output*")
-      )))
-
-(defun async-make-rebuild (&optional arg)
-  (if arg
-      (progn
-        (message "make clean; make within virtualenv './env'")
-        (shell-execute
-         "source env/bin/activate; make clean; make"
-         "*make clean; make output*")
-        )
-    (progn
-      (message "make clean")
-      (shell-execute
-       "make clean; make"
-       "*make clean; make output*")
-      )))
-
-(defun async-make-previous-buffer (&optional arg)
-  (if arg
-      (progn
-        (with-current-buffer (other-buffer (current-buffer) t)
-          (message "make within virtualenv './env' (other-buffer)")
-          (shell-execute
-           "source env/bin/activate; make"
-           "*make output*")
-          ))
-    (progn
-      (with-current-buffer (other-buffer (current-buffer) t)
-        (message "make (other-buffer)")
-        (shell-execute
-         "make"
-         "*make output*")
+         c
+         (concatenate 'string "*" cmd " output*"))
         ))))
 
 (defun global-s()
