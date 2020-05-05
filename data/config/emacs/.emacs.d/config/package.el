@@ -56,7 +56,12 @@
 (use-package helm-flyspell
              :after helm)
 (use-package helm-flycheck
-             :after helm)
+             :after (helm elpy)
+             :config
+             (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+             (add-hook 'elpy-mode-hook 'flycheck-mode)
+             (setq-default flycheck-flake8-maximum-line-length 99)
+             :init (global-flycheck-mode))
 
 ;; company
 (use-package company

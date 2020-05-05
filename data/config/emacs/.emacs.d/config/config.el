@@ -5,13 +5,23 @@
 (tool-bar-mode -1)
 (setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
 
+;; disable unused modes
+(line-number-mode -1)
+(setq-default shell-dirtrackp nil)
+
 ;; general programming options
-(add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;; isearch wraps over new lines
 (setq isearch-lax-whitespace t)
 (setq isearch-regexp-lax-whitespace t)
 (setq search-whitespace-regexp "[ \t\r\n]+")
+
+;; shell mode
+(add-hook 'shell-mode-hook 'shell-dirtrack-mode)
+
+;; python/elpy
+(setq elpy-rpc-python-command "python3")
 
 ;; tex
 ;; clean without confirmation
