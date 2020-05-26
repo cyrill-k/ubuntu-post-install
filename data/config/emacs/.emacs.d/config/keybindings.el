@@ -11,6 +11,10 @@
 (global-set-key (kbd "C-z") 'yank)
 (global-set-key (kbd "M-z") 'yank-pop)
 
+;; crux
+(global-set-key (kbd "C-c D") #'crux-duplicate-current-line-or-region)
+(global-set-key (kbd "C-c M-d") #'crux-duplicate-and-comment-current-line-or-region)
+
 ;; global keybindings
 (global-set-key (kbd "C-c s") 'ff-find-other-file)
 (global-set-key (kbd "M-SPC") 'hippie-expand)

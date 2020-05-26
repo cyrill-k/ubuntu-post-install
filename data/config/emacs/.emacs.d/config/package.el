@@ -104,3 +104,12 @@
              :config
              (elpy-enable)
              (defalias 'workon 'pyvenv-workon))
+
+;; docker
+(use-package dockerfile-mode)
+
+;; yml
+(use-package yaml-mode)
+
+;; crux
+(use-package crux)
