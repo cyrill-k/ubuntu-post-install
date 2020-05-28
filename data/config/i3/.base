@@ -100,7 +100,7 @@ bindsym $mod+c exec virtualbox
 # thunderbird email client
 bindsym $mod+b exec thunderbird
 # riot matrix client
-bindsym $mod+t exec riot-web
+bindsym $mod+t exec riot-desktop
 
 # change focus
 bindsym $mod+h focus left
