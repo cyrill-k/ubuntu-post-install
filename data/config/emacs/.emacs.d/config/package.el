@@ -113,3 +113,15 @@
 
 ;; crux
 (use-package crux)
+
+;; emacs-jupyter (depends on zmq)
+(require 'zmq)
+(use-package jupyter)
+
+;; json
+(use-package json-mode)
+
+;; php
+(use-package php-mode)
+(use-package php-eldoc)
+(use-package flymake-php)

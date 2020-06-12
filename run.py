@@ -11,10 +11,15 @@ import glob
 import stat
 
 run = subprocess.run
+rm = os.remove
 join = os.path.join
 root = os.path.dirname(os.path.realpath(__file__))
 home = Path.home()
 dirname = os.path.dirname
+
+
+def shellrun(cmd):
+    return run(" ".join(cmd), shell=True)
 
 
 class Helper:
@@ -67,21 +72,32 @@ helper = Helper()
 
 
 class Install:
-    def __init__(self):
-        helper.apt_update()
-
     def i3(self, inp):
+        helper.apt_update()
         helper.apt_install("i3")
 
     def emacs(self, inp):
-        if not helper.binary_exists("emacs25"):
-            print("removing old emacs installations")
-            helper.apt_remove("emacs*")
-            print("installing emacs25")
-            helper.apt_install("emacs25")
+        helper.apt_update()
+        if inp[0] == "apt":
+            if not helper.binary_exists("emacs"):
+                print("removing old emacs installations")
+                helper.apt_remove("emacs*")
+                print("installing emacs")
+                helper.apt_install("emacs")
+        elif inp[0] == "source":
+            print("wget http://mirror.inode.at/gnu/emacs/emacs-26.3.tar.gz")
+            print("tar -xzvf emacs-26.3.tar.gz")
+            print("cd emacs-26.3")
+            print("sudo apt-get install build-essential texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev libxpm-dev automake autoconf libgnutls28-dev")
+            print("./configure --with-modules")
+            print("make")
+            print("sudo make install")
         if not helper.binary_exists("fzf"):
             self.fzf([])
         helper.apt_install("global")
+
+    def emacs_args(self):
+        return ["apt", "source"]
 
     def fzf(self, inp):
         helper.git_clone(
@@ -91,18 +107,22 @@ class Install:
         run([join(home, ".fzf/install"), "--all"])
 
     def mysqlserver(self, inp):
+        helper.apt_update()
         helper.apt_install("mysql-server")
 
     def ietftools(self, inp):
+        helper.apt_update()
         helper.apt_install("enscript")
         helper.apt_install("gem")
         run(["sudo", "gem", "install", "kramdown-rfc2629"])
         helper.pip_install("xml2rfc")
 
     def japanese(self, inp):
+        helper.apt_update()
         helper.apt_install("fcitx-mozc")
 
     def tmux(self, inp):
+        helper.apt_update()
         helper.apt_install("tmux")
 
     def xkeysnail(self, inp):
@@ -113,6 +133,7 @@ class Install:
         )
 
     def localbin(self, inp):
+        helper.apt_update()
         for p in ["maim"]:
             helper.apt_install(p)
         os.makedirs(join(home, ".local", "bin"), exist_ok=True)
@@ -122,6 +143,17 @@ class Install:
             copyfile(join(r, src), dst)
             st = os.stat(dst)
             os.chmod(dst, st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
+    def go(self, inp):
+        tarFile = f'go{inp[0]}.linux-amd64.tar.gz'
+        run(['wget', f'https://dl.google.com/go/{tarFile}'])
+        try:
+            run(['sudo', 'tar', '-C', '/usr/local', '-xzf', tarFile])
+        finally:
+            rm(tarFile)
+
+    def go_args(self):
+        return ['1.13.12']
 
 
 class Configure:
@@ -292,6 +324,12 @@ class Configure:
         os.makedirs(dirname(configFile), exist_ok=True)
         copyfile(join(root, "data", "config", "xkeysnail", "config.py"), configFile)
 
+    def docker(self, inp):
+        shellrun(['sudo', 'groupadd', 'docker'])
+        shellrun(['sudo', 'usermod', '-G', 'docker', '$USER'])
+        print('# reboot system')
+        print('sudo reboot')
+
     # def elpy(self, inp):
     #     folder = join(home, '.emacs.d', 'elpy')
     #     if not os.path.isdir(folder):
@@ -395,9 +433,24 @@ class MyPrompt(Cmd):
                 [
                     x[0]
                     for x in inspect.getmembers(Install, predicate=inspect.isfunction)
-                    if not x[0].startswith("_")
+                    if not x[0].endswith("_args") and not x[0].startswith("_")
                 ],
             )
+        elif argIndex == 2:
+            return self.get_args(text, getattr(Install(), args[1] + "_args")())
+
+    # def complete_install(self, text, line, begidx, endidx):
+    #     args = line.split(" ")
+    #     argIndex = len(args) - 1
+    #     if argIndex == 1:
+    #         return self.get_args(
+    #             text,
+    #             [
+    #                 x[0]
+    #                 for x in inspect.getmembers(Install, predicate=inspect.isfunction)
+    #                 if not x[0].startswith("_")
+    #             ],
+    #         )
 
     def do_configure(self, inp):
         # prompt = self.prompt_map['config']

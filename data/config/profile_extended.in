@@ -1,3 +1,4 @@
 # emacsclient -nw -c ""
 export EDITOR="emacsclient --tty -a ''"
 export VISUAL="emacsclient --tty -a ''"
+export PATH=$PATH:/usr/local/go/bin

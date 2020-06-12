@@ -24,6 +24,9 @@
 (setq elpy-rpc-python-command "python3")
 
 ;; tex
+;; allow cleveref style hook
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
 ;; clean without confirmation
 (setq TeX-clean-confirm nil)
 (setq-default TeX-master 'shared)
@@ -58,6 +61,7 @@ window and close the *TeX help* buffer."
               (if (get-buffer-window (get-buffer "*TeX Help*"))
                   (delete-windows-on "*TeX Help*"))
               (kill-buffer "*TeX Help*")))))))
+
 (with-eval-after-load 'latex
   ;; TeX commands
   (add-to-list 'TeX-command-list
@@ -77,7 +81,24 @@ window and close the *TeX help* buffer."
   ;; TeX-fold-mode customization
   (add-to-list 'LaTeX-fold-macro-spec-list
                '("{1}||*" ("item")))
+
+  ;; reftex commands for cleveref
+  (TeX-add-style-hook
+   "cleveref"
+   (lambda ()
+     (if (boundp 'reftex-ref-style-alist)
+         (add-to-list
+          'reftex-ref-style-alist
+          '("Cleveref" "cleveref"
+            (("\\cref" ?c) ("\\Cref" ?C) ("\\cpageref" ?d) ("\\Cpageref" ?D)))))
+     (reftex-ref-style-activate "Cleveref")
+     (TeX-add-symbols
+      '("cref" TeX-arg-ref)
+      '("Cref" TeX-arg-ref)
+      '("cpageref" TeX-arg-ref)
+      '("Cpageref" TeX-arg-ref))))
   )
+
 (add-hook 'LaTeX-mode-hook
           (lambda ()
             (TeX-fold-mode)
@@ -241,8 +262,8 @@ window and close the *TeX help* buffer."
 
 ;; yasnippet
 (setq yas-snippet-dirs
-      '("~/.emacs.d/config/yasnippet/snippets"
-        ))
+      (append yas-snippet-dirs
+              '("~/.emacs.d/config/yasnippet/snippets")))
 
 (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
 

@@ -63,3 +63,10 @@
   "Opens the current link or image or current page's uri or any url-like text under cursor in firefox."
   (interactive)
     (browse-url-generic (car (browse-url-interactive-arg "URL: "))))
+
+(defun update-yasnippets ()
+  "Compile and load all yasnippets in yas-snippet-dirs."
+  (interactive)
+  (progn
+    (yas-recompile-all)
+    (yas-reload-all)))
