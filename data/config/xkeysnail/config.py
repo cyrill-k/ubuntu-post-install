@@ -52,6 +52,8 @@ define_keymap(
             K("M-g"): K("C-M-g"),
             # the following is invoked if the alt key (M-) is not released after pressing g
             K("g"): K("C-M-g"),
+            # cancel
+            K("C-g"): pass_through_key,
         },
     },
     "Firefox and Chrome",
@@ -68,9 +70,48 @@ define_keymap(
     re.compile("okular"),
     {
         # Go to line
-        K("M-g"): {K("M-g"): K("C-g")}
+        K("M-g"): {K("M-g"): K("C-g")},
+        K("C-x"): {
+            # C-x C-s (save)
+            K("C-s"): K("C-Shift-S"),
+            # cancel
+            K("C-g"): pass_through_key,
+        }
     },
-    "okular go-to page",
+    "okular go-to page and save",
+)
+
+# Keybindings for firefox+jupyter
+define_keymap(
+    re.compile("Firefox"),
+    {
+        # comment line or region
+        K("C-x"): {
+            K("C-semicolon"): K("C-slash"),
+            # cancel
+            K("C-g"): pass_through_key,
+        },
+        K("C-c"): {
+            K("M-d"): [K("home"), K("left"), K("Shift-right"), K("Shift-end"), K("C-c"), K("end"), K("C-v"), K("home"), K("left"), K("C-slash")],
+            # cancel
+            K("C-g"): pass_through_key,
+        }
+    },
+    "Firefox + jupyter comment line",
+)
+
+# Emacs-like save
+define_keymap(
+    lambda wm_class: wm_class not in ("Emacs", "URxvt", "Gnome-terminal", "okular"),
+    {
+        K("C-x"): {
+            # C-x C-s (save)
+            K("C-s"): K("C-s"),
+            # cancel
+            K("C-g"): pass_through_key,
+        },
+    },
+    "Emacs-like save",
 )
 
 # Emacs-like navigation
@@ -133,6 +174,8 @@ define_keymap(
         K("M-d"): [K("C-delete"), set_mark(False)],
         # Kill line
         K("C-k"): [K("Shift-end"), K("C-x"), set_mark(False)],
+        # Kill whole line
+        K("C-Shift-backspace"): [K("home"), K("Shift-end"), K("Shift-right"), K("C-x")],
         # Undo
         K("C-slash"): [K("C-z"), set_mark(False)],
         K("C-Shift-ro"): K("C-z"),
@@ -149,8 +192,6 @@ define_keymap(
             K("h"): [K("C-home"), K("C-a"), set_mark(True)],
             # C-x C-f (open)
             K("C-f"): K("C-o"),
-            # C-x C-s (save)
-            K("C-s"): K("C-s"),
             # C-x k (kill tab)
             K("k"): K("C-f4"),
             # C-x C-c (exit)
@@ -159,6 +200,10 @@ define_keymap(
             K("C-g"): pass_through_key,
             # C-x u (undo)
             K("u"): [K("C-z"), set_mark(False)],
+        },
+        K("C-c"): {
+            # print document
+            K("p"): K("C-p"),
         },
     },
     "Emacs-like keys",
