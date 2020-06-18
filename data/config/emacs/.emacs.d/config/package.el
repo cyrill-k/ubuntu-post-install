@@ -125,3 +125,11 @@
 (use-package php-mode)
 (use-package php-eldoc)
 (use-package flymake-php)
+
+;; unto-tree
+(use-package undo-tree
+             :bind (
+               :map undo-tree-map
+                 ("C-x u" . undo-tree-undo)
+                 ("C-c u" . undo-tree-visualize))
+             :config (global-undo-tree-mode))
