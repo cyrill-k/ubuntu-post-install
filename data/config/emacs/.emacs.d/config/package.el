@@ -133,3 +133,7 @@
                  ("C-x u" . undo-tree-undo)
                  ("C-c u" . undo-tree-visualize))
              :config (global-undo-tree-mode))
+
+(use-package highlight-symbol
+             :bind ("M-s h k" . highlight-symbol-remove-all))
+
