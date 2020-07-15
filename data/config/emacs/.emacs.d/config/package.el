@@ -114,9 +114,9 @@
 ;; crux
 (use-package crux)
 
-;; emacs-jupyter (depends on zmq)
-(require 'zmq)
-(use-package jupyter)
+;; ;; emacs-jupyter (depends on zmq)
+;; (require 'zmq)
+;; (use-package jupyter)
 
 ;; json
 (use-package json-mode)
@@ -137,3 +137,5 @@
 (use-package highlight-symbol
              :bind ("M-s h k" . highlight-symbol-remove-all))
 
+(use-package docker-tramp)
+(use-package helm-tramp)
