@@ -70,3 +70,7 @@
   (progn
     (yas-recompile-all)
     (yas-reload-all)))
+
+(defun tramp-remove-gofmt-before-save-hook ()
+  (interactive)
+  (remove-hook 'before-save-hook 'gofmt-before-save))

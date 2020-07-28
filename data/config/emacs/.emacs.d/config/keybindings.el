@@ -16,6 +16,10 @@
 (global-set-key (kbd "C-c M-d") #'crux-duplicate-and-comment-current-line-or-region)
 
 ;; global keybindings
+(global-set-key (kbd "C-c k") 'windmove-up)
+(global-set-key (kbd "C-c j") 'windmove-down)
+(global-set-key (kbd "C-c h") 'windmove-left)
+(global-set-key (kbd "C-c l") 'windmove-right)
 (global-set-key (kbd "C-c s") 'ff-find-other-file)
 (global-set-key (kbd "M-SPC") 'hippie-expand)
 (global-set-key (kbd "C-c d") 'whack-whitespace)
@@ -38,7 +42,7 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-c l") 'helm-locate)
+;; (global-set-key (kbd "C-c l") 'helm-locate)
 (global-set-key (kbd "M-s o") 'helm-occur)
 (global-set-key [mouse-8] (kbd "C-u C-<SPC>"))
 
