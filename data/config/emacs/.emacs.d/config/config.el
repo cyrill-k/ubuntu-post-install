@@ -4,6 +4,7 @@
 (setq browse-url-generic-program (executable-find "firefox"))
 (tool-bar-mode -1)
 (setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
+(setq kill-do-not-save-duplicates t)
 
 ;; disable unused modes
 (line-number-mode -1)

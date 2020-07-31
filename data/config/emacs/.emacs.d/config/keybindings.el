@@ -45,6 +45,9 @@
 ;; (global-set-key (kbd "C-c l") 'helm-locate)
 (global-set-key (kbd "M-s o") 'helm-occur)
 (global-set-key [mouse-8] (kbd "C-u C-<SPC>"))
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-h a") 'helm-apropos)
+(global-set-key (kbd "C-c b") 'helm-all-mark-rings)
 
 ;; helm internal keybindings
 (with-eval-after-load "helm"
