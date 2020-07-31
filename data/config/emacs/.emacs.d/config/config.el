@@ -23,6 +23,7 @@
 
 ;; python/elpy
 (setq elpy-rpc-python-command "python3")
+(setq elpy-rpc-timeout 10)
 
 ;; tex
 ;; allow cleveref style hook

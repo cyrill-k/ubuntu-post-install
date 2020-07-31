@@ -22,10 +22,19 @@ order += "cpu_usage"
 order += "cpu_temperature 0"
 order += "tztime local"
 
-memory {
-    format= "M: %available"
-    threshold_degraded = "300M"
-    format_degraded = "M: %available"
+volume master {
+        format = "♪: %volume"
+        format_muted = "♪: muted (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+disk "/" {
+        format = "/ %avail"
+        low_threshold = 10
+        threshold_type = "gbytes_free"
+        prefix_type = "custom"
 }
 
 wireless _first_ {
@@ -43,13 +52,15 @@ battery all {
         format = "%status %percentage"
 }
 
-tztime local {
-        format = "%Y-%m-%d %H:%M:%S"
+memory {
+    format= "M: %available"
+    threshold_degraded = "300M"
+    format_degraded = "M: %available"
 }
 
-load {
-        format = "%1min"
-}
+# load {
+#         format = "%1min"
+# }
 
 cpu_usage {
         format = "C: %usage"
@@ -57,20 +68,9 @@ cpu_usage {
 
 cpu_temperature 0 {
         format = "CPU[0]: %degrees°C"
-        path = "/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input"
+        path = "/sys/devices/platform/coretemp.0/hwmon/hwmon6/temp1_input"
 }
 
-disk "/" {
-        format = "/ %avail"
-        low_threshold = 10
-        threshold_type = "gbytes_free"
-        prefix_type = "custom"
-}
-
-volume master {
-        format = "♪: %volume"
-        format_muted = "♪: muted (%volume)"
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
+tztime local {
+        format = "%Y-%m-%d %H:%M:%S"
 }
