@@ -69,7 +69,24 @@
 
 ;; golang
 (use-package flycheck-gometalinter)
-(use-package company-go)
+;; (use-package company-go)
+(use-package go-eldoc)
+(setq lsp-keymap-prefix (kbd "C-c q"))
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (go-mode . lsp-deferred))
+
+;; (use-package lsp-ui
+;;   :commands lsp-ui-mode
+;;   :hook
+;;   (lsp-mode . lsp-ui-mode))
+
+(use-package helm-lsp
+  :commands helm-lsp-workspace-symbol)
+
+;; (use-package company-lsp
+;;   :commands company-lsp
+;;   :config (push 'company-lsp company-backends))
 
 ;; irony
 (use-package flycheck-irony)
@@ -126,7 +143,7 @@
 (use-package php-eldoc)
 (use-package flymake-php)
 
-;; unto-tree
+;; undo-tree
 (use-package undo-tree
              :bind (
                :map undo-tree-map
@@ -139,3 +156,15 @@
 
 (use-package docker-tramp)
 (use-package helm-tramp)
+
+(use-package projectile
+  :bind (
+         :map projectile-mode-map
+              ("C-c p" . 'projectile-command-map)))
+
+(use-package helm-projectile
+  :after helm)
+
+(use-package move-text)
+
+(use-package defrepeater)

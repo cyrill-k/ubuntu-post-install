@@ -30,9 +30,9 @@
 (global-set-key (kbd "C-c m m") (lambda (&optional arg) (interactive "P") (async-make-with-args "make" nil arg)))
 (global-set-key (kbd "C-c m c") (lambda (&optional arg) (interactive "P") (async-make-with-args "make clean" nil arg)))
 (global-set-key (kbd "C-c m r") (lambda (&optional arg) (interactive "P") (async-make-with-args "make clean; make" nil arg)))
-(global-set-key (kbd "C-c n m") (lambda (&optional arg) (interactive "P") (async-make-with-args "make" t arg)))
-(global-set-key (kbd "C-c n c") (lambda (&optional arg) (interactive "P") (async-make-with-args "make clean" t arg)))
-(global-set-key (kbd "C-c n r") (lambda (&optional arg) (interactive "P") (async-make-with-args "make clean; make" t arg)))
+;; (global-set-key (kbd "C-c n m") (lambda (&optional arg) (interactive "P") (async-make-with-args "make" t arg)))
+;; (global-set-key (kbd "C-c n c") (lambda (&optional arg) (interactive "P") (async-make-with-args "make clean" t arg)))
+;; (global-set-key (kbd "C-c n r") (lambda (&optional arg) (interactive "P") (async-make-with-args "make clean; make" t arg)))
 (global-set-key (kbd "C-c o") (lambda (x) (interactive "f") (i3wm-exec (concat "xdg-open \"" x "\""))))
 (global-set-key (kbd "C-c t") 'run-gnome-terminal-here)
 (global-set-key (kbd "C-c w") 'open-link-or-image-or-url)
@@ -99,6 +99,10 @@
 (define-key isearch-mode-map (kbd "C-z") 'isearch-yank-kill)
 (define-key isearch-mode-map (kbd "M-z") 'isearch-yank-pop)
 (define-key isearch-mode-map (kbd "M-s o") 'helm-multi-occur-from-isearch)
+
+;; move text
+(global-set-key (kbd "C-c n n") (defrepeater #'move-text-down))
+(global-set-key (kbd "C-c n p") (defrepeater #'move-text-up))
 
 ;; scrollers
 (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))

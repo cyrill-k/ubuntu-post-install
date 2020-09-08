@@ -152,6 +152,10 @@ window and close the *TeX help* buffer."
 (with-eval-after-load 'company
   (add-to-list 'company-backends 'company-go))
 
+;; company-lsp
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-lsp))
+
 ;; go
 (add-hook 'go-mode-hook
           (lambda ()
@@ -279,3 +283,12 @@ window and close the *TeX help* buffer."
 (add-hook 'term-mode-hook
           (lambda ()
             (setq term-buffer-maximum-size 0)))
+
+;; projectile
+(projectile-mode 1)
+(setq projectile-project-search-path '("~/github/" "~/bitbucket/" "~/.emacs.d/"))
+(put 'projectile-project-name 'safe-local-variable #'stringp)
+(put 'projectile-project-compilation-cmd 'safe-local-variable #'stringp)
+
+;; helm-projectile
+(helm-projectile-on)
