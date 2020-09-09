@@ -139,30 +139,19 @@ save = ({
     }},
     "Emacs-like save")
 
-navigation = ({
+text_navigation = ({
     # Cursor
     K("C-b"): with_mark(K("left")),
     K("C-f"): with_mark(K("right")),
     K("C-p"): with_mark(K("up")),
     K("C-n"): with_mark(K("down")),
-    },
-    "Emacs-like navigation")
-
-search = ({
-    # Search
-    # K("C-s"): K("F3"),
-    # K("C-r"): K("Shift-F3"),
-    K("C-s"): K("C-f"),
-    K("C-r"): K("Shift-F3"),
-    K("M-Shift-key_5"): K("C-h"),
-    },
-    "Emacs-like search")
-
-misc = ({
-    K("C-h"): with_mark(K("backspace")),
     # Forward/Backward word
     K("M-b"): with_mark(K("C-left")),
     K("M-f"): with_mark(K("C-right")),
+    },
+    "Emacs-like text navigation")
+
+page_navigation = ({
     # Beginning/End of line
     K("C-a"): with_mark(K("home")),
     K("C-e"): with_mark(K("end")),
@@ -174,14 +163,20 @@ misc = ({
     K("M-Shift-dot"): with_mark(K("C-end")),
     K("M-KEY_102ND"): with_mark(K("C-home")),
     K("M-Shift-KEY_102ND"): with_mark(K("C-end")),
-    # Newline
-    K("C-m"): K("enter"),
-    # K("C-j"): K("enter"),
-    # K("C-o"): [K("enter"), K("left")],
-    # Copy
-    K("C-w"): [K("C-x"), set_mark(False)],
-    K("M-w"): [K("C-c"), set_mark(False)],
-    K("C-y"): [K("C-v"), set_mark(False)],
+    },
+    "Emacs-like page navigation")
+
+search = ({
+    # Search
+    # K("C-s"): K("F3"),
+    # K("C-r"): K("Shift-F3"),
+    K("C-s"): K("C-f"),
+    K("C-r"): K("Shift-F3"),
+    K("M-Shift-key_5"): K("C-h"),
+    },
+    "Emacs-like search")
+
+delete = ({
     # Delete
     K("C-d"): [K("delete"), set_mark(False)],
     K("M-d"): [K("C-delete"), set_mark(False)],
@@ -190,6 +185,20 @@ misc = ({
     K("C-k"): [K("Shift-end"), K("C-x"), set_mark(False)],
     # Kill whole line
     K("C-Shift-backspace"): [K("home"), K("Shift-end"), K("Shift-right"), K("C-x")],
+    },
+    "Emacs-like deletion")
+
+
+misc = ({
+    K("C-h"): with_mark(K("backspace")),
+    # Newline
+    K("C-m"): K("enter"),
+    # K("C-j"): K("enter"),
+    # K("C-o"): [K("enter"), K("left")],
+    # Copy
+    K("C-w"): [K("C-x"), set_mark(False)],
+    K("M-w"): [K("C-c"), set_mark(False)],
+    K("C-y"): [K("C-v"), set_mark(False)],
     # Undo
     K("C-slash"): [K("C-z"), set_mark(False)],
     K("C-Shift-ro"): K("C-z"),
@@ -221,7 +230,7 @@ misc = ({
     }},
     "Emacs-like misc keys")
 
-default_bindings = [save, navigation, search, misc]
+default_bindings = [save, text_navigation, page_navigation, delete, search, misc]
 
 add_bindings(
     re.compile("Google-chrome"),
@@ -237,14 +246,20 @@ add_bindings(
 
 add_bindings(
     re.compile("okular"),
-    "okular",
-    okular, navigation, search, misc
+    "Okular",
+    okular, text_navigation, page_navigation, delete, search, misc
 )
 
 add_bindings(
     re.compile("Evince"),
-    "evince",
-    save, misc
+    "Evince",
+    save, text_navigation, page_navigation, delete, misc
+)
+
+add_bindings(
+    re.compile("Thunderbird"),
+    "Thunderbird",
+    text_navigation, page_navigation, delete
 )
 
 add_bindings(
@@ -257,6 +272,7 @@ add_bindings(
         "Google-chrome",
         "okular",
         "Evince",
+        "Thunderbird",
     ),
     "Non customized applications",
     *default_bindings
