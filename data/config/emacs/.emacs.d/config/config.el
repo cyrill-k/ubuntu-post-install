@@ -252,6 +252,10 @@ window and close the *TeX help* buffer."
 ;; org-mode
 (setq org-startup-truncated nil)
 (setq org-latex-pdf-process (list "latexmk -xelatex -quiet -shell-escape -f %f"))
+(setq org-default-notes-file "~/github/documents/org/notes.org")
+(setq org-agenda-files '("~/github/documents/org/work.org" "~/github/documents/org/notes.org" "~/github/documents/org/fpki.org" "~/github/documents/org/pila.org" "~/github/documents/org/panrg.org"))
+(setq org-agenda-todo-ignore-scheduled 'future)
+(setq org-agenda-todo-list-sublevels nil)
 
 ;; Org-Babel
 (org-babel-do-load-languages
@@ -262,9 +266,6 @@ window and close the *TeX help* buffer."
 
 ;; display/update images in the buffer after I evaluate
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
-
-;; Org file directory
-(setq org-agenda-files '("~/org"))
 
 ;; yasnippet
 (setq yas-snippet-dirs
@@ -289,6 +290,7 @@ window and close the *TeX help* buffer."
 (setq projectile-project-search-path '("~/github/" "~/bitbucket/" "~/.emacs.d/"))
 (put 'projectile-project-name 'safe-local-variable #'stringp)
 (put 'projectile-project-compilation-cmd 'safe-local-variable #'stringp)
+(projectile-discover-projects-in-search-path)
 
 ;; helm-projectile
 (helm-projectile-on)

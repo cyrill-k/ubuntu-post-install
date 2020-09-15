@@ -117,8 +117,11 @@
   (bind-keys :map yas-minor-mode-map
              ("C-c y" . yas-insert-snippet)))
 
+;; org-mode global
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c n") 'org-capture)
+
 ;; org-mode
-(define-key org-mode-map (kbd "C-c a") 'org-agenda)
 (define-key org-mode-map (kbd "C-c q") 'toggle-truncate-lines)
 
 ;; multi-term
