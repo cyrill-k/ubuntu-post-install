@@ -188,6 +188,36 @@ delete = ({
     },
     "Emacs-like deletion")
 
+thunderbird = ({
+    # archive
+    K("C-h"): K("a"),
+    # move to junk
+    K("C-j"): K("j"),
+    # filter messages
+    K("C-Shift-s"): K("C-Shift-k"),
+    },
+    "Emacs-like deletion")
+
+selection = ({
+    # Copy
+    K("C-w"): [K("C-x"), set_mark(False)],
+    K("M-w"): [K("C-c"), set_mark(False)],
+    K("C-y"): [K("C-v"), set_mark(False)],
+    # Mark
+    K("C-space"): set_mark(True),
+    K("C-M-space"): with_or_set_mark(K("C-right")),
+    # Cancel
+    K("C-g"): [set_mark(False), K("esc")],
+    # C-x YYY
+    K("C-x"): {
+        # C-x h (select all)
+        K("h"): [K("C-home"), K("C-a"), set_mark(True)],
+        # cancel
+        K("C-g"): pass_through_key,
+    },
+    },
+    "Emacs-like selection+copy-paste")
+
 
 misc = ({
     K("C-h"): with_mark(K("backspace")),
@@ -195,24 +225,15 @@ misc = ({
     K("C-m"): K("enter"),
     # K("C-j"): K("enter"),
     # K("C-o"): [K("enter"), K("left")],
-    # Copy
-    K("C-w"): [K("C-x"), set_mark(False)],
-    K("M-w"): [K("C-c"), set_mark(False)],
-    K("C-y"): [K("C-v"), set_mark(False)],
     # Undo
     K("C-slash"): [K("C-z"), set_mark(False)],
     K("C-Shift-ro"): K("C-z"),
-    # Mark
-    K("C-space"): set_mark(True),
-    K("C-M-space"): with_or_set_mark(K("C-right")),
     # Cancel
     K("C-g"): [set_mark(False), K("esc")],
     # Escape
     K("C-q"): escape_next_key,
     # C-x YYY
     K("C-x"): {
-        # C-x h (select all)
-        K("h"): [K("C-home"), K("C-a"), set_mark(True)],
         # C-x C-f (open)
         K("C-f"): K("C-o"),
         # C-x k (kill tab)
@@ -230,7 +251,7 @@ misc = ({
     }},
     "Emacs-like misc keys")
 
-default_bindings = [save, text_navigation, page_navigation, delete, search, misc]
+default_bindings = [save, text_navigation, page_navigation, delete, search, selection, misc]
 
 add_bindings(
     re.compile("Google-chrome"),
@@ -247,19 +268,19 @@ add_bindings(
 add_bindings(
     re.compile("okular"),
     "Okular",
-    okular, text_navigation, page_navigation, delete, search, misc
+    okular, text_navigation, page_navigation, delete, search, selection, misc
 )
 
 add_bindings(
     re.compile("Evince"),
     "Evince",
-    save, text_navigation, page_navigation, delete, misc
+    save, text_navigation, page_navigation, delete, selection, misc
 )
 
 add_bindings(
     re.compile("Thunderbird"),
     "Thunderbird",
-    text_navigation, page_navigation, delete
+    text_navigation, page_navigation, delete, selection, thunderbird
 )
 
 add_bindings(
