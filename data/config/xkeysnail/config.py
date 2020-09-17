@@ -196,7 +196,7 @@ thunderbird = ({
     # filter messages
     K("C-Shift-s"): K("C-Shift-k"),
     },
-    "Emacs-like deletion")
+    "Thunderbird specific keys")
 
 selection = ({
     # Copy
