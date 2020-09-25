@@ -26,7 +26,7 @@
 (global-set-key (kbd "C-c f") 'rgrep)
 (global-set-key (kbd "C-c r") 'find-name-dired)
 (global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-c v") 'copy-buffer-file-name-into-clipboard)
+;; (global-set-key (kbd "C-c v") 'copy-buffer-file-name-into-clipboard)
 (global-set-key (kbd "C-c m m") (lambda (&optional arg) (interactive "P") (async-make-with-args "make" nil arg)))
 (global-set-key (kbd "C-c m c") (lambda (&optional arg) (interactive "P") (async-make-with-args "make clean" nil arg)))
 (global-set-key (kbd "C-c m r") (lambda (&optional arg) (interactive "P") (async-make-with-args "make clean; make" nil arg)))
@@ -122,6 +122,7 @@
 (global-set-key (kbd "C-c n") 'org-capture)
 
 ;; org-mode
+;; (define-key org-mode-map (kbd "C-c a") 'org-agenda)
 (define-key org-mode-map (kbd "C-c q") 'toggle-truncate-lines)
 
 ;; multi-term

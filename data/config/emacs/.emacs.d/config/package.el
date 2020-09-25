@@ -38,7 +38,9 @@
 (use-package fcitx)
 
 ;; magit
-(use-package magit)
+(use-package magit
+             :init
+             (setq smerge-command-prefix (kbd "C-c v")))
 (use-package magit-svn
              :after magit)
 

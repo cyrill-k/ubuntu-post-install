@@ -253,7 +253,7 @@ window and close the *TeX help* buffer."
 (setq org-startup-truncated nil)
 (setq org-latex-pdf-process (list "latexmk -xelatex -quiet -shell-escape -f %f"))
 (setq org-default-notes-file "~/github/documents/org/notes.org")
-(setq org-agenda-files '("~/github/documents/org/work.org" "~/github/documents/org/notes.org" "~/github/documents/org/fpki.org" "~/github/documents/org/pila.org" "~/github/documents/org/panrg.org"))
+(setq org-agenda-files '("~/github/documents/org/work.org" "~/github/documents/org/notes.org" "~/github/documents/org/fpki.org" "~/github/documents/org/pila.org" "~/github/documents/org/panrg.org" "~/github/documents/org/private.org"))
 (setq org-agenda-todo-ignore-scheduled 'future)
 (setq org-agenda-todo-list-sublevels nil)
 
