@@ -9,6 +9,7 @@ import subprocess
 import re
 import glob
 import stat
+import errno
 
 run = subprocess.run
 rm = os.remove
@@ -330,6 +331,9 @@ class Configure:
         print('# reboot system')
         print('sudo reboot')
 
+    def aspell(self, inp):
+        self._append_if_not_found("/etc/aspell.conf", r"^home-dir.*", "home-dir /home/cyrill/.emacs.d/config/aspell")
+
     # def elpy(self, inp):
     #     folder = join(home, '.emacs.d', 'elpy')
     #     if not os.path.isdir(folder):
@@ -371,14 +375,19 @@ fi""",
     # fi''')
 
     def _append_if_not_found(self, f, searchRegex, append):
-        with open(f, "a+") as origin_file:
-            origin_file.seek(0, os.SEEK_SET)
-            for line in origin_file:
-                if re.findall(searchRegex, line):
-                    return
-            print(f"Adding include statement to {f}")
-            origin_file.seek(0, os.SEEK_END)
-            origin_file.write(append)
+        try:
+            with open(f, "a+") as origin_file:
+                origin_file.seek(0, os.SEEK_SET)
+                for line in origin_file:
+                    if re.findall(searchRegex, line):
+                        return
+                print(f"Adding include statement to {f}")
+                origin_file.seek(0, os.SEEK_END)
+                origin_file.write(append)
+        except IOError as e:
+            if e.errno == errno.EACCES:
+                print(f"not enough permissions to read and write {f}. Call run.py using sudo")
+                exit(1)
 
     def _modify_option(
         self, basic_src, extended_src, basic_dst, extended_dst_shell_path
