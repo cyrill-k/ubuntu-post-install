@@ -14,7 +14,7 @@ set $workspace4 "4"
 set $workspace5 "5"
 set $workspace6 "6"
 set $workspace7 "7"
-set $workspace8 "8"
+set $workspace8 "8: matrix"
 set $workspace9 "9"
 set $workspace10 "10"
 
@@ -61,16 +61,16 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace $workspace10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -99,8 +99,10 @@ bindsym $mod+x exec firefox
 bindsym $mod+c exec virtualbox
 # thunderbird email client
 bindsym $mod+b exec thunderbird
-# riot matrix client
-bindsym $mod+t exec riot-desktop
+# matrix client
+assign [class=Element] $workspace8
+bindsym $mod+Shift+t exec element-desktop
+bindsym $mod+t workspace $workspace8
 
 # change focus
 bindsym $mod+h focus left
