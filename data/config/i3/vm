@@ -11,4 +11,5 @@ bar {
 bindsym $mod+Pause mode "$mode_system"
 
 # Screen setup
-exec --no-startup-id setup-second-monitor 1920 1080 60 VGA-1 VGA-2
+exec --no-startup-id setup-monitor 2560 1330 60 VGA-1
+exec --no-startup-id setup-monitor 1920 1080 60 VGA-2 VGA-1

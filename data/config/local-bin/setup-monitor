@@ -1,0 +1,96 @@
+#!/bin/bash
+#If no argument is specified, ask for it and exit
+if [[ -z "$@" ]];
+then
+    echo "An argument is needed to run this script";
+    exit
+else
+    args=($@)
+    #Basic check to make sure argument number is valid. If not, display error and exit
+    displays=$(xrandr | grep -Po '.+(?=\sconnected)')
+    if [[ ${#args[@]} -lt 4 ]];
+    then
+       echo "Invalid Parameters. You need to specify parameters in the format \"width height refreshRate firstscreen secondscreen\""
+        echo "screen = [$(echo $displays | sed 's_\s_, _g' )]"
+        echo "For example setup-monitor \"1920 1080 60 ${displays##*$'\n'}\""
+        exit
+    fi
+
+    idx=0
+    cvtargs=$(printf " %s" "${args[@]:${idx}:3}")
+    cvtargs=${cvtargs:1}
+    modename="${args[idx+0]}x${args[idx+1]}_${args[idx+2]}"
+    outputdisplay=${args[idx+3]}
+
+    if [ -z "$(xrandr|grep $modename)" ];
+    then
+        echo xrandr --newmode $modename $(cvt $cvtargs | grep -oP '(?<="\s\s).+')
+        xrandr --newmode $modename $(cvt $cvtargs | grep -oP '(?<="\s\s).+')
+    fi
+
+    echo xrandr --addmode $outputdisplay $modename
+    xrandr --addmode $outputdisplay $modename
+
+    if [[ ${#args[@]} -gt 4 ]];
+    then
+        rightdisplay=${args[idx+4]}
+        echo xrandr --output $outputdisplay --mode $modename --left-of $rightdisplay
+        xrandr --output $outputdisplay --mode $modename --left-of $rightdisplay
+    else
+        echo xrandr --output $outputdisplay --mode $modename
+        xrandr --output $outputdisplay --mode $modename
+    fi
+
+    #If no error occurred, display success message
+    if [[ $? -eq 0 ]];
+    then
+        echo "Display changed successfully to $args"
+    fi
+fi
+
+<<COMMENT
+cvt 2560 1440
+xrandr --output VGA-1 --newmode "2560x1440_60.00"  312.25  2560 2752 3024 3488  1440 1443 1448 1493 -hsync +vsync
+xrandr --addmode VGA-1 2560x1440_60.00
+setup-second-monitor 1920 1080 60 VGA-1 VGA-2
+xrandr --output VGA-1 --mode "2560x1440_60.00"
+#Manual steps with explanation ahead by @debloper
+# First we need to get the modeline string for xrandr
+# Luckily, the tool "gtf" will help you calculate it.
+# All you have to do is to pass the resolution & the-
+# refresh-rate as the command parameters:
+gtf 1920 1080 60
+
+# In this case, the horizontal resolution is 1920px the
+# vertical resolution is 1080px & refresh-rate is 60Hz.
+# IMPORTANT: BE SURE THE MONITOR SUPPORTS THE RESOLUTION
+
+# Typically, it outputs a line starting with "Modeline"
+# e.g. "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync
+# Copy this entire string (except for the starting "Modeline")
+
+# Now, use "xrandr" to make the system recognize a new
+# display mode. Pass the copied string as the parameter
+# to the --newmode option:
+xrandr --newmode "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync
+
+# Well, the string within the quotes is the nick/alias
+# of the display mode - you can as well pass something
+# as "MyAwesomeHDResolution". But, careful! :-|
+
+# Then all you have to do is to add the new mode to the
+# display you want to apply, like this:
+xrandr --addmode VGA1 "1920x1080_60.00"
+
+# VGA1 is the display name, it might differ for you.
+# Run "xrandr" without any parameters to be sure.
+# The last parameter is the mode-alias/name which
+# you've set in the previous command (--newmode)
+
+# It should add the new mode to the display & apply it.
+# Usually unlikely, but if it doesn't apply automatically
+# then force it with this command:
+xrandr --output VGA1 --mode "1920x1080_60.00"
+
+# That's it... Enjoy the new awesome high-res display!
+COMMENT
