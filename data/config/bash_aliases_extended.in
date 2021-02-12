@@ -66,19 +66,20 @@ MY_COMMANDS_FILE_LINK="$COMMANDS_FOLDER/.mycommands"
 # create commands folder and commands file for this machine
 if [ ! -d "$COMMANDS_FOLDER" ]; then
     mkdir -p "$COMMANDS_FOLDER"
+fi
+
+if [ ! -f "$MY_COMMANDS_FILE_LINK" ]; then
     ln -s "$COMMANDS_FOLDER/`hostname`-`date +"%s"`" "$MY_COMMANDS_FILE_LINK"
 fi
 
 __best_command__(){
-    local cmd
-    shopt -u nocaseglob nocasematch
     cat "$COMMANDS_FOLDER/"[!.]* | fzf --read0 --height 50% | sed 's/ #[^#]*$//'
 }
 
 __save_command__(){
-    local save
     set -o history -o histexpand
-    read -p "Insert brief textual desctiption: " usrin
+    local usrin
+    read -p "Insert brief textual description: " usrin
     history | head -n -1 | sed -n '/^ *[0-9]* /h;/^ *[0-9]* /!H;$!b;x;p' | sed 's/^ *[0-9]* *//' >>"$MY_COMMANDS_FILE_LINK"
     echo -ne " #" >>"$MY_COMMANDS_FILE_LINK"
     echo -n "$usrin" | sed 's/#/ /g' >>"$MY_COMMANDS_FILE_LINK"
