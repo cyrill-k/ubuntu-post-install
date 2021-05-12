@@ -130,6 +130,12 @@ jupyter_webbrowser = ({
     }},
     "jupyter web interface")
 
+draw_io_webbrowser = ({
+    # comment line or region
+    K("M-e"): K("C-e"),
+    },
+    "drawio web interface")
+
 save = ({
     K("C-x"): {
         # C-x C-s (save)
@@ -222,7 +228,7 @@ selection = ({
 misc = ({
     K("C-h"): with_mark(K("backspace")),
     # Newline
-    K("C-m"): K("enter"),
+    # K("C-m"): K("enter"),
     # K("C-j"): K("enter"),
     # K("C-o"): [K("enter"), K("left")],
     # Undo
@@ -256,13 +262,13 @@ default_bindings = [save, text_navigation, page_navigation, delete, search, sele
 add_bindings(
     re.compile("Google-chrome"),
     "Chrome",
-    *(default_bindings + [common_browser, jupyter_webbrowser])
+    *(default_bindings + [common_browser, jupyter_webbrowser, draw_io_webbrowser])
 )
 
 add_bindings(
     re.compile("Firefox"),
     "Firefox",
-    *(default_bindings + [common_browser, jupyter_webbrowser])
+    *(default_bindings + [common_browser, jupyter_webbrowser, draw_io_webbrowser])
 )
 
 add_bindings(
@@ -287,6 +293,7 @@ add_bindings(
     lambda wm_class: wm_class
     not in (
         "Emacs",
+        "Emacs27",
         "URxvt",
         "Gnome-terminal",
         "Firefox",
