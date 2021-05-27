@@ -29,3 +29,5 @@ bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
 bindsym XF86AudioMicMute exec pactl set-source-mute 1 toggle
+
+floating_maximum_size 2300 x 1200
