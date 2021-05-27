@@ -68,3 +68,4 @@ if [ -f ~/.bashrc_extended ]; then
     . ~/.bashrc_extended
 fi
 
+[[ $- == *i* ]] && stty -ixon
